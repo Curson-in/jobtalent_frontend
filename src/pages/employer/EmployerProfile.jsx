@@ -3,7 +3,7 @@ import {
   getEmployerProfile,
   updateEmployerProfile
 } from '../../services/employerService';
-import '../../assets/css/employerProfile.css';
+import '../../assets/css/employerprofile.css';
 
 export default function EmployerProfile() {
   const [company, setCompany] = useState(null);
