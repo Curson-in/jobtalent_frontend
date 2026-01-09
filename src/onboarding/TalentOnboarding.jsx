@@ -160,10 +160,11 @@ navigate('/talent/dashboard', { replace: true });
           >
             <option value="">Select</option>
             <option>Fresher</option>
-            <option>0–1 years</option>
-            <option>1–3 years</option>
-            <option>3–5 years</option>
-            <option>5+ years</option>
+            <option value="0-1 years">0-1 years</option>
+<option value="1-3 years">1-3 years</option>
+<option value="3-5 years">3-5 years</option>
+
+           
           </select>
         </div>
 
