@@ -12,7 +12,7 @@ import TalentOnboarding from './onboarding/TalentOnboarding';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 import EditTalentProfile from './pages/EditTalentProfile';
-import About from './pages/public/ABout.jsx';
+import About from './pages/public/About.jsx';
 import Contact from './pages/public/Contact.jsx';
 import PrivacyPolicy from './pages/public/PrivacyPolicy.jsx';
 import Terms from './pages/public/Terms.jsx';
