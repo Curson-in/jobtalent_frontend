@@ -1,0 +1,810 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext.jsx';
+import * as jobService from '../services/jobService.js';
+import * as applicationService from '../services/applicationService.js';
+import '../assets/css/dashboard.css';
+import { Link, useNavigate } from 'react-router-dom';
+import ResumeEnhance from '../pages/premium/ResumeEnhance.jsx';
+import FollowUpModal from "../components/FollowUpModal.jsx";
+import JobMatchCard from '../components/jobs/JobMatchCard.jsx';
+import axios from "../services/api";
+
+
+
+
+export default function TalentDashboard() {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [pendingApply, setPendingApply] = useState(null);
+
+  
+
+
+  const [jobs, setJobs] = useState([]);
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('discover');
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [page, setPage] = useState(1);
+const [hasMore, setHasMore] = useState(true);
+const JOBS_PER_PAGE = 20;
+const [followUpJob, setFollowUpJob] = useState(null);
+const [subscription, setSubscription] = useState(null);
+
+const [subLoading, setSubLoading] = useState(true);
+
+const isFreePlan =
+  !subscription?.plan ||
+  subscription.plan.toLowerCase() === "free";
+
+
+const stripHtml = (html = '') => {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+};
+
+const normalizeJob = (job) => {
+    const company =
+      job.company_name ||
+      job.company ||
+      job.employer_company ||
+      'Company';
+
+    return {
+      ...job,
+      _companyName: company,
+      _companyInitial: company.charAt(0).toUpperCase(),
+      _description: stripHtml(job.description || ''),
+    };
+  };
+
+  
+  const [filters, setFilters] = useState({
+    jobType: [],
+    experience: [],
+    location: [],
+    datePosted: 'all'
+  });
+
+  const filterOptions = {
+  jobType: [
+    { label: 'Full-time', value: 'full-time' },
+    { label: 'Part-time', value: 'part-time' },
+    { label: 'Contract', value: 'contract' },
+    { label: 'Internship', value: 'internship' }
+  ],
+  experience: ['Entry-level', 'Mid-level', 'Senior', 'Lead'],
+  location: ['Remote', 'On-site', 'Hybrid'],
+  datePosted: [
+    { value: 'all', label: 'All Time' },
+    { value: '24h', label: 'Last 24 hours' },
+    { value: '7d', label: 'Last 7 days' },
+    { value: '30d', label: 'Last 30 days' }
+  ]
+};
+
+const fetchJobs = async (pageNo = 1) => {
+  try {
+    setLoading(true);
+
+    const res = await jobService.getJobs({
+      page: pageNo,
+      limit: JOBS_PER_PAGE,
+      search: searchQuery || undefined,
+      jobType: filters.jobType.length ? filters.jobType : undefined,
+      location: filters.location.length ? filters.location : undefined,
+      datePosted: filters.datePosted !== 'all' ? filters.datePosted : undefined
+    });
+
+    setJobs(prev =>
+      pageNo === 1 ? res.jobs : [...prev, ...res.jobs]
+    );
+
+    setHasMore(res.jobs.length === JOBS_PER_PAGE);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  const loadSubscription = async () => {
+    try {
+      const res = await axios.get("/profile/talent");
+      setSubscription(res.data.profile.subscription);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubLoading(false);
+    }
+  };
+
+  loadSubscription();
+}, []);
+
+
+useEffect(() => {
+  if (activeTab === 'discover') {
+    setPage(1);
+    fetchJobs(1);
+  }
+}, [activeTab,searchQuery, filters]);
+
+useEffect(() => {
+  const pending = localStorage.getItem('pendingExternalApply');
+  if (pending) {
+    setPendingApply(JSON.parse(pending));
+  }
+}, []);
+
+useEffect(() => {
+  const checkPendingApply = () => {
+    const pending = localStorage.getItem('pendingExternalApply');
+    if (pending) {
+      setPendingApply(JSON.parse(pending));
+    }
+  };
+
+  const onVisibilityChange = () => {
+    if (document.visibilityState === 'visible') {
+      checkPendingApply();
+    }
+  };
+
+  window.addEventListener('focus', checkPendingApply);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+
+  return () => {
+    window.removeEventListener('focus', checkPendingApply);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+  };
+}, []);
+
+
+
+
+ 
+
+ // 🔥 DEFINE THIS AT TOP LEVEL (after useState hooks)
+
+
+
+const fetchApplications = async () => {
+  try {
+    setLoading(true);
+    const res = await applicationService.getMyApplications();
+    setApplications(res.applications || []);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  const handleFilterChange = (category, value) => {
+    setFilters(prev => {
+      if (category === 'datePosted') {
+        return { ...prev, datePosted: value };
+      }
+      
+      const currentValues = prev[category];
+      const newValues = currentValues.includes(value)
+        ? currentValues.filter(v => v !== value)
+        : [...currentValues, value];
+      
+      return { ...prev, [category]: newValues };
+    });
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      jobType: [],
+      experience: [],
+      location: [],
+      datePosted: 'all'
+    });
+    setSearchQuery('');
+  };
+
+  const getActiveFilterCount = () => {
+    let count = 0;
+    if (filters.jobType.length > 0) count += filters.jobType.length;
+    if (filters.experience.length > 0) count += filters.experience.length;
+    if (filters.location.length > 0) count += filters.location.length;
+    if (filters.datePosted !== 'all') count += 1;
+    return count;
+  };
+
+
+
+
+const handleApply = (job) => {
+  // 🔥 Aggregated jobs
+  if (job.source === 'aggregated') {
+    if (!job.external_url) {
+      alert('Apply link not available');
+      return;
+    }
+
+    localStorage.setItem(
+      'pendingExternalApply',
+      JSON.stringify({
+        jobId: job.id,
+        title: job.title,
+        company: job.company_name
+      })
+    );
+
+    window.open(job.external_url, '_blank', 'noopener,noreferrer');
+    return;
+  }
+
+  // Direct jobs
+  applicationService
+    .applyToJob(job.id)
+    .then(() => {
+      alert('Applied successfully!');
+      fetchApplications();
+    })
+    .catch(err => {
+      alert(err.response?.data?.message || 'Failed to apply');
+    });
+};
+
+useEffect(() => {
+  fetchApplications();
+}, []);
+
+
+
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  return (
+    <div className="dashboard-container">
+      {/* ================= NAVBAR ================= */}
+      <nav className="navbar-premium">
+        <div className="container-premium">
+          <div className="navbar-content">
+            {/* BRAND */}
+            <div 
+              className="brand-logo"
+              onClick={() => setActiveTab('discover')}
+            >
+              <svg className="brand-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M16 21V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="brand-text">Curson</span>
+            </div>
+
+            {/* RIGHT NAV */}
+            <div className="navbar-actions">
+              <button
+                className={`nav-btn ${activeTab === 'applications' ? 'nav-btn-active' : ''}`}
+                onClick={() => setActiveTab('applications')}
+              >
+                <svg className="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span>Applications</span>
+                {applications.length > 0 && (
+                  <span className="applications-count">{applications.length}</span>
+                )}
+              </button>
+              <button
+  className={`nav-btn ${activeTab === 'enhance' ? 'nav-btn-active' : ''}`}
+  onClick={() => navigate('/talent/ai-resume')}
+
+>
+  ✨ AI Resume
+</button>
+
+             {isFreePlan && (
+  <button
+    className="nav-btn nav-btn-upgrade"
+    onClick={() => navigate('/pricing')}
+  >
+    ⭐ Upgrade
+  </button>
+)}
+
+
+
+              <div className="profile-dropdown">
+                <button
+                  className="profile-trigger"
+                  onClick={() => setShowProfileMenu((p) => !p)}
+                >
+                  <div className="avatar">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <span className="profile-label">Profile</span>
+                  <svg className={`chevron ${showProfileMenu ? 'chevron-open' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+
+                {showProfileMenu && (
+                  <div className="dropdown-content">
+                    <Link
+                      to="/talent/profile"
+                      className="dropdown-link"
+                      onClick={() => setShowProfileMenu(false)}
+                    >
+                      <svg className="dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      View Profile
+                    </Link>
+                    <button
+                      className="dropdown-link dropdown-danger"
+                      onClick={handleLogout}
+                    >
+                      <svg className="dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* ================= CONTENT ================= */}
+      <main className="main-content">
+        <div className="container-premium">
+          {/* ========= DISCOVER JOBS ========= */}
+          {activeTab === 'discover' && (
+            <div className="content-section">
+              <div className="section-header">
+                <div>
+                  <h1 className="section-title">Discover Opportunities</h1>
+                  <p className="section-subtitle">Find your next career move from top companies</p>
+                </div>
+                <div className="header-stats">
+                  <span className="stat-badge">{jobs.length} Positions</span>
+                </div>
+              </div>
+
+              {/* Search and Filter Section */}
+              <div className="search-filter-container">
+                <div className="search-filter-wrapper">
+                  <div className="search-bar-wrapper">
+                    <svg className="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <input
+                      type="text"
+                      placeholder="Search jobs, companies, or keywords..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="search-input"
+                    />
+                  </div>
+
+                  <button
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="filter-toggle-btn"
+                  >
+                    <svg className="filter-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span>Filters</span>
+                    {getActiveFilterCount() > 0 && (
+                      <span className="filter-count-badge">{getActiveFilterCount()}</span>
+                    )}
+                  </button>
+                </div>
+
+                {/* Filter Panel */}
+                {showFilters && (
+                  <div className="filter-panel">
+                    <div className="filter-panel-header">
+                      <h3 className="filter-panel-title">Filter Options</h3>
+                      {getActiveFilterCount() > 0 && (
+                        <button onClick={clearFilters} className="clear-filters-btn">
+                          <svg className="clear-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                          Clear All
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="filter-grid">
+                      {/* Job Type */}
+                      <div className="filter-group">
+                        <label className="filter-group-label">Job Type</label>
+                        <div className="filter-options">
+                          {filterOptions.jobType.map(opt => (
+  <label key={opt.value} className="filter-option">
+    <input
+      type="checkbox"
+      checked={filters.jobType.includes(opt.value)}
+      onChange={() => handleFilterChange('jobType', opt.value)}
+      className="filter-checkbox"
+    />
+    <span className="filter-option-label">{opt.label}</span>
+  </label>
+))}
+
+                        </div>
+                      </div>
+
+                      {/* Experience Level */}
+                      <div className="filter-group">
+                        <label className="filter-group-label">Experience</label>
+                        <div className="filter-options">
+                          {filterOptions.experience.map(level => (
+                            <label key={level} className="filter-option">
+                              <input
+                                type="checkbox"
+                                checked={filters.experience.includes(level)}
+                                onChange={() => handleFilterChange('experience', level)}
+                                className="filter-checkbox"
+                              />
+                              <span className="filter-option-label">{level}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Location */}
+                      <div className="filter-group">
+                        <label className="filter-group-label">Location</label>
+                        <div className="filter-options">
+                          {filterOptions.location.map(loc => (
+                            <label key={loc} className="filter-option">
+                              <input
+                                type="checkbox"
+                                checked={filters.location.includes(loc)}
+                                onChange={() => handleFilterChange('location', loc)}
+                                className="filter-checkbox"
+                              />
+                              <span className="filter-option-label">{loc}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Date Posted */}
+                      <div className="filter-group">
+                        <label className="filter-group-label">Date Posted</label>
+                        <div className="filter-options">
+                          {filterOptions.datePosted.map(option => (
+                            <label key={option.value} className="filter-option">
+                              <input
+                                type="radio"
+                                name="datePosted"
+                                checked={filters.datePosted === option.value}
+                                onChange={() => handleFilterChange('datePosted', option.value)}
+                                className="filter-radio"
+                              />
+                              <span className="filter-option-label">{option.label}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {loading ? (
+                <div className="loading-state">
+                  <div className="spinner"></div>
+                  <p>Loading opportunities...</p>
+                </div>
+              ) : jobs.length === 0 ? (
+                <div className="empty-state">
+                  <svg className="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <h3>No positions found</h3>
+                  <p>Try adjusting your filters or search criteria</p>
+                  {getActiveFilterCount() > 0 && (
+                    <button onClick={clearFilters} className="empty-state-btn">
+                      Clear Filters
+                    </button>
+                  )}
+                </div>
+              ) : (
+              <div className="jobs-grid">
+  {jobs.map((job, index) => {
+    const companyName =
+      job.company_name ||
+      job.company ||
+      job.employer_company ||
+      'Company';
+
+    const companyInitial = companyName.charAt(0).toUpperCase();
+
+    return (
+      <div
+        key={job.id}
+        className="job-card"
+        style={{ animationDelay: `${index * 50}ms` }}
+      >
+        {/* HEADER */}
+        <div className="job-header">
+          <div className="company-avatar">
+            {companyInitial}
+          </div>
+
+          <div className="job-header-info">
+            <h3 className="job-title">{job.title}</h3>
+            <p className="company-name">{companyName}</p>
+          </div>
+        </div>
+
+        {/* DETAILS */}
+        <div className="job-details">
+          <div className="job-detail-item">
+            <svg
+              className="detail-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>{job.location}</span>
+          </div>
+
+          {job.salary && (
+            <div className="job-detail-item">
+              <svg
+                className="detail-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M12 2V22"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+              </svg>
+              <span className="salary">{job.salary}</span>
+            </div>
+          )}
+        </div>
+
+        {/* ✅ MOVE MATCH CARD HERE */}
+<JobMatchCard jobId={job.id} />
+
+        {/* DESCRIPTION (flex-grow keeps button aligned) */}
+        <div className="job-description-wrapper">
+          {job.description && (
+            <p className="job-description">
+              {stripHtml(job.description).substring(0, 120)}...
+            </p>
+          )}
+        </div>
+
+        {/* APPLY BUTTON (always bottom) */}
+        <button
+          className="apply-btn"
+          onClick={() => handleApply(job)}
+        >
+          Apply Now
+          <svg className="btn-arrow" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              fillRule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+    );
+  })}
+
+  {hasMore && (
+    <div className="load-more-container">
+      <button
+        className="load-more-btn"
+        disabled={loading}
+        onClick={() => {
+          const next = page + 1;
+          setPage(next);
+          fetchJobs(next);
+        }}
+      >
+        {loading ? 'Loading...' : 'Load more'}
+      </button>
+    </div>
+  )}
+</div>
+
+                
+              )}
+            </div>
+          )}
+
+          {/* ========= MY APPLICATIONS ========= */}
+          {activeTab === 'applications' && (
+            <div className="content-section">
+              <div className="section-header">
+                <div>
+                  <h1 className="section-title">My Applications</h1>
+                  <p className="section-subtitle">Track your application progress</p>
+                </div>
+                <div className="header-stats">
+                  <span className="stat-badge">{applications.length} Active</span>
+                </div>
+              </div>
+
+              {loading ? (
+                <div className="loading-state">
+                  <div className="spinner"></div>
+                  <p>Loading applications...</p>
+                </div>
+              ) : applications.length === 0 ? (
+                <div className="empty-state">
+                  <svg className="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <h3>No applications yet</h3>
+                  <p>Start applying to positions to see them here</p>
+                </div>
+              ) : (
+                <div className="table-container">
+                  <table className="applications-table">
+                    <thead>
+                      <tr>
+                        <th>Position</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                        <th>Applied</th>
+                        <th>Actions</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {applications.map((app) => (
+                        <tr key={app.id}>
+                          <td>
+  <div className="table-cell-primary">{app.position}</div>
+</td>
+<td>
+  <div className="table-cell-secondary">{app.company}</div>
+</td>
+
+                          <td>
+                            <span className={`status-badge status-${app.status}`}>
+                              {app.status}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="table-cell-date">
+                              {new Date(app.created_at).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric'
+                              })}
+                            </div>
+                          </td>
+                          <td>
+  {app.followup_sent ? (
+    <span className="muted">Follow-up sent</span>
+  ) : (
+  <button
+  onClick={() => {
+    console.log("Follow-Up clicked", app);
+   setFollowUpJob({
+  jobId: app.job_id,      // 🔥 THIS MUST EXIST
+  position: app.position,
+  company: app.company
+});
+
+  }}
+>
+  Follow-Up
+</button>
+
+
+  )}
+</td>
+
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'enhance' && (
+  <div className="content-section">
+    <div className="section-header">
+      <div>
+        <h1 className="section-title">AI Resume Enhancement</h1>
+        <p className="section-subtitle">
+          Improve your resume with AI-powered insights
+        </p>
+      </div>
+    </div>
+
+    <ResumeEnhance />
+  </div>
+)}
+
+        </div>
+      </main>
+      {pendingApply && activeTab === 'discover' && (
+  <div className="confirm-overlay">
+    <div className="confirm-modal">
+      <h3>Did you apply for this job?</h3>
+      <p>
+        {pendingApply.title} at {pendingApply.company}
+      </p>
+
+      <div className="confirm-actions">
+      <button
+  className="btn-primary"
+  onClick={async () => {
+    await applicationService.confirmExternalApply(pendingApply.jobId);
+
+    setJobs(prev =>
+      prev.filter(job => job.id !== pendingApply.jobId)
+    );
+
+    localStorage.removeItem('pendingExternalApply');
+    setPendingApply(null);
+    fetchApplications();
+  }}
+>
+  Yes, I applied
+</button>
+
+
+
+        <button
+          className="btn-secondary"
+          onClick={() => {
+            localStorage.removeItem('pendingExternalApply');
+            setPendingApply(null);
+          }}
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+      {/* ===== FOLLOW UP MODAL (GLOBAL) ===== */}
+     {followUpJob && (
+  <FollowUpModal
+    job={followUpJob}
+    onClose={() => setFollowUpJob(null)}
+  />
+)}
+
+
+      {/* ===== PENDING EXTERNAL APPLY MODAL ===== */}
+     
+
+
+    </div>
+  );
+}

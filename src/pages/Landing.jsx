@@ -1,0 +1,523 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import "../assets/css/landing.css";
+
+export default function Landing() {
+  return (
+    <div className="landing-container">
+      {/* ================= NAVBAR ================= */}
+     <header className="navbar navbar-expand-lg">
+  <div className="container">
+    <Link className="navbar-brand" to="/">
+      Curson
+    </Link>
+
+    <nav className="navbar-nav ms-auto d-flex align-items-center gap-3">
+      <Link className="nav-link nav-login" to="/login">
+        Login
+      </Link>
+
+      <Link to="/signup" className="btn btn-nav-signup">
+        Sign up
+      </Link>
+    </nav>
+  </div>
+</header>
+
+
+      {/* ================= HERO ================= */}
+      <section className="hero-section">
+        <div className="container text-center">
+          <h1>
+  Where Top Talent <br /> Meets Serious Hiring
+</h1>
+
+<p>
+  A premium hiring platform built for skilled professionals and
+  modern companies that value quality over quantity.
+</p>
+
+          <div className="d-flex justify-content-center gap-3 hero-buttons flex-wrap">
+            <Link
+  to="/signup?role=talent"
+  className="btn btn-hero-primary btn-lg"
+>
+  Explore Jobs
+</Link>
+
+<Link
+  to="/signup?role=employer"
+  className="btn btn-outline-primary btn-lg"
+>
+  Start Hiring
+</Link>
+
+          </div>
+        </div>
+      </section>
+
+      
+      {/* ================= STATS ================= */}
+      <section className="stats-section">
+  <div className="container">
+    <div className="stats-grid">
+      <div className="stat-card">
+        <div className="stat-number">2K+</div>
+        <div className="stat-label">Live Job Openings</div>
+      </div>
+
+      <div className="stat-card">
+        <div className="stat-number">10K+</div>
+        <div className="stat-label">Verified Professionals</div>
+      </div>
+
+      <div className="stat-card">
+        <div className="stat-number">1K+</div>
+        <div className="stat-label">Hiring Companies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      {/* ================= FOR TALENT ================= */}
+      <section className="features-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">For Talent</span>
+            <h2 className="section-title">Built for Serious Professionals</h2>
+<p className="section-subtitle">
+  Tools designed to help you get hired faster — not just apply more.
+</p>
+
+          </div>
+
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg className="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </div>
+              <h5 className="feature-title">Smart Job Discovery</h5>
+              <p className="feature-text">
+                Discover global and local job opportunities tailored to
+                your skills, experience, and preferences with our AI-powered matching algorithm.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg className="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                </svg>
+              </div>
+              <h5 className="feature-title">Skill Verification</h5>
+              <p className="feature-text">
+                Validate your skills through comprehensive assessments and improve
+                visibility with verified badges that employers trust.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg className="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                </svg>
+              </div>
+              <h5 className="feature-title">Application Tracking</h5>
+              <p className="feature-text">
+                Track applications, interviews, and employer responses
+                from a single intuitive dashboard with real-time updates.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOR EMPLOYERS ================= */}
+      <section className="employer-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">For Employers</span>
+            <h2 className="section-title">Hire Smarter, Not Harder</h2>
+            <p className="section-subtitle">
+              Streamline your hiring process with advanced tools and verified talent
+            </p>
+          </div>
+
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg className="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+              </div>
+              <h5 className="feature-title">Easy Job Posting</h5>
+              <p className="feature-text">
+                Create job listings in minutes and reach qualified candidates
+                across multiple locations with intelligent distribution.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg className="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>
+              </div>
+              <h5 className="feature-title">Advanced Candidate Search</h5>
+              <p className="feature-text">
+                Search and filter candidates by skills, experience,
+                availability, and verification status with powerful filters.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <svg className="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h5 className="feature-title">Direct Communication</h5>
+              <p className="feature-text">
+                Communicate directly with candidates and manage your entire hiring
+                pipeline efficiently from one centralized platform.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="how-it-works">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-label">How It Works</span>
+            <h2 className="section-title">Get Started in 3 Simple Steps</h2>
+            <p className="section-subtitle">
+  Designed to help talent get hired and employers hire faster.
+</p>
+          </div>
+
+          <div className="how-grid">
+            <div className="how-card">
+              <div className="how-icon-wrapper">
+                <span className="how-step">01</span>
+              </div>
+              <h5 className="how-title">Create Your Profile</h5>
+              <p className="how-text">
+                Sign up and build a professional profile that highlights your skills or company.
+              </p>
+            </div>
+
+            <div className="how-card">
+              <div className="how-icon-wrapper">
+                <span className="how-step">02</span>
+              </div>
+              <h5 className="how-title">Get Matched</h5>
+              <p className="how-text">
+                Our smart system connects the right talent with the right opportunities.
+              </p>
+            </div>
+
+            <div className="how-card">
+              <div className="how-icon-wrapper">
+                <span className="how-step">03</span>
+              </div>
+              <h5 className="how-title">Grow Faster</h5>
+              <p className="how-text">
+                Apply, hire, communicate, and track progress — all in one platform.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= TESTIMONIALS ================= */}
+      <section className="testimonials-section">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-label">Testimonials</span>
+            <h2 className="section-title">Trusted by Professionals & Companies</h2>
+            <p className="section-subtitle">
+  Real results from professionals and companies hiring on Curson.
+</p>
+          </div>
+
+          <div className="testimonials-grid">
+            <div className="testimonial-card">
+              <div className="testimonial-quote">
+                <svg className="quote-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+              <p className="testimonial-text">
+                Curson helped us hire quality engineers 3x faster than traditional job portals. The candidate quality is exceptional.
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">HM</div>
+                <div>
+                 <h6 className="author-name">Thirumalai Maharaja</h6>
+<p className="author-title">Senior Intern, NatWest Group</p>
+
+
+                </div>
+              </div>
+            </div>
+
+            <div className="testimonial-card">
+              <div className="testimonial-quote">
+                <svg className="quote-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+              <p className="testimonial-text">
+                The profile visibility and verification badges made a real difference. I landed my dream job within 2 weeks!
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">RK</div>
+                <div>
+                  <h6 className="author-name">Swapnil Shinde</h6>
+<p className="author-title">Founder, Omnis AI (SaaS Company)</p>
+
+                </div>
+              </div>
+            </div>
+
+            <div className="testimonial-card">
+              <div className="testimonial-quote">
+                <svg className="quote-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+              <p className="testimonial-text">
+                Clean UI, great experience, and very easy to manage candidates. Best hiring platform we've used so far.
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">JD</div>
+                <div>
+                  <h6 className="author-name">Neeraj Gornale</h6>
+<p className="author-title">HR, Godrej Group</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ================= PRICING ================= */}
+      <section className="pricing-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Pricing</span>
+            <h2 className="section-title">Choose Your Plan</h2>
+            <p className="section-subtitle">
+              Transparent pricing with no hidden fees. Start free, upgrade anytime.
+            </p>
+          </div>
+
+          <div className="pricing-grid">
+            <div className="pricing-card">
+              <div className="card">
+                <div className="pricing-header">
+                  <h5 className="pricing-name">Talent Premium</h5>
+                  <div className="pricing-price">
+                    Pro
+                    <span className="pricing-period">/ Features</span>
+                  </div>
+                </div>
+                <ul className="pricing-features">
+  <li>Profile boosting (priority visibility)</li>
+  <li>Resume enhancement & optimization</li>
+  <li>FlowBack messages (follow-up with employers)</li>
+  <li>Job match score for every application</li>
+  <li>Advanced job alerts</li>
+  <li>Application insights & analytics</li>
+</ul>
+
+                <Link 
+                  to="/signup?role=talent" 
+                  className="btn btn-primary w-100"
+                >
+                  <span>Get Started</span>
+                </Link>
+              </div>
+            </div>
+
+            <div className="pricing-card featured">
+              <div className="pricing-badge">Most Popular</div>
+              <div className="card">
+                <div className="pricing-header">
+                  <h5 className="pricing-name">Employer Access</h5>
+                  <div className="pricing-price">
+                    Custom
+                  </div>
+                </div>
+                <ul className="pricing-features">
+                  <li>Unlimited job postings</li>
+                  <li>Advanced candidate search filters</li>
+                  <li>Analytics dashboard & reports</li>
+                  <li>Team collaboration tools</li>
+                  <li>Dedicated account manager</li>
+                  <li>Hiring pipeline management</li>
+                  <li>Priority employer support</li>
+                </ul>
+                <Link 
+                  to="/signup?role=employer" 
+                  className="btn btn-primary w-100"
+                >
+                  <span>Contact Sales</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FAQ ================= */}
+      <section className="faq-section">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-label">FAQ</span>
+            <h2 className="section-title">Frequently Asked Questions</h2>
+            <p className="section-subtitle">
+              Everything you need to know about Curson
+            </p>
+          </div>
+
+          <div className="faq-container">
+            <div className="faq-list">
+              <details className="faq-item">
+                <summary className="faq-question">
+                  Is Curson free to use?
+                  <svg className="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="faq-answer">
+                  Yes, both talent and employers can get started for free. We also offer premium plans with additional features for those who want to unlock the full potential of the platform.
+                </p>
+              </details>
+
+              <details className="faq-item">
+                <summary className="faq-question">
+                  How are candidates verified?
+                  <svg className="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="faq-answer">
+                  Through comprehensive skill assessments, profile checks, identity verification, and optional verification badges. Employers can trust that verified candidates have been thoroughly vetted.
+                </p>
+              </details>
+
+              <details className="faq-item">
+                <summary className="faq-question">
+                  Can startups hire on Curson?
+                  <svg className="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="faq-answer">
+                  Absolutely! Curson is built for startups, enterprises, and agencies of all sizes. We offer flexible pricing and features that scale with your hiring needs.
+                </p>
+              </details>
+
+              <details className="faq-item">
+                <summary className="faq-question">
+                  Is Curson available globally?
+                  <svg className="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="faq-answer">
+                  Yes, we support global hiring and remote opportunities. Connect with talent and employers from around the world, all in one platform.
+                </p>
+              </details>
+
+              <details className="faq-item">
+                <summary className="faq-question">
+                  How long does it take to get hired?
+                  <svg className="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="faq-answer">
+                  On average, candidates with complete profiles and verified skills get interview requests within 1-2 weeks. Premium members often see even faster results with priority visibility.
+                </p>
+              </details>
+
+              <details className="faq-item">
+                <summary className="faq-question">
+                  What payment methods do you accept?
+                  <svg className="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="faq-answer">
+                  We accept all major credit cards, debit cards, UPI, and net banking. All payments are processed securely through our encrypted payment gateway.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      {/* ================= CTA ================= */}
+      <section className="cta-section">
+        <div className="container">
+          <div className="cta-content text-center">
+            <h2 className="cta-title">Ready to Transform Your Career?</h2>
+            <p className="cta-subtitle">
+              Join thousands of professionals and employers building their future on Curson.
+              Sign up today and discover your next opportunity.
+            </p>
+            <div className="d-flex justify-content-center gap-3 flex-wrap">
+              <Link to="/signup?role=talent" className="btn btn-light btn-lg">
+                Join as Talent
+              </Link>
+              <Link
+                to="/signup?role=employer"
+                className="btn btn-outline-light btn-lg"
+              >
+                Join as Employer
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer>
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-section">
+              <h5>Curson</h5>
+              <p className="mb-0">
+                Connecting talent with opportunity worldwide.
+              </p>
+            </div>
+            
+            
+            <div className="footer-section">
+              <h5>Company</h5>
+              <ul className="footer-links">
+                <li><Link to="/about">About Us</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/privacy">Privacy Policy</Link></li>
+                 <li><Link to="/terms">Terms</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p className="mb-0">© 2024 Curson. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

@@ -1,0 +1,33 @@
+import api from './api.js';
+
+export const createJob = async (jobData) => {
+  const response = await api.post('/jobs', jobData);
+  return response.data;
+};
+
+// ✅ THIS MUST CALL /jobs (NOT /jobs/feed)
+export const getJobs = async (filters) => {
+  const response = await api.get('/jobs', {
+    params: filters
+  });
+  return response.data;
+};
+
+export const getEmployerJobs = async () => {
+  const response = await api.get('/jobs/employer/my-jobs');
+  return response.data;
+};
+
+
+export const getJobById = async (id) => {
+  const response = await api.get(`/jobs/${id}`);
+  return response.data;
+};
+
+export const deleteJob = async (id) => {
+  const response = await api.delete(`/jobs/${id}`);
+  return response.data;
+};
+
+export const getJobMatchScore = (jobId) =>
+  api.get(`/jobs/${jobId}/match-score`);
