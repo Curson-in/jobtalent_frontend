@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../assets/css/landing.css";
+import { Helmet } from "react-helmet-async";
 
 export default function Landing() {
   return (

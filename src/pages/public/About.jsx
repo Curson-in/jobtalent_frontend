@@ -1,4 +1,5 @@
 import "../../assets/css/public-pages.css";
+import { Helmet } from "react-helmet-async";
 
 export default function About() {
   return (
