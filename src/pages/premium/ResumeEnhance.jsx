@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../assets/css/resume-enhance.css";
 import { enhanceResume } from "../../services/resumeService";
 import NavbarPremium from "../../components/NavbarPremium";
- import { generateEnhancedResumePDF } from "../../utils/pdfExport";
+import api, { API_URL } from "../../services/api";
  
 
 
@@ -10,6 +10,8 @@ export default function ResumeEnhance() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [filename, setFilename] = useState(null);
+
   
 
 
@@ -45,16 +47,38 @@ export default function ResumeEnhance() {
   };
 
   const handleEnhance = async () => {
-    try {
-      setLoading(true);
-      const res = await enhanceResume(file);
-      setResult(res);
-    } catch (err) {
-      alert("Failed to enhance resume");
-    } finally {
-      setLoading(false);
+  try {
+    setLoading(true);
+    const res = await enhanceResume(file);
+    setResult(res);
+    setFilename(res.filename);
+  } catch {
+    alert("Failed to enhance resume");
+  } finally {
+    setLoading(false);
+  }
+};
+const downloadAIResume = async (filename) => {
+  const token = localStorage.getItem("auth_token");
+
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/files/ai-resume/${filename}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-  };
+  );
+
+  if (!res.ok) throw new Error("Download failed");
+
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+
+  window.open(url);
+};
+
+
 
  return (
   <>
@@ -139,14 +163,16 @@ export default function ResumeEnhance() {
           <div className="result-actions">
           
 
-<button
-  className="download-btn"
-  onClick={() =>
-    generateEnhancedResumePDF(result.enhancedText)
-  }
->
-  ⬇ Download Enhanced Resume (PDF)
-</button>
+{filename && (
+  <button
+    className="download-btn"
+    onClick={() => downloadAIResume(filename)}
+  >
+    ⬇ Download Enhanced Resume (PDF)
+  </button>
+)}
+
+
 
           </div>
 

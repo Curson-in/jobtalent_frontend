@@ -1,4 +1,4 @@
-import api from '../services/api.js';
+
 
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
@@ -8,6 +8,8 @@ import '../assets/css/employer.css';
 import { useNavigate } from 'react-router-dom';
 import EmployerProfile from './employer/EmployerProfile.jsx';
 import { getFollowUpsForJob } from "../services/messageService";
+import api, { API_URL } from "../services/api";
+
 
 
 
@@ -122,45 +124,38 @@ useEffect(() => {
   fetchJobs();
 };
 
-const handleDownloadResume = async (resumeUrl) => {
-  try {
-    const token = localStorage.getItem("auth_token");
-
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/applications/download?resumeUrl=${encodeURIComponent(resumeUrl)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Download failed");
-    }
-
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "resume.pdf";
-    document.body.appendChild(a);
-    a.click();
-
-    a.remove();
-    window.URL.revokeObjectURL(url);
-  } catch (err) {
-    alert("Failed to download resume");
-    console.error(err);
-  }
-};
 
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
+
+  const downloadResume = async (filename) => {
+  const token = localStorage.getItem("auth_token");
+
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/files/resume/${filename}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!res.ok) throw new Error("Download failed");
+
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
 
   return (
     // Replace ONLY the className attributes with these:
@@ -368,12 +363,14 @@ const handleDownloadResume = async (resumeUrl) => {
 
       {/* Actions */}
       <div className="emp-table-action">
-     <button
+    <button
   className="emp-btn-outline"
-  onClick={() => handleDownloadResume(app.resume_url)}
+  onClick={() => downloadResume(app.resume_file)}
 >
   Download Resume
 </button>
+
+
 
 
 
