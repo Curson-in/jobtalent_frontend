@@ -32,51 +32,63 @@ export default function Signup() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+  // 🔐 PASSWORD RULE: min 6 chars, letters + numbers
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
+  if (!passwordRegex.test(formData.password)) {
+    setError(
+      'Password must be at least 6 characters and include letters and numbers'
+    );
+    return;
+  }
+
+  // 🔐 CONFIRM PASSWORD CHECK
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match');
+    return;
+  }
+
+  // 🔐 ROLE VALIDATION
+  if (!['talent', 'employer'].includes(formData.role)) {
+    setError('Invalid role selected');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const user = await signup(
+      formData.email,
+      formData.password,
+      formData.role,
+      formData.firstName,
+      formData.lastName
+    );
+
+    if (user.role === 'talent') {
+      navigate('/talent/dashboard');
       return;
     }
 
-    if (!['talent', 'employer'].includes(formData.role)) {
-      setError('Invalid role selected');
+    if (user.role === 'employer') {
+      navigate('/employer/onboarding');
       return;
     }
 
-    setLoading(true);
+    navigate('/');
+  } catch (err) {
+    setError(
+      err.response?.data?.message || 'Unable to create your account'
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
-    try {
-   const user = await signup(
-  formData.email,
-  formData.password,
-  formData.role,
-  formData.firstName,
-  formData.lastName
-);
-
-if (user.role === 'talent') {
-  navigate('/talent/dashboard');
-  return;
-}
-
-if (user.role === 'employer') {
-  navigate('/employer/onboarding');
-  return;
-}
-
-navigate('/');
-
-    } catch (err) {
-      setError(
-        err.response?.data?.message || 'Unable to create your account'
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="auth-container">
@@ -169,9 +181,10 @@ navigate('/');
               name="password"
               type="password"
               className="auth-input"
-              placeholder="Password"
+              placeholder="Password (min 6 chars, letters & numbers)"
               value={formData.password}
               onChange={handleChange}
+              minLength={6}
               required
             />
 
@@ -182,6 +195,7 @@ navigate('/');
               placeholder="Confirm password"
               value={formData.confirmPassword}
               onChange={handleChange}
+              minLength={6}
               required
             />
 
