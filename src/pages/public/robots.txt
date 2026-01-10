@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /login
+Disallow: /signup
+Disallow: /dashboard
+Disallow: /admin
+
+Sitemap: https://www.curson.in/sitemap.xml

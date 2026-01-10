@@ -2,6 +2,14 @@ import "../../assets/css/public-pages.css";
 
 export default function About() {
   return (
+    <><Helmet>
+        <title>About Curson – Global Job & Talent Platform</title>
+        <meta
+          name="description"
+          content="Learn about Curson, a modern job and talent platform built to help professionals find better opportunities and employers hire smarter."
+        />
+        <link rel="canonical" href="https://www.curson.in/about" />
+      </Helmet>
     <div className="public-page">
       <div className="public-container">
         <button className="public-back" onClick={() => window.history.back()}>
@@ -67,5 +75,6 @@ export default function About() {
         </p>
       </div>
     </div>
+    </>
   );
 }

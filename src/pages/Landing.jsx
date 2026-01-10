@@ -4,6 +4,15 @@ import "../assets/css/landing.css";
 
 export default function Landing() {
   return (
+    <>
+   <Helmet>
+        <title>Curson - Find Jobs Faster. Hire Talent Smarter.</title>
+        <meta
+          name="description"
+          content="Curson is a global job and talent platform connecting verified candidates with employers. Discover remote jobs, local hiring, and smarter recruitment."
+        />
+        <link rel="canonical" href="https://www.curson.in/" />
+      </Helmet>
     <div className="landing-container">
       {/* ================= NAVBAR ================= */}
      <header className="navbar navbar-expand-lg">
@@ -519,5 +528,6 @@ export default function Landing() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
