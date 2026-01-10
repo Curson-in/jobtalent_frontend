@@ -3234,3 +3234,239 @@ button:disabled {
     0 3px 8px rgba(16, 185, 129, 0.25),
     inset 0 2px 4px rgba(0, 0, 0, 0.18);
 }
+
+/* ADD THIS TO THE END OF talentprofile.css */
+
+/* MOBILE RESPONSIVE FIX FOR CARDS */
+@media (max-width: 767px) {
+  /* Professional Info & Quick Actions Cards */
+  .profile-card-main,
+  .profile-card-actions,
+  .profile-card-resume,
+  .profile-card-skills {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  /* Card Content - Prevent Overflow */
+  .card-content {
+    padding: 1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  
+  /* Field Values - Wrap Text */
+  .field-value {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  
+  /* Action Items - Stack Better */
+  .action-item {
+    flex-wrap: wrap;
+    padding: 0.875rem;
+  }
+  
+  .action-content {
+    min-width: 0;
+    flex: 1;
+  }
+  
+  .action-title,
+  .action-description {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  
+  /* Skills - Wrap Properly */
+  .skills-list {
+    max-width: 100%;
+  }
+  
+  .skill-chip {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.625rem;
+  }
+  
+  /* Online Links - Stack Better */
+  .online-links {
+    max-width: 100%;
+  }
+  
+  .online-link {
+    font-size: 0.75rem;
+    padding: 0.45rem 0.875rem;
+  }
+  
+  /* Resume Upload Button */
+  .resume-upload-btn,
+  .add-profile-btn {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* VERY SMALL MOBILE (320px - 479px) */
+@media (max-width: 479px) {
+  .card-header {
+    padding: 1rem;
+  }
+  
+  .card-content {
+    padding: 0.875rem;
+  }
+  
+  .card-title {
+    font-size: 0.9375rem;
+  }
+  
+  .action-icon-wrapper {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .action-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .action-title {
+    font-size: 0.8125rem;
+  }
+  
+  .action-description {
+    font-size: 0.75rem;
+  }
+}
+/* ============================================
+   QUICK ACTIONS MOBILE FIX
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Quick Actions Card Specific */
+  .profile-card-actions .card-content {
+    padding: 1rem 0.75rem;
+  }
+  
+  /* Action Items - Better Mobile Layout */
+  .profile-card-actions .action-item {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  /* Action Icon - Smaller on Mobile */
+  .profile-card-actions .action-icon-wrapper {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+  }
+  
+  .profile-card-actions .action-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  
+  /* Action Text - Force Wrap */
+  .profile-card-actions .action-content {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .profile-card-actions .action-title {
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  
+  .profile-card-actions .action-description {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  
+  /* Arrow - Smaller */
+  .profile-card-actions .action-arrow {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+  
+  /* Action List Spacing */
+  .profile-card-actions .action-list {
+    gap: 0.625rem;
+  }
+}
+
+/* VERY SMALL MOBILE (320px - 479px) */
+@media (max-width: 479px) {
+  .profile-card-actions .action-item {
+    padding: 0.625rem;
+    gap: 0.625rem;
+  }
+  
+  .profile-card-actions .action-icon-wrapper {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .profile-card-actions .action-title {
+    font-size: 0.75rem;
+  }
+  
+  .profile-card-actions .action-description {
+    font-size: 0.6875rem;
+  }
+  
+  .profile-card-actions .action-list {
+    gap: 0.5rem;
+  }
+}
+/* ============================================
+   PROFILE PAGE - FIXED 2-COLUMN LAYOUT
+   ============================================ */
+
+/* Remove old profile-grid rules and replace with this */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Desktop: 2 columns - Left (2fr) and Right (1fr) */
+@media (min-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+}
+
+/* Tablet: 2 equal columns */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .profile-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+}
+
+/* Mobile: Stack everything */
+@media (max-width: 767px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  /* Force all cards to full width */
+  .profile-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

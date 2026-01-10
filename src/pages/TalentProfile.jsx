@@ -4,6 +4,7 @@ import * as profileService from '../services/profileService.js';
 import { AuthContext } from '../context/AuthContext.jsx';
 import SubscriptionCard from '../components/subscription/SubscriptionCard.jsx';
 
+
 export default function TalentProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
