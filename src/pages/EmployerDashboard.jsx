@@ -132,6 +132,11 @@ useEffect(() => {
   };
 
   const downloadResume = async (filename) => {
+  if (!filename) {
+    alert("Resume not uploaded");
+    return;
+  }
+
   const token = localStorage.getItem("auth_token");
 
   const res = await fetch(
@@ -155,6 +160,7 @@ useEffect(() => {
 
   URL.revokeObjectURL(url);
 };
+
 
 
   return (
