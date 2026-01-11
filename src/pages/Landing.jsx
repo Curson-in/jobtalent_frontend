@@ -23,9 +23,7 @@ export default function Landing() {
     </Link>
 
     <nav className="navbar-nav ms-auto d-flex align-items-center gap-3">
-      <Link className="nav-link nav-login" to="/login">
-        Login
-      </Link>
+     
 
       <Link to="/signup" className="btn btn-nav-signup">
         Sign up
@@ -37,7 +35,7 @@ export default function Landing() {
 
       {/* ================= HERO ================= */}
       <section className="hero-section">
-        <div className="container text-center">
+        <div className="container">
           <h1>
   Where Top Talent <br /> Meets Serious Hiring
 </h1>
@@ -94,10 +92,10 @@ export default function Landing() {
       <section className="features-section">
         <div className="container">
           <div className="section-header">
-            <span className="section-label">For Talent</span>
+            <span className="section-label">For Candidates</span>
             <h2 className="section-title">Built for Serious Professionals</h2>
 <p className="section-subtitle">
-  Tools designed to help you get hired faster — not just apply more.
+  Tools designed to help you get hired faster - not just apply more.
 </p>
 
           </div>
@@ -202,7 +200,7 @@ export default function Landing() {
       {/* ================= HOW IT WORKS ================= */}
       <section className="how-it-works">
         <div className="container">
-          <div className="section-header text-center">
+          <div className="section-header ">
             <span className="section-label">How It Works</span>
             <h2 className="section-title">Get Started in 3 Simple Steps</h2>
             <p className="section-subtitle">
@@ -237,7 +235,7 @@ export default function Landing() {
               </div>
               <h5 className="how-title">Grow Faster</h5>
               <p className="how-text">
-                Apply, hire, communicate, and track progress — all in one platform.
+                Apply, hire, communicate, and track progress - all in one platform.
               </p>
             </div>
           </div>
@@ -245,77 +243,7 @@ export default function Landing() {
       </section>
 
       {/* ================= TESTIMONIALS ================= */}
-      <section className="testimonials-section">
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-label">Testimonials</span>
-            <h2 className="section-title">Trusted by Professionals & Companies</h2>
-            <p className="section-subtitle">
-  Real results from professionals and companies hiring on Curson.
-</p>
-          </div>
-
-          <div className="testimonials-grid">
-            <div className="testimonial-card">
-              <div className="testimonial-quote">
-                <svg className="quote-icon" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="testimonial-text">
-                Curson helped us hire quality engineers 3x faster than traditional job portals. The candidate quality is exceptional.
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar">HM</div>
-                <div>
-                 <h6 className="author-name">Thirumalai Maharaja</h6>
-<p className="author-title">Senior Intern, NatWest Group</p>
-
-
-                </div>
-              </div>
-            </div>
-
-            <div className="testimonial-card">
-              <div className="testimonial-quote">
-                <svg className="quote-icon" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="testimonial-text">
-                The profile visibility and verification badges made a real difference. I landed my dream job within 2 weeks!
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar">RK</div>
-                <div>
-                  <h6 className="author-name">Swapnil Shinde</h6>
-<p className="author-title">Founder, Omnis AI (SaaS Company)</p>
-
-                </div>
-              </div>
-            </div>
-
-            <div className="testimonial-card">
-              <div className="testimonial-quote">
-                <svg className="quote-icon" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              <p className="testimonial-text">
-                Clean UI, great experience, and very easy to manage candidates. Best hiring platform we've used so far.
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar">JD</div>
-                <div>
-                  <h6 className="author-name">Neeraj Gornale</h6>
-<p className="author-title">HR, Godrej Group</p>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    
 
 
       {/* ================= PRICING ================= */}
@@ -342,7 +270,7 @@ export default function Landing() {
                 <ul className="pricing-features">
   <li>Profile boosting (priority visibility)</li>
   <li>Resume enhancement & optimization</li>
-  <li>FlowBack messages (follow-up with employers)</li>
+  <li>Follow-Up messages (follow-up with employers)</li>
   <li>Job match score for every application</li>
   <li>Advanced job alerts</li>
   <li>Application insights & analytics</li>
@@ -357,8 +285,8 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="pricing-card featured">
-              <div className="pricing-badge">Most Popular</div>
+            <div className="pricing-card ">
+             
               <div className="card">
                 <div className="pricing-header">
                   <h5 className="pricing-name">Employer Access</h5>
@@ -379,7 +307,7 @@ export default function Landing() {
                   to="/signup?role=employer" 
                   className="btn btn-primary w-100"
                 >
-                  <span>Contact Sales</span>
+                  <span>Get Started</span>
                 </Link>
               </div>
             </div>
@@ -390,7 +318,7 @@ export default function Landing() {
       {/* ================= FAQ ================= */}
       <section className="faq-section">
         <div className="container">
-          <div className="section-header text-center">
+          <div className="section-header ">
             <span className="section-label">FAQ</span>
             <h2 className="section-title">Frequently Asked Questions</h2>
             <p className="section-subtitle">
@@ -420,7 +348,7 @@ export default function Landing() {
                   </svg>
                 </summary>
                 <p className="faq-answer">
-                  Through comprehensive skill assessments, profile checks, identity verification, and optional verification badges. Employers can trust that verified candidates have been thoroughly vetted.
+                  Through comprehensive onboarding, and profile checks. Employers can trust that verified candidates have been thoroughly vetted.
                 </p>
               </details>
 
@@ -460,17 +388,7 @@ export default function Landing() {
                 </p>
               </details>
 
-              <details className="faq-item">
-                <summary className="faq-question">
-                  What payment methods do you accept?
-                  <svg className="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </summary>
-                <p className="faq-answer">
-                  We accept all major credit cards, debit cards, UPI, and net banking. All payments are processed securely through our encrypted payment gateway.
-                </p>
-              </details>
+             
             </div>
           </div>
         </div>
@@ -480,7 +398,7 @@ export default function Landing() {
       {/* ================= CTA ================= */}
       <section className="cta-section">
         <div className="container">
-          <div className="cta-content text-center">
+          <div className="cta-content">
             <h2 className="cta-title">Ready to Transform Your Career?</h2>
             <p className="cta-subtitle">
               Join thousands of professionals and employers building their future on Curson.
@@ -524,7 +442,7 @@ export default function Landing() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p className="mb-0">© 2024 Curson. All rights reserved.</p>
+            <p className="mb-0">© 2026 Curson. All rights reserved.</p>
           </div>
         </div>
       </footer>

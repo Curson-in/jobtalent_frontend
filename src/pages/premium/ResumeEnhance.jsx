@@ -3,6 +3,9 @@ import "../../assets/css/resume-enhance.css";
 import { enhanceResume } from "../../services/resumeService";
 import NavbarPremium from "../../components/NavbarPremium";
 import api, { API_URL } from "../../services/api";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
  
 
 
@@ -11,6 +14,16 @@ export default function ResumeEnhance() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [filename, setFilename] = useState(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+
+  const { subscription } = useContext(AuthContext);
+
+const isFreePlan =
+  !subscription ||
+  !subscription.plan ||
+  subscription.plan.toLowerCase() === "free";
+
+
 
   
 
@@ -47,6 +60,11 @@ export default function ResumeEnhance() {
   };
 
   const handleEnhance = async () => {
+  if (isFreePlan) {
+    setShowUpgradeModal(true);
+    return;
+  }
+
   try {
     setLoading(true);
     const res = await enhanceResume(file);
@@ -58,6 +76,7 @@ export default function ResumeEnhance() {
     setLoading(false);
   }
 };
+
 const downloadAIResume = async (filename) => {
   const token = localStorage.getItem("auth_token");
 
@@ -178,6 +197,43 @@ const downloadAIResume = async (filename) => {
 
         </div>
       )}
+
+      {showUpgradeModal && (
+  <div className="upgrade-overlay">
+    <div className="upgrade-modal">
+      <h3>Upgrade to unlock AI Resume Enhancer</h3>
+
+      <p className="upgrade-subtext">
+        Get recruiter-ready insights, ATS optimization, and personalized
+        improvement tips tailored to your resume.
+      </p>
+
+      <ul className="upgrade-benefits">
+        <li>✔ Actionable resume improvement suggestions</li>
+        <li>✔ ATS-optimized formatting & wording</li>
+        <li>✔ Strong bullet points recruiters notice</li>
+        <li>✔ Download enhanced resume as PDF</li>
+      </ul>
+
+      <div className="upgrade-actions">
+        <button
+          className="btn-secondary"
+          onClick={() => setShowUpgradeModal(false)}
+        >
+          Not now
+        </button>
+
+        <button
+          className="btn-primary"
+          onClick={() => window.location.href = "/pricing"}
+        >
+          Upgrade to Pro
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
     </div>
   </>

@@ -92,12 +92,7 @@ export default function EmployerProfile() {
                     value={form.name || ''}
                     onChange={handleChange}
                   />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleLogoChange}
-                    className="logo-input"
-                  />
+                 
                 </>
               ) : (
                 <h2>{company.name || 'Unnamed Company'}</h2>

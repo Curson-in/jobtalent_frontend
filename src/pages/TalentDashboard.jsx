@@ -8,18 +8,13 @@ import ResumeEnhance from '../pages/premium/ResumeEnhance.jsx';
 import FollowUpModal from "../components/FollowUpModal.jsx";
 import JobMatchCard from '../components/jobs/JobMatchCard.jsx';
 import axios from "../services/api";
-
-
-
+import NavbarPremium from "../components/NavbarPremium";
 
 export default function TalentDashboard() {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [pendingApply, setPendingApply] = useState(null);
-
-  
-
 
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
@@ -269,101 +264,12 @@ useEffect(() => {
     navigate('/login');
   };
 
-  return (
+  return ( 
+    <>
+     <NavbarPremium active={activeTab === "applications" ? "applications" : "discover"} />
     <div className="dashboard-container">
       {/* ================= NAVBAR ================= */}
-      <nav className="navbar-premium">
-        <div className="container-premium">
-          <div className="navbar-content">
-            {/* BRAND */}
-            <div 
-              className="brand-logo"
-              onClick={() => setActiveTab('discover')}
-            >
-              <svg className="brand-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M16 21V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="brand-text">Curson</span>
-            </div>
-
-            {/* RIGHT NAV */}
-            <div className="navbar-actions">
-              <button
-                className={`nav-btn ${activeTab === 'applications' ? 'nav-btn-active' : ''}`}
-                onClick={() => setActiveTab('applications')}
-              >
-                <svg className="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span>Applications</span>
-                {applications.length > 0 && (
-                  <span className="applications-count">{applications.length}</span>
-                )}
-              </button>
-              <button
-  className={`nav-btn ${activeTab === 'enhance' ? 'nav-btn-active' : ''}`}
-  onClick={() => navigate('/talent/ai-resume')}
-
->
-  ✨ AI Resume
-</button>
-
-             {isFreePlan && (
-  <button
-    className="nav-btn nav-btn-upgrade"
-    onClick={() => navigate('/pricing')}
-  >
-    ⭐ Upgrade
-  </button>
-)}
-
-
-
-              <div className="profile-dropdown">
-                <button
-                  className="profile-trigger"
-                  onClick={() => setShowProfileMenu((p) => !p)}
-                >
-                  <div className="avatar">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <span className="profile-label">Profile</span>
-                  <svg className={`chevron ${showProfileMenu ? 'chevron-open' : ''}`} viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-
-                {showProfileMenu && (
-                  <div className="dropdown-content">
-                    <Link
-                      to="/talent/profile"
-                      className="dropdown-link"
-                      onClick={() => setShowProfileMenu(false)}
-                    >
-                      <svg className="dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      View Profile
-                    </Link>
-                    <button
-                      className="dropdown-link dropdown-danger"
-                      onClick={handleLogout}
-                    >
-                      <svg className="dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9M16 17L21 12M21 12L16 7M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      
 
       {/* ================= CONTENT ================= */}
       <main className="main-content">
@@ -706,6 +612,7 @@ useEffect(() => {
     <span className="muted">Follow-up sent</span>
   ) : (
   <button
+  className="btn-followup"
   onClick={() => {
     console.log("Follow-Up clicked", app);
    setFollowUpJob({
@@ -803,8 +710,7 @@ useEffect(() => {
 
       {/* ===== PENDING EXTERNAL APPLY MODAL ===== */}
      
-
-
     </div>
+    </>
   );
 }

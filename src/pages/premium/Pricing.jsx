@@ -13,7 +13,7 @@ export default function Pricing() {
     popular: false,
     features: [
       "Apply to unlimited jobs",
-      "Basic profile visibility",
+      "7 days profile boosting",
       "Email notifications",
     ],
   },

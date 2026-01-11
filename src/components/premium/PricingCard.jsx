@@ -12,19 +12,32 @@ export default function PricingCard({ plan }) {
   };
 
   return (
-    <div className={`pricing-card ${plan.popular ? "popular" : ""}`}>
-      {plan.popular && <div className="popular-tag">Most Popular</div>}
+  <div className={`pricing-card ${plan.popular ? "popular" : ""}`}>
+    {plan.popular && <div className="popular-tag">Most Popular</div>}
 
-      <h3>{plan.title}</h3>
-      <h2>{plan.price} <span>{plan.duration}</span></h2>
+    <h3 className="plan-title">{plan.title}</h3>
 
-      <ul>
-        {plan.features.map(f => <li key={f}>✔ {f}</li>)}
-      </ul>
-
-      <button onClick={handleUpgrade}>
-        Get Started
-      </button>
+    <div className="plan-price">
+      <span className="price">{plan.price}</span>
+      <span className="duration">{plan.duration}</span>
     </div>
-  );
+
+    <ul className="feature-list">
+      {plan.features.map(f => (
+        <li key={f}>
+          <span className="check">✓</span>
+          {f}
+        </li>
+      ))}
+    </ul>
+
+    <button
+      className={`plan-btn ${plan.popular ? "btn-primary" : "btn-outline"}`}
+      onClick={handleUpgrade}
+    >
+      Get Started
+    </button>
+  </div>
+);
+
 }

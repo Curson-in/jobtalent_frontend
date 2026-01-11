@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { sendFollowUp } from "../services/messageService";
+import "../assets/css/followup-modal.css";
 
 export default function FollowUpModal({ job, onClose }) {
   const [message, setMessage] = useState("");

@@ -372,3 +372,97 @@
   background-size: 300% 100%;
   animation: shimmer 1.5s infinite;
 }
+/* ================= UPGRADE MODAL ================= */
+
+.upgrade-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.upgrade-modal {
+  background: #ffffff;
+  width: 100%;
+  max-width: 460px;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  animation: scaleIn 0.2s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.upgrade-modal h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.upgrade-subtext {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.upgrade-benefits {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+.upgrade-benefits li {
+  font-size: 14.5px;
+  color: #334155;
+  margin-bottom: 10px;
+}
+
+/* ACTIONS */
+.upgrade-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  background: #22c55e;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #16a34a;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #f8fafc;
+}

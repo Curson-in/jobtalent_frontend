@@ -17,9 +17,7 @@ export default function JobMatchCard({ jobId }) {
         setLocked(false);
       })
       .catch(err => {
-        if (err.response?.status === 403) {
-          setLocked(true);
-        }
+        if (err.response?.status === 403) setLocked(true);
       })
       .finally(() => setLoading(false));
   }, [jobId]);
@@ -28,12 +26,24 @@ export default function JobMatchCard({ jobId }) {
     return <div className="job-match-loading">Calculating match…</div>;
   }
 
+  /* 🔒 LOCKED (PREMIUM STRIP) */
   if (locked) {
     return (
-      <div className="job-match-locked">
-        <div className="lock-icon">🔒</div>
-        <p>Upgrade to see your match score</p>
-        <button onClick={() => navigate("/pricing")}>
+      <div className="job-match-premium">
+        <div className="job-match-left">
+          <div className="job-match-icon">🔒</div>
+          <div className="job-match-text">
+            <span className="job-match-title">Match score locked</span>
+            <span className="job-match-sub">
+              Upgrade to see how well you fit this role
+            </span>
+          </div>
+        </div>
+
+        <button
+          className="job-match-upgrade-btn"
+          onClick={() => navigate("/pricing")}
+        >
           Upgrade
         </button>
       </div>
@@ -42,23 +52,29 @@ export default function JobMatchCard({ jobId }) {
 
   if (!match) return null;
 
+  /* ✅ UNLOCKED (SCORE VIEW) */
   return (
-    <div className="job-match-card">
-      <div className="job-match-header">
-        <strong>{match.matchScore}% Match =</strong>
-        <span className={`probability ${match.probability.toLowerCase()}`}>
+    <div className="job-match-score-card">
+      <div className="score-header">
+        <div className="score-value">
+          {match.matchScore}%
+        </div>
+
+        <span className={`score-pill ${match.probability.toLowerCase()}`}>
           {match.probability}
         </span>
       </div>
 
-      {match.missingSkills.length > 0 && (
-        <div className="job-match-missing">
-          Missing skills:
-          <ul>
+      {match.missingSkills?.length > 0 && (
+        <div className="score-missing">
+          <span>Missing skills</span>
+          <div className="missing-skills">
             {match.missingSkills.map(skill => (
-              <li key={skill}>{skill}</li>
+              <span key={skill} className="skill-chip-mini">
+                {skill}
+              </span>
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>

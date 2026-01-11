@@ -1,4 +1,4 @@
-/* ============================================
+ /* ============================================
    CURSON - FULLY RESPONSIVE JOB PORTAL STYLES
    ============================================ */
 
@@ -106,6 +106,7 @@ body {
   color: var(--color-gray-900);
   background: var(--color-gray-50);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* ============================================
@@ -216,6 +217,113 @@ body {
   height: 1.125rem;
   stroke-width: 2;
   flex-shrink: 0;
+}
+/* ================= NAVBAR RESPONSIVE ================= */
+
+.navbar-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mobile-menu-btn {
+  display: none;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* MOBILE DROPDOWN */
+.mobile-nav-dropdown {
+  position: absolute;
+  top: 64px;
+  right: 16px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+  padding: 0.75rem;
+  min-width: 200px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav-dropdown button,
+.mobile-nav-dropdown a {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.mobile-nav-dropdown button:hover,
+.mobile-nav-dropdown a:hover {
+  background: #f1f5f9;
+}
+
+.mobile-nav-dropdown .danger {
+  color: #dc2626;
+}
+
+/* ===== MOBILE BREAKPOINT ===== */
+@media (max-width: 768px) {
+
+  .navbar-desktop {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+}
+/* MOBILE NAV */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 64px;
+    right: 16px;
+    background: #ffffff;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    display: none;
+    width: 220px;
+    z-index: 999;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: left;
+  }
 }
 
 .applications-count {
@@ -1152,12 +1260,8 @@ body {
   height: 250px;
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(20, 184, 166, 0.1) 100%);
   z-index: 0;
-}
-
-.profile-container::before {
   pointer-events: none;
 }
-
 
 .profile-nav {
   margin-bottom: 1.5rem;
@@ -1199,9 +1303,11 @@ body {
 
 .profile-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+flex-wrap: wrap;
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
   padding: 1.5rem;
   background: white;
   border: 2px solid var(--color-emerald-100);
@@ -1351,12 +1457,6 @@ body {
   stroke-width: 2.5;
 }
 
-.profile-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
 
 .profile-card {
   background: white;
@@ -1371,10 +1471,6 @@ body {
   box-shadow: var(--shadow-xl);
   transform: translateY(-2px);
   border-color: var(--color-emerald-300);
-}
-
-.profile-card-main {
-  animation: fadeInUp 0.5s ease-out 0.1s backwards;
 }
 
 .profile-card-secondary {
@@ -1655,13 +1751,6 @@ body {
   transform: translateX(4px);
 }
 
-.profile-stats {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  animation: fadeInUp 0.5s ease-out 0.3s backwards;
-}
-
 .stat-card {
   display: flex;
   align-items: center;
@@ -1837,10 +1926,6 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .profile-grid {
-    grid-template-columns: 1fr;
-  }
-
   .filter-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1871,10 +1956,6 @@ body {
 
   .jobs-grid {
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  }
-
-  .profile-grid {
-    grid-template-columns: 1fr;
   }
 
   .profile-stats {
@@ -1939,11 +2020,6 @@ body {
 
   .job-card {
     padding: 1.75rem;
-  }
-
-  .profile-grid {
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
   }
 
   .profile-header {
@@ -2011,67 +2087,6 @@ body {
   }
 }
 
-.online-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.online-link {
-  padding: 0.5rem 0.875rem;
-  border-radius: var(--radius-full);
-  border: 2px solid var(--color-emerald-200);
-  background: linear-gradient(
-    135deg,
-    var(--color-emerald-50),
-    var(--color-teal-50)
-  );
-  color: var(--color-emerald-700);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all var(--transition-base);
-}
-
-.online-link:hover {
-  background: linear-gradient(
-    135deg,
-    var(--color-emerald-100),
-    var(--color-teal-100)
-  );
-  border-color: var(--color-emerald-300);
-  transform: translateY(-2px);
-}
-
-.profile-stats {
-  margin-top: 2rem;
-  gap: 2rem;
-}
-
-.online-empty {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.add-profile-btn {
-  align-self: flex-start;
-  padding: 0.625rem 1rem;
-  border-radius: var(--radius-lg);
-  border: 2px dashed var(--color-emerald-300);
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-700);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition-base);
-}
-
-.add-profile-btn:hover {
-  background: var(--color-emerald-100);
-  border-color: var(--color-emerald-500);
-  transform: translateY(-2px);
-}
 /* ===============================
    PROFILE → ONLINE PROFILES
    =============================== */
@@ -2155,67 +2170,10 @@ body {
   transform: translateY(-2px);
   box-shadow: var(--shadow-emerald-lg);
 }
-/* 
-.profile-column-left,
-.profile-column-right {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Mobile: stack everything */
-@media (max-width: 1023px) {
-  .profile-column-left,
-  .profile-column-right {
-    gap: 1.5rem;
-  }
-}
-.profile-column-left .profile-card {
-  border-left: 4px solid var(--color-emerald-300);
-}
-
-.profile-column-right .profile-card {
-  background: linear-gradient(
-    135deg,
-    var(--color-white),
-    var(--color-emerald-50)
-  );
-} */
 
 .stat-card-clickable:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-
-@media (max-width: 1023px) {
-  .profile-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.profile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.profile-header-right {
-  min-width: 260px;
-}
-
-
-.profile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.profile-header-right {
-  min-width: 260px;
-  display: flex;
-  justify-content: flex-end;
 }
 
 /* ===============================
@@ -2326,126 +2284,53 @@ body {
 .manage-modal .btn-close:hover {
   background: #e2e8f0;
 }
-.profile-header-layout {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
 
 .profile-header-left {
   display: flex;
   align-items: center;
   gap: 1.25rem;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-.subscription-card.compact {
-  min-width: 260px;
+.profile-header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1 1 auto;
+  max-width: 100%;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .profile-header-layout {
+
+.upgrade-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+.upgrade-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 26px rgba(16, 185, 129, 0.6);
+}
+
+@media (max-width: 600px) {
+  .match-upgrade-card {
     flex-direction: column;
     align-items: flex-start;
+    gap: 14px;
   }
 
-  .subscription-card.compact {
+  .upgrade-btn {
     width: 100%;
+    text-align: center;
   }
-}
-
-/* ===== JOB MATCH CARD ===== */
-.job-match-card {
-  margin: 12px 0;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: #f7fffb;
-  border: 1px dashed #c7f0df;
-  font-size: 0.9rem;
-}
-
-/* Locked state */
-.job-match-locked {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.job-match-locked p {
-  margin: 0;
-  color: #3a7f68;
-  font-weight: 500;
-}
-
-/* 🔥 DOWNGRADE upgrade button */
-.job-match-locked {
-  background: transparent;
-  color: #1dbf73;
-  border: 1px solid #1dbf73;
-  padding: 6px 12px;
-  font-size: 0.85rem;
-  border-radius: 999px;
-}
-
-
-/* ===== JOB CARD ===== */
-.job-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 22px;
-  border: 1px solid #e9f5ef;
-  box-shadow:
-    0 4px 12px rgba(16, 185, 129, 0.08),
-    0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: all 0.25s ease;
-}
-
-.job-card:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 12px 28px rgba(16, 185, 129, 0.15),
-    0 4px 8px rgba(0, 0, 0, 0.06);
-}
-/* ===== MATCH SCORE STRIP ===== */
-.job-match-card {
-  margin: 14px 0;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: linear-gradient(
-    90deg,
-    rgba(16, 185, 129, 0.08),
-    rgba(16, 185, 129, 0.03)
-  );
-  border: 1px dashed rgba(16, 185, 129, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Text */
-.job-match-locked p {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #065f46;
-}
-
-/* Upgrade button – subtle, not dominant */
-.job-match-locked  {
-  background: #ffffff;
-  color: #1dbf73;
-  border: 1px solid #1dbf73;
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  border-radius: 999px;
-  font-weight: 600;
-}
-
-.job-match-locked  {
-  background: #ecfdf5;
 }
 
 
@@ -2662,20 +2547,6 @@ body {
   color: #0f172a;
 }
 
-
-
-
-
-
-@media (max-width: 900px) {
-  .premium-cards {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-
-
 .subscription-card h3,
 .boost-card h2 {
   font-size: 1.1rem;
@@ -2776,15 +2647,15 @@ button:active {
 
 /* ---------- STICKY SECTION HEADERS ---------- */
 .section-header {
-  position: sticky;
-  top: 5rem;
+  position: static;
+  top: auto;
   background: linear-gradient(
     180deg,
     rgba(249, 250, 251, 0.95),
     rgba(249, 250, 251, 0.75)
   );
   backdrop-filter: blur(6px);
-  z-index: 20;
+  z-index: auto;
 }
 
 /* ---------- PROFILE AVATAR GLOW ---------- */
@@ -2879,14 +2750,15 @@ img {
 
 .premium-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 16px;
   align-items: stretch;
 }
 
-@media (max-width: 900px) {
+
+@media (min-width: 1024px) {
   .premium-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -2913,6 +2785,7 @@ img {
 .boost-card {
   padding: 28px;
   border-radius: 20px;
+  position: relative;
 }
 
 /* Headings: confident, not loud */
@@ -2937,32 +2810,49 @@ img {
   padding: 6px 0;
 }
 
-
-
-/* Muted secondary action (Manage Plan) */
-.btn-muted {
-  background: linear-gradient(
-    135deg,
-    var(--color-emerald-50),
-    var(--color-emerald-100)
-  );
-  color: var(--color-emerald-700);
-  box-shadow: none;
-}
-
-.btn-muted:hover {
-  background: linear-gradient(
-    135deg,
-    var(--color-emerald-100),
-    var(--color-emerald-200)
-  );
-  transform: translateY(-1px);
-}
-
 /* Premium card hover — subtle */
 .premium-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 32px rgba(16, 185, 129, 0.12);
+}
+.btn-followup {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 6px 16px rgba(37, 99, 235, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+/* Hover */
+.btn-followup:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 25px rgba(37, 99, 235, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Active click */
+.btn-followup:active {
+  transform: translateY(0);
+  box-shadow:
+    0 5px 12px rgba(37, 99, 235, 0.35),
+    inset 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Disabled (future use) */
+.btn-followup:disabled {
+  background: #c7d2fe;
+  color: #475569;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* ============================================
@@ -3175,80 +3065,10 @@ button:disabled {
     0 4px 12px rgba(16, 185, 129, 0.22);
 }
 
-/* ===============================
-   🔒 JOB MATCH – UPGRADE BUTTON
-   =============================== */
 
-.job-match-locked button,
-.job-match-locked .upgrade-btn {
-  appearance: none;
-  border: none;
-  cursor: pointer;
-
-  padding: 6px 14px;
-  border-radius: 999px;
-
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-
-  color: #ffffff;
-
-  background: linear-gradient(
-    135deg,
-    #10b981,
-    #14b8a6
-  );
-
-  box-shadow:
-    0 4px 10px rgba(16, 185, 129, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    background 0.25s ease;
-}
-
-/* Hover */
-.job-match-locked button:hover,
-.job-match-locked .upgrade-btn:hover {
-  background: linear-gradient(
-    135deg,
-    #059669,
-    #0d9488
-  );
-
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 8px 18px rgba(16, 185, 129, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* Active (press) */
-.job-match-locked button:active,
-.job-match-locked .upgrade-btn:active {
-  transform: translateY(0);
-  box-shadow:
-    0 3px 8px rgba(16, 185, 129, 0.25),
-    inset 0 2px 4px rgba(0, 0, 0, 0.18);
-}
-
-/* ADD THIS TO THE END OF talentprofile.css */
 
 /* MOBILE RESPONSIVE FIX FOR CARDS */
 @media (max-width: 767px) {
-  /* Professional Info & Quick Actions Cards */
-  .profile-card-main,
-  .profile-card-actions,
-  .profile-card-resume,
-  .profile-card-skills {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-  }
-  
   /* Card Content - Prevent Overflow */
   .card-content {
     padding: 1rem;
@@ -3341,132 +3161,268 @@ button:disabled {
     font-size: 0.75rem;
   }
 }
-/* ============================================
-   QUICK ACTIONS MOBILE FIX
-   ============================================ */
 
-@media (max-width: 767px) {
-  /* Quick Actions Card Specific */
-  .profile-card-actions .card-content {
-    padding: 1rem 0.75rem;
-  }
-  
-  /* Action Items - Better Mobile Layout */
-  .profile-card-actions .action-item {
-    padding: 0.75rem;
-    gap: 0.75rem;
-  }
-  
-  /* Action Icon - Smaller on Mobile */
-  .profile-card-actions .action-icon-wrapper {
-    width: 2.25rem;
-    height: 2.25rem;
-    flex-shrink: 0;
-  }
-  
-  .profile-card-actions .action-icon {
-    width: 1.125rem;
-    height: 1.125rem;
-  }
-  
-  /* Action Text - Force Wrap */
-  .profile-card-actions .action-content {
-    min-width: 0;
-    flex: 1;
-    overflow: hidden;
-  }
-  
-  .profile-card-actions .action-title {
-    font-size: 0.8125rem;
-    line-height: 1.3;
-    word-break: break-word;
-    overflow-wrap: anywhere;
-  }
-  
-  .profile-card-actions .action-description {
-    font-size: 0.75rem;
-    line-height: 1.4;
-    word-break: break-word;
-    overflow-wrap: anywhere;
-  }
-  
-  /* Arrow - Smaller */
-  .profile-card-actions .action-arrow {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-  }
-  
-  /* Action List Spacing */
-  .profile-card-actions .action-list {
-    gap: 0.625rem;
+
+
+/* Laptop & Desktop only */
+@media (min-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 2fr 1fr;  /* Left | Right */
+    gap: 2rem;
+    align-items: flex-start;
   }
 }
 
-/* VERY SMALL MOBILE (320px - 479px) */
-@media (max-width: 479px) {
-  .profile-card-actions .action-item {
-    padding: 0.625rem;
-    gap: 0.625rem;
-  }
+/* Mobile hard safety */
+@media (max-width: 1023px) {
+ 
   
-  .profile-card-actions .action-icon-wrapper {
-    width: 2rem;
-    height: 2rem;
-  }
-  
-  .profile-card-actions .action-title {
-    font-size: 0.75rem;
-  }
-  
-  .profile-card-actions .action-description {
-    font-size: 0.6875rem;
-  }
-  
-  .profile-card-actions .action-list {
-    gap: 0.5rem;
-  }
 }
-/* ============================================
-   PROFILE PAGE - FIXED 2-COLUMN LAYOUT
-   ============================================ */
 
-/* Remove old profile-grid rules and replace with this */
+/* ================================
+   PROFILE GRID – FINAL AUTHORITY
+   ================================ */
+
 .profile-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1.25rem;
   margin-bottom: 2rem;
 }
 
-/* Desktop: 2 columns - Left (2fr) and Right (1fr) */
+.profile-column-left,
+.profile-column-right {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  gap: 1.25rem;
+}
+
+/* Desktop only */
 @media (min-width: 1024px) {
   .profile-grid {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2.2fr 1.3fr !important;
     gap: 2rem;
-    align-items: start;
   }
 }
 
-/* Tablet: 2 equal columns */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .profile-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    align-items: start;
-  }
-}
 
-/* Mobile: Stack everything */
-@media (max-width: 767px) {
-  .profile-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  /* Force all cards to full width */
-  .profile-card {
+/* Mobile hard lock */
+@media (max-width: 1023px) {
+  .profile-column-left > *,
+  .profile-column-right > * {
     width: 100% !important;
     max-width: 100% !important;
+  }
+}
+
+/* =================================================
+   JOB MATCH – PREMIUM LOCKED STRIP
+   ================================================= */
+
+.job-match-premium {
+  margin: 14px 0 18px;
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(16,185,129,0.12),
+    rgba(20,184,166,0.05)
+  );
+
+  border: 1px solid rgba(16,185,129,0.25);
+
+  box-shadow:
+    0 6px 16px rgba(16,185,129,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition: all 0.25s ease;
+}
+
+.job-match-premium:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 24px rgba(16,185,129,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+.job-match-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.job-match-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  box-shadow: 0 6px 14px rgba(16,185,129,0.35);
+}
+
+.job-match-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #064e3b;
+}
+
+.job-match-sub {
+  font-size: 0.75rem;
+  color: #047857;
+  opacity: 0.9;
+}
+
+.job-match-upgrade-btn {
+  border: none;
+  cursor: pointer;
+
+  padding: 7px 16px;
+  border-radius: 999px;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #10b981, #059669);
+
+  box-shadow:
+    0 6px 16px rgba(16,185,129,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+
+  transition: all 0.2s ease;
+}
+
+.job-match-upgrade-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 22px rgba(16,185,129,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* =================================================
+   JOB MATCH – UNLOCKED SCORE CARD
+   ================================================= */
+
+.job-match-score-card {
+  margin: 14px 0;
+  padding: 14px 16px;
+
+  border-radius: 14px;
+  background: #ffffff;
+
+  border: 1px solid rgba(16,185,129,0.25);
+
+  box-shadow: 0 6px 18px rgba(16,185,129,0.10);
+}
+
+.job-match-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;        /* perfect vertical spacing */
+  line-height: 1.25;
+}
+
+.job-match-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #064e3b;
+  margin: 0;
+}
+
+.job-match-sub {
+  font-size: 0.75rem;
+  color: #047857;
+  opacity: 0.9;
+  margin: 0;
+}
+
+
+.score-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.score-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #064e3b;
+}
+
+.score-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.score-pill.high {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.score-pill.medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.score-pill.low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.score-missing {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: #047857;
+  font-weight: 600;
+}
+
+.missing-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.skill-chip-mini {
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+  border: 1px solid rgba(16,185,129,0.35);
+
+  color: #047857;
+  font-weight: 600;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .job-match-premium {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .job-match-upgrade-btn {
+    width: 100%;
   }
 }

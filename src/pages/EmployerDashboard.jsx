@@ -368,32 +368,25 @@ useEffect(() => {
       </div>
 
       {/* Actions */}
-      <div className="emp-table-action">
-    <button
-  className="emp-btn-outline"
-  onClick={() => downloadResume(app.resume_file)}
->
-  Download Resume
-</button>
+    <div className="emp-table-action">
+  <button
+    className="emp-btn-outline"
+    onClick={() => downloadResume(app.resume_file)}
+  >
+    Download Resume
+  </button>
 
+  {followUp && (
+    <div className="emp-followup-box">
+      <strong>Candidate Follow-Up</strong>
+      <p>{followUp.message_text}</p>
+      <span className="emp-followup-time">
+        {new Date(followUp.created_at).toLocaleString()}
+      </span>
+    </div>
+  )}
+</div>
 
-
-
-
-
-
-
-
-        {followUp && (
-          <div className="emp-followup-box">
-            <strong>Candidate Follow-Up</strong>
-            <p>{followUp.message_text}</p>
-            <span className="emp-followup-time">
-              {new Date(followUp.created_at).toLocaleString()}
-            </span>
-          </div>
-        )}
-      </div>
 
     </div>
   );

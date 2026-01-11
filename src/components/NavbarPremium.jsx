@@ -5,7 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 export default function NavbarPremium({ active = "" }) {
   const { logout, subscription, loading } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   // ⛔ Prevent flash while loading
   if (loading) return null;
@@ -20,22 +22,45 @@ export default function NavbarPremium({ active = "" }) {
       <div className="container-premium">
         <div className="navbar-content">
 
-          <div className="brand-logo" onClick={() => navigate("/talent/dashboard")}>
+          {/* BRAND */}
+          <div
+            className="brand-logo"
+            onClick={() => {
+              setMobileOpen(false);
+              navigate("/talent/dashboard");
+            }}
+          >
             <span className="brand-text">Curson</span>
           </div>
 
-          <div className="navbar-actions">
+          {/* MOBILE MENU BUTTON */}
+          <button
+            className="mobile-menu-btn"
+            onClick={() => setMobileOpen(p => !p)}
+            aria-label="Toggle menu"
+          >
+            ☰
+          </button>
+
+          {/* NAV LINKS */}
+          <div className={`navbar-actions navbar-links ${mobileOpen ? "open" : ""}`}>
 
             <button
               className={`nav-btn ${active === "applications" ? "nav-btn-active" : ""}`}
-              onClick={() => navigate("/talent/dashboard")}
+              onClick={() => {
+                setMobileOpen(false);
+                navigate("/talent/dashboard");
+              }}
             >
               Applications
             </button>
 
             <button
               className={`nav-btn ${active === "resume" ? "nav-btn-active" : ""}`}
-              onClick={() => navigate("/talent/ai-resume")}
+              onClick={() => {
+                setMobileOpen(false);
+                navigate("/talent/ai-resume");
+              }}
             >
               ✨ AI Resume
             </button>
@@ -44,12 +69,16 @@ export default function NavbarPremium({ active = "" }) {
             {isFreePlan && (
               <button
                 className="nav-btn nav-btn-upgrade"
-                onClick={() => navigate("/pricing")}
+                onClick={() => {
+                  setMobileOpen(false);
+                  navigate("/pricing");
+                }}
               >
                 ⭐ Upgrade
               </button>
             )}
 
+            {/* PROFILE DROPDOWN */}
             <div className="profile-dropdown">
               <button
                 className="profile-trigger"
@@ -60,12 +89,24 @@ export default function NavbarPremium({ active = "" }) {
 
               {showProfileMenu && (
                 <div className="dropdown-content">
-                  <Link to="/talent/profile" className="dropdown-link">
+                  <Link
+                    to="/talent/profile"
+                    className="dropdown-link"
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      setMobileOpen(false);
+                    }}
+                  >
                     View Profile
                   </Link>
+
                   <button
                     className="dropdown-link dropdown-danger"
-                    onClick={logout}
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      setMobileOpen(false);
+                      logout();
+                    }}
                   >
                     Logout
                   </button>

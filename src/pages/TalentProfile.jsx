@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import SubscriptionCard from '../components/subscription/SubscriptionCard.jsx';
 
 
+
 export default function TalentProfile() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,6 +13,14 @@ export default function TalentProfile() {
   const [uploadingResume, setUploadingResume] = useState(false);
   const fileInputRef = useRef(null);
   const resumeInputRef = useRef(null);
+ 
+const { subscription } = useContext(AuthContext);
+
+const isFreePlan =
+  !subscription ||
+  !subscription.plan ||
+  subscription.plan.toLowerCase() === "free";
+
 
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -85,15 +94,23 @@ export default function TalentProfile() {
     }
   };
 
-  const handleBoostProfile = async () => {
+ const handleBoostProfile = async () => {
+  // 🔒 Free user → redirect to pricing
+  if (isFreePlan) {
+    navigate("/pricing");
+    return;
+  }
+
+  // ✅ Paid user → boost profile
   try {
     const res = await profileService.boostProfile();
 
     safeSetProfile({
       is_boosted: true,
-      boost_expires_at: res.expires_at
+      boost_expires_at: res.expires_at,
     });
 
+    // Optional: replace alert with toast later
     alert("🚀 Profile boosted successfully!");
   } catch (err) {
     alert(err.response?.data?.message || "Boost failed");
@@ -175,7 +192,7 @@ export default function TalentProfile() {
 </div>
 
         {/* Profile Header */}
-       <div className="profile-header profile-header-layout">
+       <div className="profile-header">
 
   {/* LEFT SIDE */}
   <div className="profile-header-left">
@@ -238,7 +255,7 @@ export default function TalentProfile() {
 {profile?.subscription && (
   <div className="profile-card boost-card premium-card">
     <div className="boost-header">
-      <h3 className="boost-title">🚀 Profile Boost</h3>
+      <h3 className="boost-title"> Profile Boost</h3>
 
       {profile.is_boosted && (
         <span className="boost-status active">
@@ -254,17 +271,12 @@ export default function TalentProfile() {
           prioritized for recruiters.
         </p>
 
-        <div className="boost-expiry">
-          Expires on
-          <strong>
-            {new Date(profile.boost_expires_at).toDateString()}
-          </strong>
-        </div>
+       
       </div>
     ) : (
       <>
         <p className="boost-desc">
-  Your profile gets <strong>priority placement</strong> in recruiter searches,
+  Your profile gets <strong>priority placement</strong>,
   increasing visibility and response rate.
 </p>
 
@@ -361,7 +373,7 @@ export default function TalentProfile() {
 
        <div className="profile-column-right">
         {/* Professional Information Card - 8 columns */}
-          <div className="profile-card profile-card-main">
+          <div className="profile-card">
             <div className="card-header">
               <div className="card-header-content">
                 <svg className="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -435,7 +447,7 @@ export default function TalentProfile() {
           </div>
 
  {/* Quick Actions Card - 4 columns */}
-          <div className="profile-card profile-card-actions">
+          <div className="profile-card">
             <div className="card-header">
               <div className="card-header-content">
                 <svg className="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -513,67 +525,10 @@ export default function TalentProfile() {
           </div>
 
  {/* Resume Card - 6 columns */}
-          <div className="profile-card profile-card-resume">
-            <div className="card-header">
-              <div className="card-header-content">
-                <svg className="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <h2 className="card-title">Resume</h2>
-              </div>
-            </div>
-            
-            <div className="card-content">
-              {profile.resume ? (
-                <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="resume-link">
-                  <svg className="field-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  View Resume
-                  <svg className="external-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11M15 3H21M21 3V9M21 3L10 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-              ) : (
-                <div className="resume-empty-state">
-                  <svg className="resume-empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <p className="resume-empty-text">No resume uploaded yet</p>
-                  <button
-                    className="resume-upload-btn"
-                    onClick={() => !uploadingResume && resumeInputRef.current.click()}
-                    disabled={uploadingResume}
-                  >
-                    {uploadingResume ? (
-                      <>
-                        <div className="action-spinner"></div>
-                        Uploading...
-                      </>
-                    ) : (
-                      <>
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '1.25rem', height: '1.25rem' }}>
-                          <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                        Upload Resume
-                      </>
-                    )}
-                  </button>
-                </div>
-              )}
-
-              <input
-                type="file"
-                ref={resumeInputRef}
-                hidden
-                accept="application/pdf"
-                onChange={handleResumeUpload}
-              />
-            </div>
-          </div>
+          
 
 {/* Skills Card - 6 columns */}
-          <div className="profile-card profile-card-skills">
+          <div className="profile-card">
             <div className="card-header">
               <div className="card-header-content">
                 <svg className="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -622,7 +577,7 @@ export default function TalentProfile() {
           strokeLinecap="round"
         />
       </svg>
-      <h2 className="card-title">Profiles</h2>
+      <h2 className="card-title">Add Links</h2>
     </div>
   </div>
 
@@ -647,13 +602,13 @@ export default function TalentProfile() {
       </div>
     ) : (
       <div className="online-empty">
-        <p className="field-empty">No online profiles added yet</p>
+        <p className="field-empty">No links added yet</p>
 
         <button
           className="add-profile-btn"
           onClick={() => navigate('/profile/edit')}
         >
-          + Add Online Profiles
+          + Add Portfolio Link
         </button>
       </div>
     )}

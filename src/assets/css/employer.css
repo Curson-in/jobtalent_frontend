@@ -544,17 +544,51 @@ body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Sego
 }
 
 /* RESPONSIVE */
+/* ================= MOBILE APPLICATION CARDS ================= */
 @media (max-width: 768px) {
-  .emp-main-content { padding: 2rem 1rem; }
-  .emp-jobs-grid { grid-template-columns: 1fr; }
-  .emp-form-row { grid-template-columns: 1fr; }
-  .emp-table-row { 
-    grid-template-columns: 2fr 1fr;
+
+  .emp-table-row {
+    grid-template-columns: 1fr;
     gap: 1rem;
+    padding: 1.25rem;
   }
-  .emp-table-row > *:nth-child(3),
-  .emp-table-row > *:nth-child(4) { display: none; }
+
+  /* Candidate info stays top */
+  .emp-applicant-info {
+    align-items: flex-start;
+  }
+
+  /* Status + date row */
+  .emp-table-status,
+  .emp-table-date {
+    display: inline-block;
+    font-size: 0.8rem;
+  }
+
+  .emp-table-status {
+    margin-right: 0.5rem;
+  }
+
+  /* Actions become stacked */
+  .emp-table-action {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .emp-btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Follow-up box becomes full width */
+  .emp-followup-box {
+    width: 100%;
+    font-size: 0.85rem;
+  }
 }
+
 
 @media (max-width: 480px) {
   .emp-tabs-section { flex-direction: column; gap: 1rem; align-items: stretch; }
