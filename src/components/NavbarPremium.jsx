@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-export default function NavbarPremium({ active = "" }) {
+export default function NavbarPremium({ active = "", onTabChange }) {
   const { logout, subscription, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -45,15 +45,21 @@ export default function NavbarPremium({ active = "" }) {
           {/* NAV LINKS */}
           <div className={`navbar-actions navbar-links ${mobileOpen ? "open" : ""}`}>
 
-            <button
-              className={`nav-btn ${active === "applications" ? "nav-btn-active" : ""}`}
-              onClick={() => {
-                setMobileOpen(false);
-                navigate("/talent/dashboard");
-              }}
-            >
-              Applications
-            </button>
+           <button
+  className={`nav-btn ${active === "applications" ? "nav-btn-active" : ""}`}
+  onClick={() => {
+    setMobileOpen(false);
+
+    if (onTabChange) {
+      onTabChange("applications"); // ✅ TAB SWITCH
+    } else {
+      navigate("/talent/dashboard"); // fallback
+    }
+  }}
+>
+  Applications
+</button>
+
 
             <button
               className={`nav-btn ${active === "resume" ? "nav-btn-active" : ""}`}

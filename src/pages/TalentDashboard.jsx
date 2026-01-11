@@ -266,7 +266,13 @@ useEffect(() => {
 
   return ( 
     <>
-     <NavbarPremium active={activeTab === "applications" ? "applications" : "discover"} />
+    <NavbarPremium
+  active={activeTab}
+  onTabChange={(tab) => {
+    setActiveTab(tab);
+  }}
+/>
+
     <div className="dashboard-container">
       {/* ================= NAVBAR ================= */}
       
