@@ -2,32 +2,89 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Primary SEO -->
-<meta name="title" content="Curson – Global Job Platform for Talent & Hiring" />
-<meta name="description" content="Curson is a global job and talent platform connecting verified candidates with employers. Find remote jobs, local hiring, skill-verified talent, and hire faster." />
 
-<!-- Keywords (still useful slightly) -->
-<meta name="keywords" content="jobs platform, hire talent, remote jobs, local jobs, verified skills, job search india, hiring platform, recruiter software, job portal saas" />
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Author -->
-<meta name="author" content="Curson" />
+    <!-- Title (SEO Optimized) -->
+    <title>Curson – Verified Jobs & Talent Platform for Remote and Local Hiring</title>
 
-<!-- Open Graph (Social Sharing) -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Curson – Hire Talent Faster. Get Jobs Smarter." />
-<meta property="og:description" content="A modern job & talent platform for verified hiring, global jobs, and local recruitment." />
-<meta property="og:url" content="https://www.curson.in" />
-<meta property="og:image" content="https://www.curson.in/seo-cover.png" />
+    <!-- Meta Description -->
+    <meta
+      name="description"
+      content="Curson is a modern job and talent platform connecting verified candidates with employers. Find remote jobs, local hiring, and skill-verified talent faster."
+    />
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Curson – Global Job & Talent Platform" />
-<meta name="twitter:description" content="Find jobs or hire talent with verified skills and real hiring workflows." />
-<meta name="twitter:image" content="https://www.curson.in/seo-cover.png" />
+    <!-- Keywords (secondary signal) -->
+    <meta
+      name="keywords"
+      content="job portal, hire talent, remote jobs, verified jobs, hiring platform, job search india, recruiter software, talent marketplace"
+    />
 
-<!-- Canonical -->
-<link rel="canonical" href="https://www.curson.in/" />
+    <!-- Author -->
+    <meta name="author" content="Curson" />
 
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.curson.in/" />
+
+    <!-- Favicon (CRITICAL for Google logo) -->
+    <link rel="icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Curson" />
+    <meta property="og:title" content="Curson – Verified Jobs & Talent Platform" />
+    <meta
+      property="og:description"
+      content="Hire faster or get hired smarter with Curson. Discover verified jobs and skill-verified talent across remote and local hiring."
+    />
+    <meta property="og:url" content="https://www.curson.in/" />
+    <meta property="og:image" content="https://www.curson.in/seo-cover.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Curson – Global Job & Talent Platform" />
+    <meta
+      name="twitter:description"
+      content="Find verified jobs or hire skill-verified talent with Curson."
+    />
+    <meta name="twitter:image" content="https://www.curson.in/seo-cover.png" />
+
+    <!-- ========================= -->
+    <!-- STRUCTURED DATA (JSON-LD) -->
+    <!-- ========================= -->
+
+    <!-- Organization -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Curson",
+        "url": "https://www.curson.in",
+        "logo": "https://www.curson.in/favicon.png",
+        "description": "Curson is a global job and talent platform connecting verified candidates with employers.",
+        "sameAs": [
+          "https://www.linkedin.com/company/curson",
+          "https://twitter.com/curson"
+        ]
+      }
+    </script>
+
+    <!-- Website -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Curson",
+        "url": "https://www.curson.in",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.curson.in/jobs?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
 
     <!-- Google Tag Manager -->
     <script>
@@ -37,20 +94,11 @@
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-5CQBXCLM');
     </script>
-    <!-- End Google Tag Manager -->
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-
-    <link rel="icon" type="image/jpeg" href="/src/assets/images/logo.jpeg" />
-    <title>Curson</title>
+    <!-- End GTM -->
   </head>
 
   <body>
-    <!-- Google Tag Manager (noscript) -->
+    <!-- GTM (noscript) -->
     <noscript>
       <iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-5CQBXCLM"
@@ -59,9 +107,11 @@
         style="display:none;visibility:hidden"
       ></iframe>
     </noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
+    <!-- React Root -->
     <div id="root"></div>
+
+    <!-- App Script -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
