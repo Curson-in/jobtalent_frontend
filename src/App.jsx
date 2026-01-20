@@ -16,7 +16,8 @@ import About from './pages/public/About.jsx';
 import Contact from './pages/public/Contact.jsx';
 import PrivacyPolicy from './pages/public/PrivacyPolicy.jsx';
 import Terms from './pages/public/Terms.jsx';
-
+import Legal from './pages/public/Legal.jsx';
+import RefundPolicy from './pages/public/RefundPolicy.jsx';
 
 
 import OAuthSuccess from './pages/OAuthSuccess.jsx';
@@ -58,7 +59,8 @@ function App() {
 <Route path="/contact" element={<Contact />} />
 <Route path="/privacy" element={<PrivacyPolicy />} />
 <Route path="/terms" element={<Terms />} />
-
+<Route path="/legal" element={<Legal />} />
+<Route path="/refund-policy" element={<RefundPolicy />} />
 
        
 <Route path="/employer/profile" element={<EmployerProfile />} />

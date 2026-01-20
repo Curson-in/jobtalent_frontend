@@ -438,6 +438,9 @@ export default function Landing() {
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/privacy">Privacy Policy</Link></li>
                  <li><Link to="/terms">Terms</Link></li>
+                 <li><Link to="/legal">Legal</Link></li>
+                 <li><Link to="/refund-policy">Refund Policy</Link></li>
+
               </ul>
             </div>
           </div>
