@@ -516,6 +516,14 @@ const isFreePlan =
         : 'Upload your resume (PDF)'}
     </div>
   </div>
+  <input
+  type="file"
+  ref={resumeInputRef}
+  hidden
+  accept="application/pdf"
+  onChange={handleResumeUpload}
+/>
+
 
   {uploadingResume ? (
     <div className="action-spinner" />
