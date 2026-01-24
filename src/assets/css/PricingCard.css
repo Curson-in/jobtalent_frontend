@@ -1,0 +1,71 @@
+.pricing-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 24px;
+  width: 280px;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.pricing-card.popular {
+  border: 2px solid #22c55e;
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #22c55e;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.price {
+  margin: 16px 0;
+}
+
+.amount {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.duration {
+  color: #6b7280;
+  margin-left: 4px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  text-align: left;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+.cta-btn {
+  width: 100%;
+  padding: 12px;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cta-btn:hover {
+  background: #16a34a;
+}

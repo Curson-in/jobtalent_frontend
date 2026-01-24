@@ -70,6 +70,8 @@ const isFreePlan =
     }
   };
 
+
+
   const handleResumeUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -196,35 +198,40 @@ const isFreePlan =
 
   {/* LEFT SIDE */}
   <div className="profile-header-left">
-    <div
-      className="profile-avatar-large"
-      onClick={() => !uploadingPhoto && fileInputRef.current.click()}
-    >
-      {uploadingPhoto ? (
-        <div className="avatar-spinner-wrapper">
-          <div className="avatar-spinner"></div>
-        </div>
-      ) : profile.profile_picture_url ? (
-        <img
-          src={profile.profile_picture_url}
-          className="profile-avatar-img"
-          alt="Profile"
-        />
-      ) : (
-        <svg className="avatar-placeholder-icon" viewBox="0 0 24 24" fill="none">
-          <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-            stroke="currentColor" strokeWidth="2" />
-        </svg>
-      )}
-
-      <input
-        type="file"
-        ref={fileInputRef}
-        hidden
-        accept="image/*"
-        onChange={handlePhotoUpload}
+   <div
+  className="profile-avatar-large"
+  onClick={() => !uploadingPhoto && fileInputRef.current.click()}
+>
+  {profile.profile_picture_url ? (
+    <img
+      src={profile.profile_picture_url}
+      className="profile-avatar-img"
+      alt="Profile"
+    />
+  ) : (
+    <svg className="avatar-placeholder-icon" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+        stroke="currentColor"
+        strokeWidth="2"
       />
-    </div>
+    </svg>
+  )}
+
+  {/* 🔥 TEXT OVERLAY */}
+  <div className="avatar-overlay">
+    {profile.profile_picture_url ? "Change photo" : "Upload photo"}
+  </div>
+
+  <input
+    type="file"
+    ref={fileInputRef}
+    hidden
+    accept="image/*"
+    onChange={handlePhotoUpload}
+  />
+</div>
+
 
     <div className="profile-header-content">
       <h1 className="profile-name">
@@ -244,11 +251,16 @@ const isFreePlan =
   {/* RIGHT SIDE – SUBSCRIPTION + BOOST */}
   
   <div className="profile-header-right">
-<div className="premium-cards premium-cards-dense">
+<div
+  className={`premium-cards premium-cards-dense ${
+    isFreePlan ? "single-card" : ""
+  }`}
+>
     {/* Subscription Card */}
-    {profile?.subscription && (
+   {!isFreePlan && profile?.subscription && (
   <SubscriptionCard subscription={profile.subscription} />
 )}
+
 
 
 {/* Profile Boost */}

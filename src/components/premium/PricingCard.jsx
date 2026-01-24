@@ -1,43 +1,54 @@
-import { createSubscription } from "../../services/paymentService";
+import "../../assets/css/PricingCard.css";
+import {
+  createRazorpayOrder,
+  verifyRazorpayPayment
+} from "../../services/paymentService";
 
 export default function PricingCard({ plan }) {
-  const handleUpgrade = async () => {
+  const handlePay = async () => {
     try {
-      const { checkoutUrl } = await createSubscription(plan.key);
-      window.location.href = checkoutUrl; // 🚀 redirect to Dodo
+      const order = await createRazorpayOrder(plan.key);
+
+      const options = {
+        key: order.key,
+        amount: order.amount,
+        currency: "INR",
+        order_id: order.orderId,
+        name: "Curson",
+        description: `${plan.title} Plan`,
+        handler: async (response) => {
+          await verifyRazorpayPayment(response);
+          window.location.href = "/talent/dashboard";
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (err) {
-      console.error("BACKEND ERROR:", err.response?.data || err);
-      alert("Payment failed");
+      alert("Payment failed. Try again.");
     }
   };
 
   return (
-  <div className={`pricing-card ${plan.popular ? "popular" : ""}`}>
-    {plan.popular && <div className="popular-tag">Most Popular</div>}
+    <div className={`pricing-card ${plan.popular ? "popular" : ""}`}>
+      {plan.popular && <div className="badge">Most Popular</div>}
 
-    <h3 className="plan-title">{plan.title}</h3>
+      <h3>{plan.title}</h3>
 
-    <div className="plan-price">
-      <span className="price">{plan.price}</span>
-      <span className="duration">{plan.duration}</span>
+      <div className="price">
+        <span className="amount">{plan.price}</span>
+        <span className="duration">{plan.duration}</span>
+      </div>
+
+      <ul>
+        {plan.features.map((f, i) => (
+          <li key={i}>✓ {f}</li>
+        ))}
+      </ul>
+
+      <button className="cta-btn" onClick={handlePay}>
+        Get Started
+      </button>
     </div>
-
-    <ul className="feature-list">
-      {plan.features.map(f => (
-        <li key={f}>
-          <span className="check">✓</span>
-          {f}
-        </li>
-      ))}
-    </ul>
-
-    <button
-      className={`plan-btn ${plan.popular ? "btn-primary" : "btn-outline"}`}
-      onClick={handleUpgrade}
-    >
-      Get Started
-    </button>
-  </div>
-);
-
+  );
 }

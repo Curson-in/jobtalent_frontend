@@ -113,3 +113,18 @@
     font-size: 28px;
   }
 }
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;   /* 👈 centers cards */
+  }
+
+  .pricing-card {
+    width: 100%;
+    max-width: 360px;        /* 👈 same visual width as desktop cards */
+  }
+
+  .pricing-card.popular {
+    transform: none;         /* 👈 avoid weird zoom on mobile */
+  }
+}

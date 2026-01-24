@@ -20,7 +20,7 @@ export default function Legal() {
 
           <p style={{ fontSize: "12px", color: "#9aa0a6", marginTop: "16px" }}>
             Curson is a brand operated by
-            <strong> Shrawan Rajendra Wandhekar</strong>,
+            <strong> </strong>,
             a sole proprietorship registered in India.
           </p>
 

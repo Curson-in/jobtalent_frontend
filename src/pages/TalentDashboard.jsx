@@ -14,6 +14,12 @@ export default function TalentDashboard() {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
+ const isInternship = (job) =>
+  job.job_type === "internship" ||
+  job.employment_type === "internship" ||
+  /\bintern\b/i.test(job.title);
+
+
   const [pendingApply, setPendingApply] = useState(null);
 
   const [jobs, setJobs] = useState([]);
@@ -180,6 +186,17 @@ const fetchApplications = async () => {
     setLoading(false);
   }
 };
+
+const internships = jobs.filter(isInternship);
+const pinnedInternships = internships.slice(0, 3);
+
+const pinnedIds = new Set(pinnedInternships.map(j => j.id));
+
+const finalJobs = [
+  ...pinnedInternships,
+  ...jobs.filter(job => !pinnedIds.has(job.id))
+];
+
 
 
   const handleFilterChange = (category, value) => {
@@ -437,7 +454,7 @@ useEffect(() => {
                 </div>
               ) : (
               <div className="jobs-grid">
-  {jobs.map((job, index) => {
+  {finalJobs.map((job, index) => {
     const companyName =
       job.company_name ||
       job.company ||
@@ -499,7 +516,7 @@ useEffect(() => {
         </div>
 
         {/* ✅ MOVE MATCH CARD HERE */}
-<JobMatchCard jobId={job.id} />
+<JobMatchCard jobId={job.id} index={index} />
 
         {/* DESCRIPTION (flex-grow keeps button aligned) */}
         <div className="job-description-wrapper">

@@ -37,12 +37,11 @@ export default function Landing() {
       <section className="hero-section">
         <div className="container">
           <h1>
-  Where Top Talent <br /> Meets Serious Hiring
+  Increase your chances of getting hired
 </h1>
 
 <p>
-  A premium hiring platform built for skilled professionals and
-  modern companies that value quality over quantity.
+  Smart job matching and resume insights that lead to better hiring outcomes.
 </p>
 
           <div className="d-flex justify-content-center gap-3 hero-buttons flex-wrap">
@@ -247,73 +246,63 @@ export default function Landing() {
 
 
       {/* ================= PRICING ================= */}
-      <section className="pricing-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Pricing</span>
-            <h2 className="section-title">Choose Your Plan</h2>
-            <p className="section-subtitle">
-              Transparent pricing with no hidden fees. Start free, upgrade anytime.
-            </p>
-          </div>
+     <section className="plans-section">
+  <div className="plans-container">
+    <div className="plans-header">
+      <span className="plans-badge">Pricing</span>
+      <h2 className="plans-title">Choose Your Plan</h2>
+      <p className="plans-subtitle">
+        Transparent pricing with no hidden fees. Start free, upgrade anytime.
+      </p>
+    </div>
 
-          <div className="pricing-grid">
-            <div className="pricing-card">
-              <div className="card">
-                <div className="pricing-header">
-                  <h5 className="pricing-name">Talent Premium</h5>
-                  <div className="pricing-price">
-                    Pro
-                    <span className="pricing-period">/ Features</span>
-                  </div>
-                </div>
-                <ul className="pricing-features">
-  <li>Profile boosting (priority visibility)</li>
-  <li>Resume enhancement & optimization</li>
-  <li>Follow-Up messages (follow-up with employers)</li>
-  <li>Job match score for every application</li>
-  <li>Advanced job alerts</li>
-  <li>Application insights & analytics</li>
-</ul>
-
-                <Link 
-                  to="/signup?role=talent" 
-                  className="btn btn-primary w-100"
-                >
-                  <span>Get Started</span>
-                </Link>
-              </div>
-            </div>
-
-            <div className="pricing-card ">
-             
-              <div className="card">
-                <div className="pricing-header">
-                  <h5 className="pricing-name">Employer Access</h5>
-                  <div className="pricing-price">
-                    Custom
-                  </div>
-                </div>
-                <ul className="pricing-features">
-                  <li>Unlimited job postings</li>
-                  <li>Advanced candidate search filters</li>
-                  <li>Analytics dashboard & reports</li>
-                  <li>Team collaboration tools</li>
-                  <li>Dedicated account manager</li>
-                  <li>Hiring pipeline management</li>
-                  <li>Priority employer support</li>
-                </ul>
-                <Link 
-                  to="/signup?role=employer" 
-                  className="btn btn-primary w-100"
-                >
-                  <span>Get Started</span>
-                </Link>
-              </div>
-            </div>
+    <div className="plans-grid">
+      {/* TALENT */}
+      <div className="plan-card plan-primary">
+        <div className="plan-top">
+          <h5 className="plan-name">Talent Premium</h5>
+          <div className="plan-price">
+            Pro <span>/ Features</span>
           </div>
         </div>
-      </section>
+
+        <ul className="plan-features">
+          <li>Profile boosting (priority visibility)</li>
+          <li>Resume enhancement & optimization</li>
+          <li>Follow-up messages with employers</li>
+          <li>Job match score for every application</li>
+          <li>Advanced job alerts</li>
+          <li>Application insights & analytics</li>
+        </ul>
+
+        <Link to="/signup?role=talent" className="plan-btn">
+          Get Started
+        </Link>
+      </div>
+
+      {/* EMPLOYER */}
+      <div className="plan-card">
+        <div className="plan-top">
+          <h5 className="plan-name">Employer Access</h5>
+          <div className="plan-price">Custom</div>
+        </div>
+
+        <ul className="plan-features">
+          <li>Unlimited job postings</li>
+          <li>Advanced candidate search filters</li>
+          <li>Analytics dashboard & reports</li>
+          
+          <li>Dedicated account manager</li>
+          <li>Priority employer support</li>
+        </ul>
+
+        <Link to="/signup?role=employer" className="plan-btn">
+          Get Started
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* ================= FAQ ================= */}
       <section className="faq-section">
@@ -438,8 +427,7 @@ export default function Landing() {
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/privacy">Privacy Policy</Link></li>
                  <li><Link to="/terms">Terms</Link></li>
-                 <li><Link to="/legal">Legal</Link></li>
-                 <li><Link to="/refund-policy">Refund Policy</Link></li>
+                 
 
               </ul>
             </div>

@@ -29,7 +29,6 @@ import ResetPassword from './pages/ResetPassword.jsx';
 import EmployerProfile from './pages/employer/EmployerProfile.jsx';
 import EmployerOnboarding from './pages/employer/EmployerOnboarding.jsx';
 import Pricing from "./pages/premium/Pricing.jsx";
-import PaymentSuccess from "./pages/premium/PaymentSuccess.jsx";
 import ResumeEnhance from './pages/premium/ResumeEnhance.jsx';
 
 
@@ -131,14 +130,7 @@ function App() {
   }
 />
 
-<Route
-  path="/payment/success"
-  element={
-    <ProtectedRoute role="talent">
-      <PaymentSuccess />
-    </ProtectedRoute>
-  }
-/>
+
 
 
       <Route

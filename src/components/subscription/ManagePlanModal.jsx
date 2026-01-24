@@ -18,7 +18,7 @@ export default function ManagePlanModal({ subscription, onClose, onToggle }) {
         </div>
 
         <div className="info-text">
-          ⚠️ You will be notified 2–3 days before expiry
+          ⚠️ You will be notified 2-3 days before expiry
         </div>
 
         <div className="modal-actions">

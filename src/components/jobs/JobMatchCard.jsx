@@ -2,14 +2,25 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getJobMatchScore } from "../../services/jobService";
 
-export default function JobMatchCard({ jobId }) {
+export default function JobMatchCard({ jobId, index = 0 }) {
   const navigate = useNavigate();
   const [match, setMatch] = useState(null);
   const [locked, setLocked] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // 🔐 Decide visibility (FREE USERS)
+  const shouldShowMatch =
+    index % 3 === 0 || index % 4 === 0;
+
   useEffect(() => {
     if (!jobId) return;
+
+    // ⛔ Skip API call if we shouldn't show match
+    if (!shouldShowMatch) {
+  setLoading(false);
+  return;
+}
+
 
     getJobMatchScore(jobId)
       .then(res => {
@@ -20,13 +31,13 @@ export default function JobMatchCard({ jobId }) {
         if (err.response?.status === 403) setLocked(true);
       })
       .finally(() => setLoading(false));
-  }, [jobId]);
+  }, [jobId, shouldShowMatch]);
 
   if (loading) {
     return <div className="job-match-loading">Calculating match…</div>;
   }
 
-  /* 🔒 LOCKED (PREMIUM STRIP) */
+  /* 🔒 LOCKED */
   if (locked) {
     return (
       <div className="job-match-premium">
@@ -52,7 +63,7 @@ export default function JobMatchCard({ jobId }) {
 
   if (!match) return null;
 
-  /* ✅ UNLOCKED (SCORE VIEW) */
+  /* ✅ UNLOCKED */
   return (
     <div className="job-match-score-card">
       <div className="score-header">
