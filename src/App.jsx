@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-
+// Add this line at the top of App.jsx
+import "./assets/css/blogs.css";
 import Landing from './pages/Landing.jsx';
 import Signup from './pages/Signup.jsx';
 import Login from './pages/Login.jsx';
@@ -30,6 +31,12 @@ import EmployerProfile from './pages/employer/EmployerProfile.jsx';
 import EmployerOnboarding from './pages/employer/EmployerOnboarding.jsx';
 import Pricing from "./pages/premium/Pricing.jsx";
 import ResumeEnhance from './pages/premium/ResumeEnhance.jsx';
+import Blogs from "./pages/Blogs";
+import WriteBlog from "./pages/WriteBlog";
+import BlogDetail from "./pages/BlogDetail";
+
+
+
 
 
 
@@ -66,9 +73,26 @@ function App() {
 
 
 
+
           {/* Google OAuth */}
           <Route path="/oauth-success" element={<OAuthSuccess />} />
           <Route path="/login-redirect" element={<LoginRedirect />} />
+          <Route path="/blogs" element={<Blogs />} />
+
+<Route
+  path="/blogs/write"
+  element={
+    <ProtectedRoute>
+      <WriteBlog />
+    </ProtectedRoute>
+  }
+/>
+
+
+{/* ✅ ADD THIS */}
+<Route path="/blogs/:id" element={<BlogDetail />} />
+
+
 
 
       {/* Talent Onboarding */}
@@ -90,6 +114,9 @@ function App() {
     </ProtectedRoute>
   }
 />
+
+
+
 
 <Route
   path="*"

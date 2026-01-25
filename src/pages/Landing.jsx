@@ -16,19 +16,19 @@ export default function Landing() {
       </Helmet>
     <div className="landing-container">
       {/* ================= NAVBAR ================= */}
-     <header className="navbar navbar-expand-lg">
+  {/* ================= NAVBAR ================= */}
+<header className="navbar">
   <div className="container">
     <Link className="navbar-brand" to="/">
       Curson
     </Link>
 
-    <nav className="navbar-nav ms-auto d-flex align-items-center gap-3">
-     
-
-      <Link to="/signup" className="btn btn-nav-signup">
-        Sign up
+    {/* CHANGED: Removed 'navbar-nav' and 'ms-auto' to avoid Bootstrap conflicts */}
+    <div className="landing-nav-right">
+      <Link to="/login" className="btn btn-nav-signup">
+        Login
       </Link>
-    </nav>
+    </div>
   </div>
 </header>
 

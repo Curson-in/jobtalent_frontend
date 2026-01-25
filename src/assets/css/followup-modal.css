@@ -22,6 +22,62 @@
   animation: modalFadeIn 0.25s ease;
 }
 
+/* --- SUCCESS STATE --- */
+.followup-success {
+  text-align: center;
+  padding: 30px 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.followup-success h3 {
+  color: #10b981; /* Green Success Color */
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+}
+
+.followup-success p {
+  color: #64748b;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* --- ERROR STATE --- */
+.input-error {
+  border-color: #ef4444 !important; /* Red Border */
+  background-color: #fef2f2;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 0.9rem;
+  margin-top: -12px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 /* Header */
 .followup-header {
   display: flex;

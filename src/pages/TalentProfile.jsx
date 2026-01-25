@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as profileService from '../services/profileService.js';
 import { AuthContext } from '../context/AuthContext.jsx';
 import SubscriptionCard from '../components/subscription/SubscriptionCard.jsx';
+import NavbarPremium from "../components/NavbarPremium";
+
 
 
 
@@ -174,6 +176,10 @@ const isFreePlan =
   const completion = calculateCompletion(profile);
 
   return (
+
+    <> 
+    <NavbarPremium active="write" />
+
     <div className="profile-container">
       <div className="container-premium">
         {/* Back Navigation */}
@@ -198,55 +204,56 @@ const isFreePlan =
 
   {/* LEFT SIDE */}
   <div className="profile-header-left">
-   <div
-  className="profile-avatar-large"
-  onClick={() => !uploadingPhoto && fileInputRef.current.click()}
->
-  {profile.profile_picture_url ? (
-    <img
-      src={profile.profile_picture_url}
-      className="profile-avatar-img"
-      alt="Profile"
-    />
-  ) : (
-    <svg className="avatar-placeholder-icon" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-    </svg>
-  )}
+  <div
+    className="profile-avatar-large"
+    onClick={() => !uploadingPhoto && fileInputRef.current.click()}
+  >
+    {profile.profile_picture_url ? (
+      /* --- CASE 1: PHOTO EXISTS --- */
+      <>
+        <img
+          src={profile.profile_picture_url}
+          className="profile-avatar-img"
+          alt="Profile"
+        />
+        {/* Overlay only appears on hover to Change */}
+        <div className="avatar-overlay">
+          <span className="overlay-btn"> Change</span>
+        </div>
+      </>
+    ) : (
+      /* --- CASE 2: NO PHOTO (Empty State) --- */
+      <div className="avatar-empty-state">
+        <svg className="avatar-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+        </svg>
+        <span className="upload-text-label">Upload Photo</span>
+      </div>
+    )}
 
-  {/* 🔥 TEXT OVERLAY */}
-  <div className="avatar-overlay">
-    {profile.profile_picture_url ? "Change photo" : "Upload photo"}
+    <input
+      type="file"
+      ref={fileInputRef}
+      hidden
+      accept="image/*"
+      onChange={handlePhotoUpload}
+    />
   </div>
 
-  <input
-    type="file"
-    ref={fileInputRef}
-    hidden
-    accept="image/*"
-    onChange={handlePhotoUpload}
-  />
-</div>
+  <div className="profile-header-content">
+    <h1 className="profile-name">
+      {profile?.user?.first_name
+        ? `${profile.user.first_name} ${profile.user.last_name}`
+        : 'Your Profile'}
+    </h1>
 
-
-    <div className="profile-header-content">
-      <h1 className="profile-name">
-        {profile?.user?.first_name
-          ? `${profile.user.first_name} ${profile.user.last_name}`
-          : 'Your Profile'}
-      </h1>
-
-      <div className="completion-badge-wrapper">
-        <div className="completion-badge">
-          <span>{completion}% Complete</span>
-        </div>
+    <div className="completion-badge-wrapper">
+      <div className="completion-badge">
+        <span>{completion}% Complete</span>
       </div>
     </div>
   </div>
+</div>
 
   {/* RIGHT SIDE – SUBSCRIPTION + BOOST */}
   
@@ -714,5 +721,6 @@ const isFreePlan =
         </div>
       </div>
     </div>
+    </>
   );
 }

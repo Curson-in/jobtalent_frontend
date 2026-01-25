@@ -15,62 +15,62 @@
 :root {
   /* === PROFESSIONAL BLUE-GRAY BRAND COLORS === */
   --brand-primary: #457bee;
-  --brand-primary-hover: #1D4ED8;
-  --brand-secondary: #60A5FA;
-  --brand-accent: #93C5FD;
-  --brand-dark: #1E293B;
-  --brand-glass: rgba(37, 99, 235, 0.08);
-
-  /* === BACKGROUNDS === */
   --bg-light: #F8FAFC;
-  --bg-surface: #FFFFFF;
   --bg-glass: rgba(255, 255, 255, 0.95);
-  --bg-dark-gradient: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
   --bg-blue-gradient: linear-gradient(135deg, #4175e6 0%, #60A5FA 100%);
-
-  /* === TEXT === */
   --text-primary: #0F172A;
   --text-secondary: #475569;
-  --text-light: #64748B;
-  --text-inverse: #FFFFFF;
-  --text-blue: #4577e3;
-
-  /* === BORDERS === */
   --border-light: #E2E8F0;
-  --border-blue: rgba(58, 112, 228, 0.28);
-  --border-glass: rgba(30, 41, 59, 0.08);
-
-  /* === SHADOWS (professional clean) === */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.10);
-  --shadow-glass: 0 8px 20px rgba(0, 0, 0, 0.08);
-  --shadow-hover-blue: 0 12px 30px rgba(37, 99, 235, 0.20);
   --shadow-nav: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.landing-container {
-  background: var(--bg-light);
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
   color: var(--text-primary);
+  background: var(--bg-light);
+}
+
+.landing-container {
+  width: 100%;
   overflow-x: hidden;
 }
 
-/* ================= NAVBAR ================= */
-/* ========================= NAVBAR ========================= */
+/* ========================= NAVBAR (FIXED) ========================= */
 .navbar {
   background: var(--bg-glass);
   backdrop-filter: blur(35px) saturate(180%);
   box-shadow: var(--shadow-nav), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid var(--border-light);
-  animation: slideDownPremium 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: sticky;
   top: 0;
   z-index: 1000;
   padding: 0.9rem 0;
+  width: 100%;
 }
 
-/* Brand */
+/* 1. CONTAINER LAYOUT - Always Row, Always Spaced */
+.navbar .container {
+  display: flex !important;
+  flex-direction: row !important; /* Forces Logo Left, Button Right */
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important; /* Never wrap to new line */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 2. RIGHT SIDE NAV - Forces Horizontal Layout */
+.landing-nav-right {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 15px;
+}
+
+/* Brand Style */
 .navbar-brand {
   font-size: 1.9rem;
   font-weight: 900;
@@ -78,44 +78,10 @@
   background: var(--bg-blue-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  position: relative;
+  text-decoration: none;
 }
 
-.navbar-brand::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--bg-blue-gradient);
-  transform: scaleX(0);
-  transition: transform 0.4s ease;
-}
-
-.navbar:hover .navbar-brand::after {
-  transform: scaleX(1);
-}
-
-/* Login */
-.nav-login {
-  padding: 10px 22px;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  background: var(--bg-glass);
-  border: 1px solid var(--border-light);
-  transition: all 0.3s ease;
-}
-
-.nav-login:hover {
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--brand-primary);
-  transform: translateY(-1px);
-}
-
-/* Signup */
+/* Signup Button Style */
 .btn-nav-signup {
   padding: 12px 28px;
   border-radius: 50px;
@@ -124,50 +90,25 @@
   color: #fff;
   background: var(--bg-blue-gradient);
   border: none;
-  
-  transition: all 0.35s ease;
+  white-space: nowrap; /* Prevents text breaking */
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  display: inline-block;
 }
 
 .btn-nav-signup:hover {
-  transform: translateY(-2px) scale(1.02);
-  
+  transform: translateY(-2px);
 }
 
-/* Mobile Navbar */
+
+
+
+/* ========================= RESPONSIVE ========================= */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 0.6rem 0;
-    backdrop-filter: blur(28px);
-  }
-
-  .navbar-brand {
-    font-size: 1.55rem;
-  }
-
-  .nav-login {
-    padding: 8px 18px;
-    font-size: 0.9rem;
-  }
-
-  .btn-nav-signup {
-    padding: 10px 22px;
-    font-size: 0.9rem;
-  }
+  .hero-section h1 { font-size: 2.5rem; }
+  .navbar-brand { font-size: 1.6rem; }
+  .btn-nav-signup { padding: 10px 20px; font-size: 0.9rem; }
 }
-
-/* Animation */
-@keyframes slideDownPremium {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-
 /* ================= HERO ================= */
 .hero-section {
   min-height: 100vh;

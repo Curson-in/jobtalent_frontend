@@ -568,99 +568,112 @@ useEffect(() => {
           )}
 
           {/* ========= MY APPLICATIONS ========= */}
-          {activeTab === 'applications' && (
-            <div className="content-section">
-              <div className="section-header">
-                <div>
-                  <h1 className="section-title">My Applications</h1>
-                  <p className="section-subtitle">Track your application progress</p>
-                </div>
-                <div className="header-stats">
-                  <span className="stat-badge">{applications.length} Active</span>
-                </div>
-              </div>
+        {activeTab === 'applications' && (
+  <div className="content-section">
+    <div className="section-header">
+      <div>
+        <h1 className="section-title">Applied Jobs</h1>
+        <p className="section-subtitle">Track your application progress</p>
+      </div>
+      <div className="header-stats">
+        <span className="stat-badge">{applications.length} Active</span>
+      </div>
+    </div>
 
-              {loading ? (
-                <div className="loading-state">
-                  <div className="spinner"></div>
-                  <p>Loading applications...</p>
-                </div>
-              ) : applications.length === 0 ? (
-                <div className="empty-state">
-                  <svg className="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <h3>No applications yet</h3>
-                  <p>Start applying to positions to see them here</p>
-                </div>
-              ) : (
-                <div className="table-container">
-                  <table className="applications-table">
-                    <thead>
-                      <tr>
-                        <th>Position</th>
-                        <th>Company</th>
-                        <th>Status</th>
-                        <th>Applied</th>
-                        <th>Actions</th>
+    {loading ? (
+      <div className="loading-state">
+        <div className="spinner"></div>
+        <p>Loading applications...</p>
+      </div>
+    ) : applications.length === 0 ? (
+      <div className="empty-state">
+        <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" />
+        </svg>
+        <h3>No applications yet</h3>
+        <p>Start applying to positions to see them here</p>
+      </div>
+    ) : (
+      <div className="table-container">
+        <table className="applications-table">
+          <thead>
+            <tr>
+              {/* 1. Position */}
+              <th>Position</th>
+              
+              {/* 2. Company */}
+              <th>Company</th>
+              
+              {/* 3. Actions (MOVED HERE) */}
+              <th>Actions</th>
 
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {applications.map((app) => (
-                        <tr key={app.id}>
-                          <td>
-  <div className="table-cell-primary">{app.position}</div>
-</td>
-<td>
-  <div className="table-cell-secondary">{app.company}</div>
-</td>
+              {/* 4. Status (MOVED RIGHT) */}
+              <th>Status</th>
+              
+              {/* 5. Applied Date (MOVED RIGHT) */}
+              <th>Applied</th>
+            </tr>
+          </thead>
+          <tbody>
+            {applications.map((app) => (
+              <tr key={app.id}>
+                
+                {/* 1. Position */}
+                <td>
+                  <div className="table-cell-primary">{app.position}</div>
+                </td>
+                
+                {/* 2. Company */}
+                <td>
+                  <div className="table-cell-secondary">{app.company}</div>
+                </td>
 
-                          <td>
-                            <span className={`status-badge status-${app.status}`}>
-                              {app.status}
-                            </span>
-                          </td>
-                          <td>
-                            <div className="table-cell-date">
-                              {new Date(app.created_at).toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric'
-                              })}
-                            </div>
-                          </td>
-                          <td>
-  {app.followup_sent ? (
-    <span className="muted">Follow-up sent</span>
-  ) : (
-  <button
-  className="btn-followup"
-  onClick={() => {
-    console.log("Follow-Up clicked", app);
-   setFollowUpJob({
-  jobId: app.job_id,      // 🔥 THIS MUST EXIST
-  position: app.position,
-  company: app.company
-});
+                {/* 3. Actions (MOVED HERE - Visible on Mobile) */}
+                <td>
+                  {app.followup_sent ? (
+                    <span className="muted">Follow-up sent</span>
+                  ) : (
+                    <button
+                      className="btn-followup"
+                      onClick={() => {
+                        setFollowUpJob({
+                          jobId: app.job_id,
+                          position: app.position,
+                          company: app.company
+                        });
+                      }}
+                    >
+                      Follow-Up
+                    </button>
+                  )}
+                </td>
 
-  }}
->
-  Follow-Up
-</button>
+                {/* 4. Status */}
+                <td>
+                  <span className={`status-badge status-${app.status}`}>
+                    {app.status}
+                  </span>
+                </td>
 
+                {/* 5. Applied Date */}
+                <td>
+                  <div className="table-cell-date">
+                    {new Date(app.created_at).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </div>
+                </td>
 
-  )}
-</td>
-
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+)}
 
           {activeTab === 'enhance' && (
   <div className="content-section">

@@ -45,6 +45,29 @@ export default function NavbarPremium({ active = "", onTabChange }) {
           {/* NAV LINKS */}
           <div className={`navbar-actions navbar-links ${mobileOpen ? "open" : ""}`}>
 
+            <button
+  className={`nav-btn ${active === "blogs" ? "nav-btn-active" : ""}`}
+  onClick={() => {
+    setMobileOpen(false);
+    navigate("/blogs");
+  }}
+>
+  DevHouse
+</button>
+
+<button
+  className="nav-btn"
+  onClick={() => {
+    setMobileOpen(false);
+    navigate("/blogs/write");
+  }}
+>
+   Write
+</button>
+
+  
+
+
            <button
   className={`nav-btn ${active === "applications" ? "nav-btn-active" : ""}`}
   onClick={() => {
@@ -57,7 +80,7 @@ export default function NavbarPremium({ active = "", onTabChange }) {
     }
   }}
 >
-  Applications
+  Applied Jobs
 </button>
 
 
@@ -68,7 +91,7 @@ export default function NavbarPremium({ active = "", onTabChange }) {
                 navigate("/talent/ai-resume");
               }}
             >
-              ✨ AI Resume
+               AI Resume
             </button>
 
             {/* ✅ ONLY FREE USERS */}

@@ -257,6 +257,152 @@ body {
   }
 }
 
+
+/* =========================================
+   PROFILE PICTURE UPDATE (Blue/Slate Theme)
+   ========================================= */
+
+.profile-avatar-large {
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 50% !important;
+  /* New Background: Clean Slate instead of Green */
+  background: #f1f5f9 !important; 
+  border: 4px solid #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+}
+
+.profile-avatar-large:hover {
+  background: #e2e8f0 !important;
+  border-color: #e2e8f0 !important;
+  transform: scale(1.02);
+}
+
+/* --- CASE 1: IMAGE STYLES --- */
+.profile-avatar-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
+
+/* The Overlay for changing photo */
+.avatar-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(15, 23, 42, 0.6) !important; /* Dark overlay */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+  backdrop-filter: blur(2px);
+}
+
+.profile-avatar-large:hover .avatar-overlay {
+  opacity: 1 !important;
+}
+
+.overlay-btn {
+  color: white !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* --- CASE 2: EMPTY STATE STYLES --- */
+.avatar-empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  color: #64748b !important; /* Slate Text */
+  transition: color 0.3s ease !important;
+}
+
+.profile-avatar-large:hover .avatar-empty-state {
+  color: #2563eb !important; /* Blue on hover */
+}
+
+.avatar-placeholder-icon {
+  width: 32px !important;
+  height: 32px !important;
+  margin-bottom: 4px !important;
+  opacity: 0.7 !important;
+}
+
+.upload-text-label {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+/* FIX: Ensure Full Name Shows on Desktop */
+.profile-name {
+  white-space: normal !important; /* Allow text to wrap to next line if needed */
+  overflow: visible !important;   /* Show all content */
+  text-overflow: clip !important; /* Remove the "..." dots */
+  max-width: none !important;     /* Let it take full width */
+  line-height: 1.2;               /* Adjust spacing if it wraps */
+}
+
+/* Ensure the container doesn't constrict it */
+.profile-header-content {
+  min-width: 0; /* Flexbox fix to prevent crushing */
+  flex-grow: 1; /* Allow it to take available space */
+}
+
+/* =========================================
+   PROFILE GRID LAYOUT (The Fix)
+   ========================================= */
+
+.profile-grid {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr; /* Left side takes 2 parts, Right takes 1 */
+  gap: 24px !important;
+  align-items: start !important; /* Prevents stretching */
+  margin-bottom: 40px !important;
+}
+
+.profile-column-left {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+  min-width: 0 !important; /* Prevents overflow issues */
+}
+
+.profile-column-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+  min-width: 0 !important;
+}
+
+/* --- RESPONSIVE FOR MOBILE/TABLET --- */
+@media (max-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 1fr !important; /* Switch to 1 column on smaller screens */
+  }
+  
+  /* Optional: Reorder so important stuff stays top on mobile */
+  .profile-column-right {
+    order: -1; 
+  }
+}
+
+
 .brand-text {
   font-size: 1.25rem;
   font-weight: 800;
