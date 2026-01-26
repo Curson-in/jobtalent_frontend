@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
 
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://checkout.razorpay.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
     <!-- Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -28,8 +32,9 @@
     <link rel="canonical" href="https://www.curson.in/" />
 
     <!-- Favicon (CRITICAL for Google logo) -->
-    <link rel="icon" href="/logo.png" />
-    <link rel="apple-touch-icon" href="/logo.png" />
+   <link rel="icon" href="https://www.curson.in/favicon.ico" sizes="any" />
+<link rel="icon" href="https://www.curson.in/logo.png" type="image/png" />
+<link rel="apple-touch-icon" href="https://www.curson.in/logo.png" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -57,33 +62,39 @@
 
     <!-- Organization -->
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Curson",
-  "url": "https://www.curson.in/",
-  "logo": "https://www.curson.in/logo.png",
-  "sameAs": [
-    "https://www.linkedin.com/company/curson",
-    "https://twitter.com/curson"
-  ]
-}
-</script>
-
-
-    <!-- Website -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Curson",
-        "url": "https://www.curson.in",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://www.curson.in/jobs?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Curson",
+      "alternateName": "Curson Jobs",
+      "url": "https://www.curson.in/",
+      "logo": "https://www.curson.in/logo.png",
+      "description": "Curson is a verified job and talent platform connecting candidates with top employers.",
+      "sameAs": [
+        "https://www.linkedin.com/company/curson",
+        "https://twitter.com/curson",
+        "https://www.instagram.com/curson"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "support@curson.in"
       }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Curson",
+      "url": "https://www.curson.in/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.curson.in/discover?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
     </script>
 
     <!-- Google Tag Manager -->

@@ -98,12 +98,20 @@ export default function Discover() {
   return (
     <>
       <Helmet>
-        <title>Discover Jobs | Curson</title>
-        <meta
-          name="description"
-          content="Browse the latest job openings for freshers and experienced professionals. Join Curson to apply."
-        />
-      </Helmet>
+  <title>Discover Jobs & Internships | Curson</title>
+  <meta
+    name="description"
+    content="Explore 1000+ active job openings and internships for freshers and experienced professionals. Filter by company, salary, and location. Join Curson to apply."
+  />
+  {/* ✅ THIS TELLS GOOGLE THIS IS THE MAIN PAGE */}
+  <link rel="canonical" href="https://www.curson.in/discover" />
+  
+  {/* Social Media / SEO Boosters */}
+  <meta property="og:title" content="Discover Jobs & Internships | Curson" />
+  <meta property="og:description" content="Find your next career move. Browse jobs from top companies like Amazon, Google, and more." />
+  <meta property="og:url" content="https://www.curson.in/discover" />
+  <meta property="og:type" content="website" />
+</Helmet>
 
       <div className="discover-container">
         {/* Navbar */}
