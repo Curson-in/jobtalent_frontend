@@ -181,7 +181,7 @@ export default function Signup() {
               name="password"
               type="password"
               className="auth-input"
-              placeholder="Password (min 6 chars, letters & numbers)"
+              placeholder="Password (min 6 chars, letters & nums)"
               value={formData.password}
               onChange={handleChange}
               minLength={6}

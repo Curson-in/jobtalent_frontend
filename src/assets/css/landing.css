@@ -101,7 +101,42 @@ body {
 }
 
 
+/* =========================================
+   NAVBAR RIGHT SIDE FIXES
+   ========================================= */
 
+/* 1. Ensure the container holds items in a row with spacing */
+.landing-nav-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 24px !important; /* Space between 'Discover' and 'Register' */
+  margin-left: auto !important; /* Pushes everything to the far right */
+}
+
+/* 2. Style the Discover Link (Proper Button Look) */
+.nav-link-discover {
+  color: #2563eb;;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-link-discover:hover {
+  color: #2563eb; /* Brand Blue */
+}
+
+/* Mobile Tweak: Ensure it doesn't break on small phones */
+@media (max-width: 480px) {
+  .landing-nav-right {
+    gap: 12px !important;
+  }
+  
+  .nav-link-discover {
+    font-size: 0.85rem;
+  }
+}
 
 /* ========================= RESPONSIVE ========================= */
 @media (max-width: 768px) {

@@ -35,6 +35,7 @@ import Blogs from "./pages/Blogs";
 import WriteBlog from "./pages/WriteBlog";
 import BlogDetail from "./pages/BlogDetail";
 
+import Discover from "./pages/Discover.jsx";
 
 
 
@@ -50,6 +51,7 @@ function App() {
     <Routes>
       {/* Public */}
       <Route path="/" element={<Landing />} />
+      <Route path="/discover" element={<Discover />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 

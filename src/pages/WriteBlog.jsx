@@ -100,7 +100,7 @@ export default function WriteBlog() {
         </div>
 
         <div className="form-group">
-          <label>Tags (comma separated)</label>
+          <label>Tags</label>
           <input
             className="styled-input"
             value={tags}

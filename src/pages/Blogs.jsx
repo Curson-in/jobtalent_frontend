@@ -58,7 +58,7 @@ export default function Blogs() {
             <p style={{ color: '#666', margin: 0 }}>Where developers share knowledge</p>
           </div>
           <Link to="/blogs/write" className="read-btn" style={{ background: '#000' }}>
-            + Write
+             Write
           </Link>
         </div>
 
@@ -89,7 +89,7 @@ export default function Blogs() {
                     <span className="stat-item" title="Comments">
                       💬 {b.commentCount || (b.comments ? b.comments.length : 0)}
                     </span>
-                    <span className="stat-item">✍ {b.author}</span>
+                    <span className="stat-item">By {b.author}</span>
                   </div>
                   
                   {/* ACTIONS RIGHT */}

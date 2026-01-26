@@ -96,8 +96,11 @@ const fetchJobs = async (pageNo = 1) => {
       page: pageNo,
       limit: JOBS_PER_PAGE,
       search: searchQuery || undefined,
+      
+      // ✅ Filters passed to Backend
       jobType: filters.jobType.length ? filters.jobType : undefined,
       location: filters.location.length ? filters.location : undefined,
+      experience: filters.experience.length ? filters.experience : undefined, // 👈 ADD THIS LINE
       datePosted: filters.datePosted !== 'all' ? filters.datePosted : undefined
     });
 
@@ -187,17 +190,40 @@ const fetchApplications = async () => {
   }
 };
 
-const internships = jobs.filter(isInternship);
-const pinnedInternships = internships.slice(0, 3);
+// ==========================================
+  // 🚀 SMART SORTING & FILTERING
+  // ==========================================
 
-const pinnedIds = new Set(pinnedInternships.map(j => j.id));
+  // 1. MANUAL RULE: Hide Internships if filtering for Senior/Mid/Lead
+  const shouldHideInternships = () => {
+    const highLevels = ['Mid-level', 'Senior', 'Lead'];
+    
+    // Are we filtering by experience at all?
+    const hasExperienceFilter = filters.experience.length > 0;
+    
+    // Is "Entry-level" NOT selected?
+    const isEntryMissing = !filters.experience.includes('Entry-level');
+    
+    // Is any High Level (Mid/Senior/Lead) selected?
+    const hasHighLevel = filters.experience.some(level => highLevels.includes(level));
 
-const finalJobs = [
-  ...pinnedInternships,
-  ...jobs.filter(job => !pinnedIds.has(job.id))
-];
+    // If we are looking for Senior/Mid roles AND didn't ask for Entry-level -> HIDE INTERNS
+    return hasExperienceFilter && isEntryMissing && hasHighLevel;
+  };
 
+  // 2. Filter the raw jobs list based on our rule
+  let displayJobs = jobs;
 
+  if (shouldHideInternships()) {
+    displayJobs = jobs.filter(job => !isInternship(job));
+  }
+
+  // 3. Now Apply "Internships on Top" Sorting to whatever is left
+  const internshipJobs = displayJobs.filter(isInternship);
+  const otherJobs = displayJobs.filter(job => !isInternship(job));
+
+  // 4. Final List
+  const finalJobs = [...internshipJobs, ...otherJobs];
 
   const handleFilterChange = (category, value) => {
     setFilters(prev => {

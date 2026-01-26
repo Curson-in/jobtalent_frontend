@@ -805,8 +805,8 @@ textarea {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 1.2rem; /* Emoji size */
+  padding: 8px 10px;
+  font-size: 1rem; /* Emoji size */
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;

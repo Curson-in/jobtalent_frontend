@@ -23,15 +23,18 @@ export default function Landing() {
       Curson
     </Link>
 
-    {/* CHANGED: Removed 'navbar-nav' and 'ms-auto' to avoid Bootstrap conflicts */}
+    {/* ✅ MERGED: Both links are now in ONE container so they stay on the right */}
     <div className="landing-nav-right">
-      <Link to="/login" className="btn btn-nav-signup">
-        Login
+      <Link to="/discover" className="nav-link-discover">
+        Discover Jobs
+      </Link>
+
+      <Link to="/signup" className="btn btn-nav-signup">
+        Register
       </Link>
     </div>
   </div>
 </header>
-
 
       {/* ================= HERO ================= */}
       <section className="hero-section">
@@ -46,10 +49,10 @@ export default function Landing() {
 
           <div className="d-flex justify-content-center gap-3 hero-buttons flex-wrap">
             <Link
-  to="/signup?role=talent"
+  to="/discover"
   className="btn btn-hero-primary btn-lg"
 >
-  Explore Jobs
+  Explore 
 </Link>
 
 <Link
