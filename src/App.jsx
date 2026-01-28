@@ -126,7 +126,7 @@ function App() {
   }
 />
 
-
+<Route path="/job/:id" element={<Navigate to="/signup" replace />} />
 
 
 <Route
