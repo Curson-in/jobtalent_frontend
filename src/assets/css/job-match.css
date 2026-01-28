@@ -1,0 +1,244 @@
+/* job-match.css */
+
+.match-page-container {
+  padding: 40px 20px;
+  max-width: 1000px; /* Reduced width for better focus */
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+}
+
+.match-hero {
+  text-align: center;
+  margin: 40px 0 60px;
+}
+
+.match-hero h1 {
+  font-size: 2.2rem;
+  color: #111;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.match-hero p {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* RESPONSIVE GRID */
+.comparison-section {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.comparison-card-wrapper {
+  flex: 1;
+  max-width: 450px;
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid #eaeaea;
+  display: flex;
+  flex-direction: column;
+}
+
+.comparison-label {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.label-free { color: #888; }
+.label-pro { color: #2ecc71; }
+
+/* JOB CARD INTERNALS */
+.mock-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+}
+
+.mock-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mock-logo {
+  width: 44px;
+  height: 44px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #555;
+}
+
+.mock-info h3 { margin: 0; font-size: 1rem; color: #222; }
+.mock-info p { margin: 2px 0 0; font-size: 0.85rem; color: #777; }
+
+/* MATCH AREAS */
+.match-area-free {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 140px; /* Fixed height for alignment */
+  border: 1px dashed #ddd;
+}
+
+.blur-lines {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 15px;
+  opacity: 0.3;
+}
+
+.blur-line {
+  height: 10px;
+  background: #999;
+  border-radius: 5px;
+}
+
+.lock-btn {
+  background: #111;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.match-area-premium {
+  background: #f0fdf4;
+  border-radius: 12px;
+  padding: 20px;
+  height: 140px; /* Fixed height for alignment */
+  border: 1px solid #bbf7d0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.score-big {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.score-badge {
+  background: #16a34a;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.missing-display {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.tag-miss {
+  display: inline-block;
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-right: 5px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* CTA */
+.cta-banner {
+  background: #212121;
+  color: white;
+  border-radius: 24px;
+  padding: 50px 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.cta-banner p {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+.btn-cta-green {
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+}
+
+.btn-cta-green:hover {
+  transform: translateY(-2px);
+  background: #27ae60;
+}
+
+/* 📱 MOBILE FIXES */
+@media (max-width: 768px) {
+  .comparison-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .comparison-card-wrapper {
+    max-width: 100%;
+  }
+
+  .cta-banner {
+    padding: 40px 20px;
+  }
+  
+  .btn-cta-green {
+    width: 100%;
+  }
+}

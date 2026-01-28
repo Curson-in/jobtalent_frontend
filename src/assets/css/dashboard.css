@@ -133,6 +133,17 @@ body {
   transition: all var(--transition-base);
   box-shadow: var(--shadow-sm);
 }
+/* Add to navbar-premium.css */
+.nav-item {
+  text-decoration: none !important;
+  color: #555; /* Or whatever your button color is */
+  /* ... rest of your button styles */
+}
+
+.nav-item.active {
+  color: #2ecc71; /* Your active color */
+}
+
 
 .container-premium {
   max-width: 1280px;

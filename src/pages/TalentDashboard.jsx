@@ -542,8 +542,8 @@ useEffect(() => {
         </div>
 
         {/* ✅ MOVE MATCH CARD HERE */}
-<JobMatchCard jobId={job.id} index={index} />
-
+{/* ✅ Only show Match Card if user is NOT on free plan (Hides Upgrade UI) */}
+{!isFreePlan && <JobMatchCard jobId={job.id} index={index} />}
         {/* DESCRIPTION (flex-grow keeps button aligned) */}
         <div className="job-description-wrapper">
           {job.description && (

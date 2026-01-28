@@ -25,8 +25,8 @@ export default function Pricing() {
       features: [
         "Everything in Starter",
         "Follow-up messages",
-        "60 Profile boost (Top 10%)",
-        "Resume insights",
+        "60 days Profile boost (Top 10%)",
+        "Resume enhancement and tips",
         "Higher recruiter visibility"
       ]
     },

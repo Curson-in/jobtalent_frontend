@@ -94,6 +94,19 @@ export default function NavbarPremium({ active = "", onTabChange }) {
                AI Resume
             </button>
 
+           
+           {isFreePlan && (
+              <button
+                className={`nav-btn ${active === "job-match" ? "nav-btn-active" : ""}`}
+                onClick={() => {
+                  setMobileOpen(false);
+                  navigate("/talent/job-match");
+                }}
+              >
+                Job Match
+              </button>
+            )}
+
             {/* ✅ ONLY FREE USERS */}
             {isFreePlan && (
               <button

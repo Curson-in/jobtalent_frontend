@@ -36,7 +36,7 @@ import WriteBlog from "./pages/WriteBlog";
 import BlogDetail from "./pages/BlogDetail";
 
 import Discover from "./pages/Discover.jsx";
-
+import JobMatchPage from './pages/premium/JobMatchPage';
 
 
 
@@ -107,6 +107,15 @@ function App() {
         }
       />
 
+<Route 
+        path="/talent/job-match" 
+        element={
+          <ProtectedRoute>
+            <JobMatchPage />
+          </ProtectedRoute>
+        } 
+      />
+      
       {/* Employer Onboarding */}
       <Route
   path="/employer/onboarding"
