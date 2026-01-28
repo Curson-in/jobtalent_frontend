@@ -308,7 +308,7 @@ useEffect(() => {
   };
 
   // 🔗 SHARE FUNCTION
-  const handleShare = async (e, job) => {
+ const handleShare = async (e, job) => {
     e.stopPropagation(); // Prevent clicking the card body
     e.preventDefault();
 
@@ -325,6 +325,9 @@ useEffect(() => {
     if (navigator.share) {
       try {
         await navigator.share(shareData);
+        // After share attempt/success, send to signup if not logged in (optional logic, usually better to stay)
+        // If you specifically want to redirect user sharing it:
+        // navigate('/signup'); 
       } catch (err) {
         console.log('User cancelled share', err);
       }
@@ -333,6 +336,11 @@ useEffect(() => {
       try {
         await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
         alert("Link copied to clipboard!");
+        
+        // 🚀 REDIRECT LOGIC FOR CLIPBOARD USERS (if that's what you meant)
+        // Usually the PERSON CLICKING the shared link goes to signup (handled by your App.jsx route /job/:id).
+        // If you want the person SHARING to go to signup (odd, but okay):
+        // navigate('/signup');
       } catch (err) {
         console.error("Failed to copy", err);
       }
@@ -538,7 +546,7 @@ useEffect(() => {
         <line x1="12" y1="2" x2="12" y2="15" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     </button>
-    
+
         {/* HEADER */}
         <div className="job-header">
           <div className="company-avatar">
