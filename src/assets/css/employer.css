@@ -594,3 +594,103 @@ body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Sego
   .emp-tabs-section { flex-direction: column; gap: 1rem; align-items: stretch; }
   .emp-tabs-nav { justify-content: center; }
 }
+/* ======================================================
+   MOBILE RESPONSIVE FIXES
+   Add this to the very bottom of employer.css
+====================================================== */
+
+@media (max-width: 768px) {
+
+  /* --- 1. Fix the Tabs & Post Job Button Layout --- */
+  .emp-tabs-section {
+    flex-direction: column-reverse; /* Stack them: Button on top, Tabs below */
+    gap: 1.25rem;
+    padding: 1.25rem;
+    align-items: stretch; /* Make children full width */
+  }
+
+  .emp-tabs-nav {
+    justify-content: space-between; /* Spread tabs evenly */
+    background: #f8fafc; /* Subtle background for the tab container */
+    padding: 0.25rem;
+    border-radius: 10px;
+    gap: 0; /* Remove gap, use space-between */
+  }
+
+  .emp-tab-btn {
+    padding: 0.6rem 0.5rem; /* Reduce padding to fit text */
+    font-size: 0.8rem; /* Slightly smaller font */
+    flex: 1; /* Make all tabs equal width */
+    text-align: center;
+    border-radius: 8px;
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  /* Make the "Post Job" button big and easy to tap */
+  .emp-post-job-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.9rem;
+  }
+
+  /* --- 2. Fix the "Post Job" Form Card --- */
+  .emp-job-form-card {
+    padding: 1.5rem; /* Reduce padding inside the form */
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .emp-form-row {
+    grid-template-columns: 1fr; /* Stack inputs vertically (1 column) instead of 2 */
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Ensure form header fits */
+  .emp-form-header h3 {
+    font-size: 1.1rem;
+  }
+
+  /* --- 3. Fix the Job Cards Grid --- */
+  .emp-jobs-grid {
+    /* Allow cards to go smaller than 360px on very small phones */
+    grid-template-columns: 1fr; 
+  }
+
+  /* --- 4. Fix Company Profile (make it 1 column) --- */
+  /* This targets the .profile-grid class from your Profile component */
+  .profile-grid {
+    grid-template-columns: 1fr !important; /* Force 1 column stack */
+    gap: 1.5rem;
+  }
+  
+  .profile-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .profile-header-left {
+    width: 100%;
+  }
+
+  .edit-btn {
+    width: 100%; /* Full width edit button on mobile */
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  /* --- 5. General Layout Adjustments --- */
+  .emp-main-content {
+    padding: 1.5rem 1rem 4rem; /* Reduce page padding */
+  }
+
+  .emp-page-title {
+    font-size: 1.5rem; /* Smaller title */
+    margin-bottom: 1.5rem;
+  }
+  
+  .emp-header-inner {
+    padding: 1rem;
+  }
+}
