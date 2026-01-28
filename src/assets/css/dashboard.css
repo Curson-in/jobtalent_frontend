@@ -143,7 +143,154 @@ body {
 .nav-item.active {
   color: #2ecc71; /* Your active color */
 }
+/* Add this to dashboard.css */
 
+.job-card {
+  position: relative; /* Critical for positioning the share button */
+}
+
+.btn-share-job {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #3466bd;
+  transition: all 0.2s ease;
+  z-index: 10; /* Ensure it sits above other elements */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =================================================================
+   🚨 EMERGENCY OVERRIDES - PASTE AT THE BOTTOM OF dashboard.css
+   ================================================================= */
+
+/* 1. TIGHTER MAIN LAYOUT (LAPTOP/DESKTOP) */
+@media (min-width: 1024px) {
+  .main-content {
+    padding: 1.5rem 0 2rem !important;
+  }
+
+  .section-header {
+    margin-bottom: 1rem !important;
+  }
+
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+
+  .search-filter-container {
+    padding: 1rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .jobs-grid {
+    gap: 1rem !important;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  }
+
+  .job-card {
+    padding: 1.15rem !important;
+  }
+
+  .profile-grid {
+    grid-template-columns: 2fr 1fr !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* 2. PROFILE HEADER FIXES */
+.profile-avatar-large {
+  width: 120px !important;
+  height: 120px !important;
+  background: #f1f5f9 !important;
+  border: 4px solid #ffffff !important;
+}
+
+.profile-name {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  max-width: none !important;
+}
+
+/* 3. SHARE BUTTON POSITIONING */
+.job-card {
+  position: relative !important;
+}
+
+.btn-share-job {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 20 !important;
+  background: transparent !important;
+  color: #3466bd !important;
+  padding: 6px !important;
+  border-radius: 50% !important;
+}
+
+.btn-share-job:hover {
+  background-color: #f3f4f6 !important;
+  color: #1a1a1a !important;
+}
+
+/* 4. JOB CARD LAYOUT FIXES */
+.job-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.apply-btn {
+  margin-top: auto !important;
+}
+
+/* 5. NAVBAR MOBILE FIXES */
+@media (max-width: 768px) {
+  .navbar-content {
+    height: 3.5rem !important;
+  }
+  
+  .container-premium {
+    padding: 0 1rem !important;
+  }
+
+  .jobs-grid {
+    gap: 1rem !important;
+  }
+}
+
+/* 6. PROFILE COLUMN WIDTH SAFETY */
+.profile-column-left,
+.profile-column-right {
+  min-width: 0 !important; /* Prevents flex items from overflowing */
+  width: 100% !important;
+}
+.btn-share-job:hover {
+  background-color: #f3f4f6;
+  color: #1a1a1a;
+  transform: scale(1.1);
+}
+
+.btn-share-job svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Adjust mobile layout if needed */
+@media (max-width: 768px) {
+  .btn-share-job {
+    top: 10px;
+    right: 10px;
+    padding: 8px; /* Larger touch target */
+  }
+}
 
 .container-premium {
   max-width: 1280px;

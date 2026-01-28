@@ -307,6 +307,38 @@ useEffect(() => {
     navigate('/login');
   };
 
+  // 🔗 SHARE FUNCTION
+  const handleShare = async (e, job) => {
+    e.stopPropagation(); // Prevent clicking the card body
+    e.preventDefault();
+
+    const companyName = job.company_name || job.company || 'Company';
+    const shareUrl = `${window.location.origin}/job/${job.id}`; // Generates: curson.in/job/123
+
+    const shareData = {
+      title: `${job.title} at ${companyName}`,
+      text: `Check out this opportunity for ${job.title} at ${companyName} on Curson!`,
+      url: shareUrl,
+    };
+
+    // 1. Try Native Share (Mobile/Supported Browsers)
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.log('User cancelled share', err);
+      }
+    } else {
+      // 2. Fallback: Copy to Clipboard
+      try {
+        await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+        alert("Link copied to clipboard!");
+      } catch (err) {
+        console.error("Failed to copy", err);
+      }
+    }
+  };
+
   return ( 
     <>
     <NavbarPremium
@@ -495,6 +527,18 @@ useEffect(() => {
         className="job-card"
         style={{ animationDelay: `${index * 50}ms` }}
       >
+        <button 
+      className="btn-share-job" 
+      onClick={(e) => handleShare(e, job)}
+      title="Share this job"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" strokeLinecap="round" strokeLinejoin="round"/>
+        <polyline points="16 6 12 2 8 6" strokeLinecap="round" strokeLinejoin="round"/>
+        <line x1="12" y1="2" x2="12" y2="15" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </button>
+    
         {/* HEADER */}
         <div className="job-header">
           <div className="company-avatar">
