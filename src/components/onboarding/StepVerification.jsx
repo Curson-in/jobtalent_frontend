@@ -1,12 +1,8 @@
 import '../../assets/css/employer-boarding.css';
-import {
-  isValidLinkedInCompany,
-  isValidEmailDomain
-} from '../../utils/validators';
+import { isValidLinkedInCompany } from '../../utils/validators';
 
 export default function StepVerification({ data, update, next, back }) {
   const linkedinValid = isValidLinkedInCompany(data.linkedin);
-  const emailValid = isValidEmailDomain(data.officialEmail, data.website);
 
   return (
     <div className="employer-onboarding-wrapper">
@@ -15,14 +11,12 @@ export default function StepVerification({ data, update, next, back }) {
         <h2>Verification</h2>
 
         <div className="onboarding-field">
-          <label>Official Company Email *</label>
+          <label>Official Company Email</label>
           <input
             value={data.officialEmail || ''}
             onChange={(e) => update({ officialEmail: e.target.value })}
             placeholder="hr@company.com"
           />
-
-          
         </div>
 
         <div className="onboarding-field">
@@ -41,22 +35,9 @@ export default function StepVerification({ data, update, next, back }) {
         </div>
 
         <div className="onboarding-field">
-  <label>Company Logo (optional)</label>
-  <input
-    type="file"
-    accept="image/*"
-    onChange={async (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      const formData = new FormData();
-      formData.append('logo', file);
-
-     
-    }}
-  />
-</div>
-
+          <label>Company Logo (optional)</label>
+          <input type="file" accept="image/*" />
+        </div>
 
         <div className="onboarding-actions">
           <button className="onboarding-secondary-btn" onClick={back}>
@@ -64,7 +45,7 @@ export default function StepVerification({ data, update, next, back }) {
           </button>
           <button
             className="onboarding-primary-btn"
-            disabled={!linkedinValid || !emailValid}
+            disabled={!linkedinValid}
             onClick={next}
           >
             Continue

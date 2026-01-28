@@ -80,7 +80,7 @@ export default function WriteBlog() {
 
   return (
     <>
-          <NavbarPremium active="blogs" />
+<NavbarPremium active="write" />
     
     <div className="container" style={{ maxWidth: "800px" }}>
       
