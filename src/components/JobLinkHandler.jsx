@@ -6,15 +6,15 @@ export default function JobLinkHandler() {
   const { user, loading } = useContext(AuthContext);
   const { id } = useParams();
 
-  // ⏳ Wait for Auth check to finish
   if (loading) return <div className="loading-spinner"></div>; 
 
   if (user) {
-    // ✅ User IS logged in -> Go to Dashboard
-    return <Navigate to="/talent/dashboard" replace />;
+    // ✅ Logged in? Go to dashboard with highlight param
+    return <Navigate to={`/talent/dashboard?highlight=${id}`} replace />;
   } else {
-    // ❌ User is NOT logged in -> Go to Signup
-    // We add '?redirect=' so they come back to the dashboard after signing up
-    return <Navigate to={`/signup?redirect=/talent/dashboard`} replace />;
+    // ❌ Not Logged in? Go to signup, then redirect to dashboard with highlight
+    // We encode the URL so the ?highlight=123 part survives the signup process
+    const targetUrl = encodeURIComponent(`/talent/dashboard?highlight=${id}`);
+    return <Navigate to={`/signup?redirect=${targetUrl}`} replace />;
   }
 }

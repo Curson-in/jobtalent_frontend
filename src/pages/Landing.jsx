@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useEffect, useContext } from 'react'; // 👈 ADD useEffect, useContext
+import { useNavigate } from 'react-router-dom';      // 👈 ADD useNavigate
+import { AuthContext } from '../context/AuthContext';
 import { Link } from "react-router-dom";
 import "../assets/css/landing.css";
 import { Helmet } from "react-helmet-async";
 
 export default function Landing() {
+
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext); 
+
+  useEffect(() => {
+    // Only redirect if the Context explicitly says we have a valid user
+    if (user) {
+      if (user.role === 'employer') {
+        navigate('/employer/dashboard');
+      } else {
+        navigate('/talent/dashboard');
+      }
+    }
+  }, [user, navigate]);
+
+
   return (
     <>
    <Helmet>

@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import * as jobService from '../services/jobService.js';
 import * as applicationService from '../services/applicationService.js';
 import '../assets/css/dashboard.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import ResumeEnhance from '../pages/premium/ResumeEnhance.jsx';
 import FollowUpModal from "../components/FollowUpModal.jsx";
 import JobMatchCard from '../components/jobs/JobMatchCard.jsx';
@@ -13,6 +13,12 @@ import NavbarPremium from "../components/NavbarPremium";
 export default function TalentDashboard() {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams(); 
+  // Change 'jobId' to 'id' if your URL looks like /dashboard?id=123
+  const highlightId = searchParams.get('jobId');
+  const [highlightedJob, setHighlightedJob] = useState(null);
+  
 
  const isInternship = (job) =>
   job.job_type === "internship" ||
@@ -48,6 +54,7 @@ const stripHtml = (html = '') => {
   return div.textContent || div.innerText || '';
 };
 
+
 const normalizeJob = (job) => {
     const company =
       job.company_name ||
@@ -63,6 +70,26 @@ const normalizeJob = (job) => {
     };
   };
 
+  useEffect(() => {
+    const loadHighlightedJob = async () => {
+      if (!highlightId) return;
+      try {
+        // Ensure this endpoint matches your backend (e.g., /jobs/123)
+        const res = await axios.get(`/jobs/${highlightId}`);
+        if (res.data && res.data.job) {
+          setHighlightedJob(res.data.job);
+          // Only scroll if we are on the discover tab
+          if (activeTab === 'discover') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }
+      } catch (err) {
+        console.error("Could not load shared job", err);
+      }
+    };
+    loadHighlightedJob();
+  }, [highlightId, activeTab]);
+  
   
   const [filters, setFilters] = useState({
     jobType: [],
@@ -219,11 +246,18 @@ const fetchApplications = async () => {
   }
 
   // 3. Now Apply "Internships on Top" Sorting to whatever is left
+  // 3. Now Apply "Internships on Top" Sorting to whatever is left
   const internshipJobs = displayJobs.filter(isInternship);
   const otherJobs = displayJobs.filter(job => !isInternship(job));
 
   // 4. Final List
-  const finalJobs = [...internshipJobs, ...otherJobs];
+  let finalJobs = [...internshipJobs, ...otherJobs];
+
+  // ✅ MERGE HIGHLIGHTED JOB TO TOP
+  if (highlightedJob) {
+    finalJobs = finalJobs.filter(j => j.id !== highlightedJob.id);
+    finalJobs = [highlightedJob, ...finalJobs];
+  }
 
   const handleFilterChange = (category, value) => {
     setFilters(prev => {
@@ -299,8 +333,8 @@ useEffect(() => {
   fetchApplications();
 }, []);
 
-
-
+// ✅ FETCH SPECIFIC JOB IF SHARED
+  
 
   const handleLogout = () => {
     logout();
@@ -529,12 +563,30 @@ useEffect(() => {
 
     const companyInitial = companyName.charAt(0).toUpperCase();
 
+    const isHighlighted = highlightedJob && job.id === highlightedJob.id;
+
     return (
       <div
         key={job.id}
         className="job-card"
-        style={{ animationDelay: `${index * 50}ms` }}
+        style={{ 
+          animationDelay: `${index * 50}ms`,
+          border: isHighlighted ? '2px solid #10b981' : undefined,
+          backgroundColor: isHighlighted ? '#f0fdf4' : 'white'
+        }}
       >
+
+        {isHighlighted && (
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0, 
+            background: '#10b981', color: 'white', 
+            fontSize: '0.7rem', fontWeight: 'bold', 
+            textAlign: 'center', padding: '2px'
+          }}>
+            SHARED JOB
+          </div>
+        )}
+
         <button 
       className="btn-share-job" 
       onClick={(e) => handleShare(e, job)}

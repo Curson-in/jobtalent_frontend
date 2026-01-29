@@ -26,47 +26,41 @@ export default function Login() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /* ===============================
-     FORM SUBMIT
-  =============================== */
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+e.preventDefault();
+ setError("");
+ setLoading(true);
+ try {
+ const user = await login(formData.email, formData.password);
 
-    try {
-      const user = await login(formData.email, formData.password);
+      localStorage.setItem('userRole', user.role); 
 
-      // TALENT FLOW
-      if (user.role === "talent") {
-        navigate("/talent/dashboard");
-        return;
-      }
+// TALENT FLOW
+ if (user.role === "talent") {
+ navigate("/talent/dashboard");
+ return;
+ }
 
-      // EMPLOYER FLOW
-      if (user.role === "employer") {
-        const res = await getEmployerProfile();
+ if (user.role === "employer") {
+ const res = await getEmployerProfile();
 
-        if (res?.data) {
-          navigate("/employer/dashboard"); // company exists
-        } else {
-          navigate("/employer/onboarding"); // first time employer
-        }
-        return;
-      }
+ if (res?.data) {
+ navigate("/employer/dashboard"); // company exists
+ } else {
+ navigate("/employer/onboarding"); // first time employer
+ }
+ return;
+ }
 
-      // FALLBACK
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.message || "Unable to sign in right now");
-    } finally {
-      setLoading(false);
-    }
-  };
+navigate("/");
+ } catch (err) {
+ setError(err.response?.data?.message || "Unable to sign in right now");
+ } finally {
+ setLoading(false);
+ }
+ };
 
-  /* ===============================
-     GOOGLE LOGIN
-  =============================== */
+  
   const googleLogin = () => {
     window.location.href = "http://localhost:5000/api/auth/google";
   };
