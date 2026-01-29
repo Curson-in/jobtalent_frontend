@@ -39,7 +39,7 @@ import Discover from "./pages/Discover.jsx";
 import JobMatchPage from './pages/premium/JobMatchPage';
 
 
-
+import JobLinkHandler from './components/JobLinkHandler';
 
 
 
@@ -126,8 +126,7 @@ function App() {
   }
 />
 
-<Route path="/job/:id" element={<Navigate to="/signup" replace />} />
-
+<Route path="/job/:id" element={<JobLinkHandler />} />
 
 <Route
   path="*"
