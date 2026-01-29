@@ -56,10 +56,10 @@ export default function Landing() {
 </Link>
 
 <Link
-  to="/signup?role=employer"
+  to="/signup?role=talent"
   className="btn btn-outline-primary btn-lg"
 >
-  Start Hiring
+  Start Applying
 </Link>
 
           </div>
