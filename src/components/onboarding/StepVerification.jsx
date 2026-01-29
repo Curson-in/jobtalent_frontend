@@ -1,9 +1,6 @@
 import '../../assets/css/employer-boarding.css';
-import { isValidLinkedInCompany } from '../../utils/validators';
 
 export default function StepVerification({ data, update, next, back }) {
-  const linkedinValid = isValidLinkedInCompany(data.linkedin);
-
   return (
     <div className="employer-onboarding-wrapper">
       <div className="employer-onboarding-card">
@@ -11,7 +8,7 @@ export default function StepVerification({ data, update, next, back }) {
         <h2>Verification</h2>
 
         <div className="onboarding-field">
-          <label>Official Company Email</label>
+          <label>Official Company Email </label>
           <input
             value={data.officialEmail || ''}
             onChange={(e) => update({ officialEmail: e.target.value })}
@@ -20,18 +17,12 @@ export default function StepVerification({ data, update, next, back }) {
         </div>
 
         <div className="onboarding-field">
-          <label>LinkedIn Company Page *</label>
+          <label>LinkedIn Company Page</label>
           <input
             value={data.linkedin || ''}
             onChange={(e) => update({ linkedin: e.target.value })}
             placeholder="https://linkedin.com/company/acme"
           />
-
-          {!linkedinValid && data.linkedin && (
-            <span className="field-error">
-              Enter a valid LinkedIn company URL
-            </span>
-          )}
         </div>
 
         <div className="onboarding-field">
@@ -45,7 +36,6 @@ export default function StepVerification({ data, update, next, back }) {
           </button>
           <button
             className="onboarding-primary-btn"
-            disabled={!linkedinValid}
             onClick={next}
           >
             Continue
