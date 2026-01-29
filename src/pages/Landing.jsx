@@ -1,25 +1,26 @@
-import React, { useEffect, useContext } from 'react'; // 👈 ADD useEffect, useContext
-import { useNavigate } from 'react-router-dom';      // 👈 ADD useNavigate
+import React, { useEffect, useContext } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'; // 👈 Add useLocation
 import { AuthContext } from '../context/AuthContext';
 import { Link } from "react-router-dom";
 import "../assets/css/landing.css";
 import { Helmet } from "react-helmet-async";
 
 export default function Landing() {
-
   const navigate = useNavigate();
+  const location = useLocation(); 
   const { user } = useContext(AuthContext); 
 
   useEffect(() => {
-    // Only redirect if the Context explicitly says we have a valid user
     if (user) {
+      const queryParams = location.search; 
+
       if (user.role === 'employer') {
-        navigate('/employer/dashboard');
+        navigate(`/employer/dashboard${queryParams}`);
       } else {
-        navigate('/talent/dashboard');
+        navigate(`/talent/dashboard${queryParams}`);
       }
     }
-  }, [user, navigate]);
+  }, [user, navigate, location.search]);
 
 
   return (
