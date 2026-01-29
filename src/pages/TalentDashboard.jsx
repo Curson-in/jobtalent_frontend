@@ -15,9 +15,13 @@ export default function TalentDashboard() {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams(); 
-  // Change 'jobId' to 'id' if your URL looks like /dashboard?id=123
-  const highlightId = searchParams.get('jobId');
+
+  // 2. ✅ FIX: Look for 'highlight' since your URL is ?highlight=98931
+  const highlightId = searchParams.get('highlight'); 
+
+  // 3. State for the highlighted job
   const [highlightedJob, setHighlightedJob] = useState(null);
+
   
 
  const isInternship = (job) =>
