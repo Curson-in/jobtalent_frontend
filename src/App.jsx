@@ -40,6 +40,8 @@ import JobMatchPage from './pages/premium/JobMatchPage';
 
 
 import JobLinkHandler from './components/JobLinkHandler';
+import Features from './pages/public/Features';
+import FAQ from './pages/public/FAQ.jsx';
 
 
 
@@ -69,6 +71,8 @@ function App() {
 <Route path="/terms" element={<Terms />} />
 <Route path="/legal" element={<Legal />} />
 <Route path="/refund-policy" element={<RefundPolicy />} />
+<Route path="/features" element={<Features />} />
+<Route path="/faq" element={<FAQ />} />
 
        
 <Route path="/employer/profile" element={<EmployerProfile />} />

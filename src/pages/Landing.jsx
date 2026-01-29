@@ -44,9 +44,14 @@ export default function Landing() {
 
     {/* ✅ MERGED: Both links are now in ONE container so they stay on the right */}
     <div className="landing-nav-right">
-      <Link to="/discover" className="nav-link-discover">
-        Discover Jobs
-      </Link>
+
+              <Link
+  to="/discover"
+  className="btn btn-hero-primary"
+>
+  Jobs 
+</Link>
+    
 
       <Link to="/signup" className="btn btn-nav-signup">
         Register
@@ -67,19 +72,23 @@ export default function Landing() {
 </p>
 
           <div className="d-flex justify-content-center gap-3 hero-buttons flex-wrap">
-            <Link
-  to="/discover"
-  className="btn btn-hero-primary btn-lg"
->
-  Explore 
-</Link>
 
-<Link
+            <Link
   to="/signup?role=talent"
   className="btn btn-outline-primary btn-lg"
 >
   Start Applying
 </Link>
+
+              <Link
+  to="/signup?role=employer"
+  className="btn btn-outline-primary btn-lg"
+>
+  Start Hiring
+</Link>
+    
+
+
 
           </div>
         </div>
@@ -431,34 +440,55 @@ export default function Landing() {
       </section>
 
       {/* ================= FOOTER ================= */}
-      <footer>
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <h5>Curson</h5>
-              <p className="mb-0">
-                Connecting talent with opportunity worldwide.
-              </p>
-            </div>
-            
-            
-            <div className="footer-section">
-              <h5>Company</h5>
-              <ul className="footer-links">
-                <li><Link to="/about">About Us</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
-                <li><Link to="/privacy">Privacy Policy</Link></li>
-                 <li><Link to="/terms">Terms</Link></li>
-                 
+   
+<footer>
+  <div className="container">
+    <div className="footer-content">
+      
+      {/* Column 1: Brand & Tagline */}
+      <div className="footer-brand-section">
+        <h5 className="footer-logo">Curson</h5>
+        <p className="footer-tagline">
+          Your personal career vault for verified jobs and talent. 
+          Never miss an opportunity.
+        </p>
+      </div>
 
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p className="mb-0">© 2026 Curson. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      {/* Column 2: Product */}
+      <div className="footer-section">
+        <h5 className="footer-heading">PRODUCT</h5>
+        <ul className="footer-links">
+          <li><Link to="/features">Features</Link></li>
+          <li><Link to="/faq">FAQ</Link></li>
+        </ul>
+      </div>
+      
+      {/* Column 3: Company */}
+      <div className="footer-section">
+        <h5 className="footer-heading">COMPANY</h5>
+        <ul className="footer-links">
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
+        </ul>
+      </div>
+
+      {/* Column 4: Legal */}
+      <div className="footer-section">
+        <h5 className="footer-heading">LEGAL</h5>
+        <ul className="footer-links">
+          <li><Link to="/privacy">Privacy</Link></li>
+          <li><Link to="/terms">Terms</Link></li>
+        </ul>
+      </div>
+
+    </div>
+
+    {/* Bottom Copyright */}
+    <div className="footer-bottom">
+      <p>© 2026 Curson. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
     </div>
     </>
   );

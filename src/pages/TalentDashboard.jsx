@@ -47,6 +47,17 @@ const [subscription, setSubscription] = useState(null);
 
 const [subLoading, setSubLoading] = useState(true);
 
+const [notification, setNotification] = useState(null); // { message: '', type: 'success' | 'error' }
+
+  // 👇 2. ADD THIS HELPER FUNCTION
+  const showToast = (message, type = 'success') => {
+    setNotification({ message, type });
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
+  };
+  
 const isFreePlan =
   !subscription?.plan ||
   subscription.plan.toLowerCase() === "free";
@@ -322,14 +333,16 @@ const handleApply = (job) => {
   }
 
   // Direct jobs
-  applicationService
+ applicationService
     .applyToJob(job.id)
     .then(() => {
-      alert('Applied successfully!');
+      // alert('Applied successfully!'); ❌ REMOVE THIS
+      showToast('Application sent successfully!', 'success'); // ✅ ADD THIS
       fetchApplications();
     })
     .catch(err => {
-      alert(err.response?.data?.message || 'Failed to apply');
+      // alert(err.response?.data?.message || 'Failed to apply'); ❌ REMOVE THIS
+      showToast(err.response?.data?.message || 'Failed to apply', 'error'); // ✅ ADD THIS
     });
 };
 
@@ -878,9 +891,40 @@ useEffect(() => {
 )}
 
 
-      {/* ===== PENDING EXTERNAL APPLY MODAL ===== */}
+
+
+
+
+      
      
     </div>
+
+    {/* ... existing Modals ... */}
+      
+      {/* 👇 3. ADD THIS TOAST COMPONENT HERE */}
+      {notification && (
+        <div className={`toast-notification ${notification.type}`}>
+          <div className="toast-content">
+            {notification.type === 'success' ? (
+              <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            )}
+            <span>{notification.message}</span>
+          </div>
+          <button onClick={() => setNotification(null)} className="toast-close">
+            ×
+          </button>
+        </div>
+      )}
+
+   
+
+    
     </>
   );
 }
