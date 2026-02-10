@@ -61,7 +61,7 @@ export default function Contact() {
                     strokeLinejoin="round"
                   />
                 </svg>
-                support@curson.app
+                admin@curson.in
               </button>
             </div>
           </div>

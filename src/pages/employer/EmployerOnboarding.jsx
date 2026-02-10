@@ -4,6 +4,7 @@ import StepCompanyInfo from '../../components/onboarding/StepCompanyInfo';
 import StepCompanyDetails from '../../components/onboarding/StepCompanyDetails';
 import StepVerification from '../../components/onboarding/StepVerification';
 import StepReview from '../../components/onboarding/StepReview';
+import StepOTP from '../../components/onboarding/StepOTP';
 import '../../assets/css/onboarding.css';
 
 export default function EmployerOnboarding() {
@@ -33,7 +34,14 @@ export default function EmployerOnboarding() {
         {step === 1 && <StepCompanyInfo data={data} update={update} next={next} />}
         {step === 2 && <StepCompanyDetails data={data} update={update} next={next} back={back} />}
         {step === 3 && <StepVerification data={data} update={update} next={next} back={back} />}
-        {step === 4 && <StepReview data={data} back={back} />}
+        {step === 4 && (
+        <StepOTP 
+          data={data} 
+          next={next} 
+          back={back} 
+        />
+      )}
+        {step === 5 && <StepReview data={data} back={back} />}
       </div>
     </div>
   );

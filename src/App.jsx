@@ -42,6 +42,7 @@ import JobMatchPage from './pages/premium/JobMatchPage';
 import JobLinkHandler from './components/JobLinkHandler';
 import Features from './pages/public/Features';
 import FAQ from './pages/public/FAQ.jsx';
+import EmployerPricing from './pages/employer/EmployerPricing.jsx';
 
 
 
@@ -76,6 +77,7 @@ function App() {
 
        
 <Route path="/employer/profile" element={<EmployerProfile />} />
+<Route path="/employer/pricing" element={<EmployerPricing />} />
 
 
 

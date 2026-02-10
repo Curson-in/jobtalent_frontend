@@ -8,7 +8,7 @@ export default function StepCompanyInfo({ data, update, next }) {
   return (
     <div className="employer-onboarding-wrapper">
       <div className="employer-onboarding-card">
-        <span className="onboarding-step">Step 1 of 4</span>
+        <span className="onboarding-step">Step 1 of 5</span>
         <h2>Company Basics</h2>
 
         <div className="onboarding-field">

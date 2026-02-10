@@ -22,7 +22,7 @@ export default function StepReview({ data, back }) {
   return (
     <div className="employer-onboarding-wrapper">
       <div className="employer-onboarding-card">
-        <span className="onboarding-step">Step 4 of 4</span>
+        <span className="onboarding-step">Step 5 of 5</span>
         <h2>Review & Finish</h2>
 
         <ul className="review-list">
