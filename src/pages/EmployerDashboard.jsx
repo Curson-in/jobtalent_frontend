@@ -324,7 +324,7 @@ export default function EmployerDashboard() {
       <ConfirmModal 
         show={modalConfig.show && modalConfig.type === 'INVITE'}
         title="Send Invitation?"
-        message="This will send an email to the candidate inviting them to apply. It will cost 1 Invite Credit."
+        message="This will send an email to the candidate inviting them to interview. It will cost 1 Invite Credit."
         confirmText="Yes, Send Invite"
         onConfirm={confirmInvite}
         onCancel={() => setModalConfig({ show: false })}
@@ -495,7 +495,7 @@ export default function EmployerDashboard() {
                               <>
                                 {cand.has_invited ? 
                                   <button className="btn btn-success btn-sm disabled" disabled><i className="bi bi-check2"></i> Invited</button> : 
-                                  <button className="btn btn-primary btn-sm" onClick={() => initiateInvite(cand.id)}>Invite to Apply</button>
+                                  <button className="btn btn-primary btn-sm" onClick={() => initiateInvite(cand.id)}>Invite to Interview</button>
                                 }
                                 {cand.resume_file ? (
                                   <button className="btn btn-outline-secondary btn-sm" onClick={() => downloadResume(cand.resume_file)}>Download Resume</button>
