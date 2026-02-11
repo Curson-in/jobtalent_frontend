@@ -1,6 +1,8 @@
-// About.jsx
 import "../../assets/css/public-pages.css";
 import { Helmet } from "react-helmet-async";
+import { Target, Flag, Shield, Eye, Zap, Heart } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+
 
 export default function About() {
   return (
@@ -13,69 +15,121 @@ export default function About() {
         />
         <link rel="canonical" href="https://www.curson.in/about" />
       </Helmet>
-      <div className="public-page">
-        <div className="public-container">
-          <button className="public-back" onClick={() => window.history.back()}>
-            <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M15 18L9 12L15 6"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Back
-          </button>
 
-          <h1 className="public-title">About Curson</h1>
-          <p className="public-subtitle">
-            Curson is a modern career platform built to help ambitious professionals
-            discover opportunities, apply smarter, and grow faster.
-          </p>
+       <header className="navbar">
+                              <div className="container">
+                                <Link className="navbar-brand" to="/">
+                                  Curson
+                                </Link>
+                                <div className="landing-nav-right">
+                                  <Link to="/login" className="nav-link-simple">
+                                    Login
+                                  </Link>
+                                  <Link to="/signup" className="btn btn-nav-signup">
+                                    Sign up
+                                  </Link>
+                                </div>
+                              </div>
+                            </header>
 
-          <div className="public-section">
-            <h2>Our Mission</h2>
-            <p>
-              Our mission is simple: remove friction from the hiring process and give
-              individuals the tools they need to compete in a rapidly evolving job market.
-              We believe talent should be recognized based on skill, effort, and clarity -
-              not noise.
-            </p>
-            <p>
-              Curson exists to bridge the gap between candidates and employers by using
-              technology responsibly, transparently, and effectively.
+      <div className="public-page-wrapper">
+        <div className="public-content-container">
+          
+          {/* Header */}
+          <div className="public-header">
+            <button className="btn-back-text" onClick={() => window.history.back()}>
+              ← Back
+            </button>
+            <h1 className="page-heading">About Curson</h1>
+            <p className="page-subheading">
+              Curson is a modern career platform built to help ambitious professionals
+              discover opportunities, apply smarter, and grow faster.
             </p>
           </div>
 
-          <div className="public-section">
-            <h2>Why We Built Curson</h2>
+          {/* About Grid */}
+          <div className="features-grid">
+            
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <Target size={24} />
+              </div>
+              <h3 className="feature-title">Our Mission</h3>
+              <p className="feature-desc">
+                Remove friction from the hiring process. We believe talent should be 
+                recognized based on skill, effort, and clarity—not noise. We strive 
+                to bridge the gap between candidates and employers responsibly.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <Flag size={24} />
+              </div>
+              <h3 className="feature-title">Why We Built This</h3>
+              <p className="feature-desc">
+                Job searching is broken. Candidates apply blindly, and resumes get 
+                buried by algorithms. Curson was created to change that with intelligent 
+                matching and tools that actually help users improve.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <Shield size={24} />
+              </div>
+              <h3 className="feature-title">Privacy First</h3>
+              <p className="feature-desc">
+                Your data belongs to you. We do not sell user data to third-party 
+                marketing agencies. Our platform is designed with privacy and data 
+                sovereignty at its core.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <Eye size={24} />
+              </div>
+              <h3 className="feature-title">No Dark Patterns</h3>
+              <p className="feature-desc">
+                We believe in honest product design. No misleading paywalls, no 
+                hidden subscriptions, and no tricks to keep you locked in. 
+                Everything is transparent.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <Zap size={24} />
+              </div>
+              <h3 className="feature-title">Tangible Value</h3>
+              <p className="feature-desc">
+                Our premium features aren't just gates—they are utilities. From AI 
+                resume enhancement to priority visibility, every paid feature is 
+                built to give you a measurable advantage.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon-wrapper">
+                <Heart size={24} />
+              </div>
+              <h3 className="feature-title">Built for You</h3>
+              <p className="feature-desc">
+                Curson is independently built and continuously improved based on real 
+                user feedback. We build what helps you get hired, not what drives 
+                our engagement metrics.
+              </p>
+            </div>
+
+          </div>
+
+          <div className="public-footer-note">
             <p>
-              Job searching is broken. Candidates apply blindly, resumes are filtered by
-              algorithms, and opportunities are often missed due to lack of visibility.
-              Curson was created to change that.
-            </p>
-            <p>
-              We focus on intelligent matching, clear communication, and AI-assisted tools
-              that actually help users improve - not overwhelm them.
+              Curson is built for the community. <a href="/contact">Get in touch.</a>
             </p>
           </div>
 
-          <div className="public-section">
-            <h2>What Makes Us Different</h2>
-            <ul>
-              <li>Privacy-first platform design</li>
-              <li>No dark patterns or misleading paywalls</li>
-              <li>Real value from premium features</li>
-              <li>Clear, honest product decisions</li>
-            </ul>
-          </div>
-
-          <div className="public-divider" />
-
-          <p className="footer-note">
-            Curson is independently built and continuously improved with user feedback at
-            its core.
-          </p>
         </div>
       </div>
     </>
