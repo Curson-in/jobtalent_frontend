@@ -43,6 +43,7 @@ export default function TalentDashboard() {
 const [hasMore, setHasMore] = useState(true);
 const JOBS_PER_PAGE = 20;
 const [followUpJob, setFollowUpJob] = useState(null);
+const [userProfile, setUserProfile] = useState(null); // 👈 ADD THIS
 const [subscription, setSubscription] = useState(null);
 
 const [subLoading, setSubLoading] = useState(true);
@@ -162,6 +163,10 @@ useEffect(() => {
   const loadSubscription = async () => {
     try {
       const res = await axios.get("/profile/talent");
+      
+      // 👇 ADD THIS LINE to save the profile details
+      setUserProfile(res.data.profile); 
+      
       setSubscription(res.data.profile.subscription);
     } catch (err) {
       console.error(err);
@@ -312,6 +317,12 @@ const fetchApplications = async () => {
 
 
 const handleApply = (job) => {
+
+  if (!userProfile?.resume) {
+    showToast('Please upload your resume in Profile section to apply.', 'error');
+    return;
+  }
+
   // 🔥 Aggregated jobs
   if (job.source === 'aggregated') {
     if (!job.external_url) {

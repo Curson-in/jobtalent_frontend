@@ -66,20 +66,10 @@ export default function SubscriptionCard({ subscription }) {
             </strong>
           </p>
 
-          <p>
-            <span>Auto-renew</span>
-            <strong className={subscription.auto_renew ? "on" : "off"}>
-              {subscription.auto_renew ? "ON" : "OFF"}
-            </strong>
-          </p>
+          
         </div>
 
-        <button
-          className="btn-manage"
-          onClick={() => setOpen(true)}
-        >
-          Manage Plan
-        </button>
+        
       </div>
 
       {open && (

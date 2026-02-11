@@ -15,6 +15,7 @@ export default function TalentProfile() {
   const [uploadingResume, setUploadingResume] = useState(false);
   const fileInputRef = useRef(null);
   const resumeInputRef = useRef(null);
+  const [notification, setNotification] = useState(null);
  
 const { subscription } = useContext(AuthContext);
 
@@ -32,6 +33,13 @@ const isFreePlan =
     ...updater
   }));
 };
+
+const showToast = (message, type = 'success') => {
+    setNotification({ message, type });
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -99,27 +107,25 @@ const isFreePlan =
   };
 
  const handleBoostProfile = async () => {
-  // 🔒 Free user → redirect to pricing
-  if (isFreePlan) {
-    navigate("/pricing");
-    return;
-  }
+    if (isFreePlan) {
+      navigate("/pricing");
+      return;
+    }
 
-  // ✅ Paid user → boost profile
-  try {
-    const res = await profileService.boostProfile();
+    try {
+      const res = await profileService.boostProfile();
 
-    safeSetProfile({
-      is_boosted: true,
-      boost_expires_at: res.expires_at,
-    });
+      safeSetProfile({
+        is_boosted: true,
+        boost_expires_at: res.expires_at,
+      });
 
-    // Optional: replace alert with toast later
-    alert("🚀 Profile boosted successfully!");
-  } catch (err) {
-    alert(err.response?.data?.message || "Boost failed");
-  }
-};
+      // ✅ Use Toast instead of Alert
+      showToast("🚀 Profile boosted successfully!", "success");
+    } catch (err) {
+      showToast(err.response?.data?.message || "Boost failed", "error");
+    }
+  };
 
  const calculateCompletion = (profile) => {
   if (!profile) return 0;
@@ -272,34 +278,34 @@ const isFreePlan =
 
 {/* Profile Boost */}
 {profile?.subscription && (
-  <div className="profile-card boost-card premium-card">
-    <div className="boost-header">
-      <h3 className="boost-title"> Profile Boost</h3>
-
-      {profile.is_boosted && (
-        <span className="boost-status active">
-          Active
-        </span>
-      )}
-    </div>
-
+  <>
     {profile.is_boosted ? (
-      <div className="boost-active-state">
-        <p className="boost-message">
-          Your profile is currently boosted and
-          prioritized for recruiters.
-        </p>
-
-       
+      // 🔥 Compact Active State (No changes here)
+      <div className="profile-card boost-card-active">
+        <div className="boost-active-content">
+          <div className="boost-icon-pulse">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          </div>
+          <div className="boost-text-wrapper">
+            <h4 className="boost-active-title">Boost Active</h4>
+            <p className="boost-active-sub">Priority visibility enabled</p>
+          </div>
+        </div>
       </div>
     ) : (
-      <>
+      // Standard State (Not Boosted) - ✅ POINTS ADDED BACK HERE
+      <div className="profile-card boost-card premium-card">
+        <div className="boost-header">
+          <h3 className="boost-title">Profile Boost</h3>
+        </div>
+        
         <p className="boost-desc">
-  Your profile gets <strong>priority placement</strong>,
-  increasing visibility and response rate.
-</p>
+          Your profile gets <strong>priority placement</strong>, increasing visibility and response rate.
+        </p>
 
-
+        {/* 👇 Added these benefits back */}
         <ul className="boost-benefits">
           <li>✔ Priority recruiter visibility</li>
           <li>✔ Higher ranking in search</li>
@@ -307,15 +313,12 @@ const isFreePlan =
           <li>✔ Shown before free profiles</li>
         </ul>
 
-        <button
-          className="btn-boost-primary btn-primary btn-muted"
-          onClick={handleBoostProfile}
-        >
+        <button className="btn-boost-primary btn-primary btn-muted" onClick={handleBoostProfile}>
           Boost Profile
         </button>
-      </>
+      </div>
     )}
-  </div>
+  </>
 )}
 </div>
   </div>
@@ -721,6 +724,25 @@ const isFreePlan =
         </div>
       </div>
     </div>
+
+    {notification && (
+        <div className={`toast-notification ${notification.type}`}>
+          <div className="toast-content">
+            {notification.type === 'success' ? (
+              <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            )}
+            <span>{notification.message}</span>
+          </div>
+          <button onClick={() => setNotification(null)} className="toast-close">×</button>
+        </div>
+      )}
+
     </>
   );
 }

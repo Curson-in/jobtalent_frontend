@@ -1,6 +1,35 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
+// ✅ HELPER: Formats date correctly (e.g., "2 hours ago" or "Nov 12, 2026")
+const formatDate = (dateString) => {
+  if (!dateString) return "Just now"; // Fallback if no date exists
+  
+  const date = new Date(dateString);
+  const now = new Date();
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) return "Just now";
+
+  const diffInSeconds = Math.floor((now - date) / 1000);
+
+  // Less than 1 minute
+  if (diffInSeconds < 60) return "Just now";
+  // Less than 1 hour
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+  // Less than 1 day
+  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+  // Less than 7 days
+  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
+
+  // Older than a week: Show full date
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
 // --- MOVED OUTSIDE: Stable Component Definition ---
 const CommentNode = ({ 
   comment, 
@@ -19,6 +48,9 @@ const CommentNode = ({
   const authorName = comment.author || "Anonymous";
   const initial = authorName.charAt(0).toUpperCase();
 
+  // ✅ FIX: Use database field 'created_at' or 'createdAt'
+  const dateDisplay = formatDate(comment.created_at || comment.createdAt);
+
   return (
     <div className="comment-thread">
       {/* Visuals */}
@@ -34,7 +66,8 @@ const CommentNode = ({
         <div className="comment-header">
           <span className="author-name">{authorName}</span>
           <span className="meta-text">
-            • {new Date(comment.createdAt || Date.now()).toLocaleDateString()}
+            {/* ✅ UPDATED DATE DISPLAY */}
+            • {dateDisplay}
           </span>
           <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? "[+]" : "[-]"}
@@ -47,7 +80,7 @@ const CommentNode = ({
           </div>
         ) : (
           <>
-            <p className="comment-body">{comment.comment}</p>
+            <p className="comment-body">{comment.comment || comment.content}</p>
 
             <div className="comment-actions">
               <button
@@ -119,6 +152,7 @@ export default function BlogComments({ blogId }) {
     try {
       await api.post(`/blogs/${blogId}/comments`, {
         comment: text,
+        content: text, // Sending both to be safe
         parentId: parentId,
         parent_id: parentId,
       });
