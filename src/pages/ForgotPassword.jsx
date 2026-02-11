@@ -120,10 +120,10 @@ export default function ForgotPassword() {
         <div className="auth-visual-overlay">
           <div className="auth-glass-card">
             <h2 style={{ fontSize: '1.65rem', marginBottom: '10px' }}>
-              Secure account recovery
+            Forgot your password? No worries.
             </h2>
             <p style={{ fontSize: '0.95rem', opacity: 0.95, lineHeight: '1.6' }}>
-              We take security seriously. Verify your identity and regain access in just a few steps.
+              We’ll help you reset it quickly.
             </p>
           </div>
         </div>
