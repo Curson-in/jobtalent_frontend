@@ -5,6 +5,7 @@ import * as jobService from '../services/jobService.js';
 import * as applicationService from '../services/applicationService.js';
 import { getFollowUpsForJob } from "../services/messageService";
 import api from "../services/api";
+import { Briefcase, CheckCircle, Search, Users, Lock } from 'lucide-react'; // ✅ Added Icons
 
 // Styles & Components
 import '../assets/css/employer.css';
@@ -58,6 +59,53 @@ const ConfirmModal = ({ show, title, message, confirmText, onConfirm, onCancel, 
     </div>
   );
 };
+
+// ✅ NEW: Professional Empty State Component with Illustration
+const EmptyState = ({ isPaid, onAction }) => (
+  <div className="card border-0 shadow-sm rounded-4 text-center py-5 px-4 mt-2 bg-white">
+    
+    {/* 🖼️ Illustration Section */}
+    <div className="mb-4 d-flex justify-content-center">
+      <img 
+        src="https://illustrations.popsy.co/blue/success.svg" 
+        alt="Start Hiring" 
+        style={{ width: '220px', height: 'auto', opacity: 0.9 }} 
+      />
+    </div>
+    
+    <h3 className="fw-bold text-dark mb-2">Let's find your next hire</h3>
+    <p className="text-muted mb-4 mx-auto" style={{maxWidth: '500px', lineHeight: '1.6'}}>
+      {isPaid 
+        ? "You're all set! Post a job to start receiving AI-matched applications from verified talent." 
+        : "Post your first job to unlock access to 10,000+ verified professionals and our AI matching engine."}
+    </p>
+
+    {/* Value Props */}
+    <div className="d-flex justify-content-center gap-3 gap-md-4 mb-5 flex-wrap">
+      <div className="d-flex align-items-center gap-2 text-secondary bg-light px-3 py-2 rounded-pill border">
+        <CheckCircle size={16} className="text-success" />
+        <span className="small fw-medium">Search Candidates</span>
+      </div>
+      <div className="d-flex align-items-center gap-2 text-secondary bg-light px-3 py-2 rounded-pill border">
+        <CheckCircle size={16} className="text-success" />
+        <span className="small fw-medium">Smart AI Matching</span>
+      </div>
+      <div className="d-flex align-items-center gap-2 text-secondary bg-light px-3 py-2 rounded-pill border">
+        <CheckCircle size={16} className="text-success" />
+        <span className="small fw-medium">Instant Invite</span>
+      </div>
+    </div>
+
+    <div>
+      <button 
+        className="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm hover-scale" 
+        onClick={onAction}
+      >
+        {isPaid ? 'Create Job Post' : 'Start Hiring (Upgrade)'}
+      </button>
+    </div>
+  </div>
+);
 
 export default function EmployerDashboard() {
   const { user, logout } = useContext(AuthContext);
@@ -140,6 +188,27 @@ export default function EmployerDashboard() {
     } catch (err) { console.error("Failed to fetch saved candidates"); }
   };
 
+  // ✅ STRICT PAID CHECK
+  const isPaidPlan = useMemo(() => {
+    if (!planUsage || !planUsage.current_plan) return false;
+    const plan = planUsage.current_plan.toLowerCase().trim();
+    return ['starter', 'growth', 'pro'].includes(plan);
+  }, [planUsage]);
+
+  // ✅ FIXED: Handle Post Job Click
+  const handlePostJobClick = () => {
+    // 1. If NOT a paid plan, Redirect immediately
+    if (!isPaidPlan) {
+      navigate('/employer/pricing');
+      return; 
+    }
+
+    // 2. If Paid, Show Form
+    setEditingJobId(null);
+    setFormData({ title: '', description: '', location: '', salary: '', jobType: 'full-time', skills: '' });
+    setShowPostForm(!showPostForm);
+  };
+
   // --- HANDLERS ---
   const handleEditClick = (job) => {
     setEditingJobId(job.id);
@@ -192,14 +261,6 @@ export default function EmployerDashboard() {
       const res = await api.get(`/employer/search-candidates?query=${searchQuery}`);
       let results = res.data.candidates || [];
       results = results.filter(c => !c.has_invited);
-      results.sort((a, b) => {
-        const hasResumeA = a.resume_file ? 1 : 0;
-        const hasResumeB = b.resume_file ? 1 : 0;
-        if (hasResumeA !== hasResumeB) return hasResumeB - hasResumeA;
-        const hasExpA = (a.experience && a.experience !== '-' && a.experience !== 'N/A') ? 1 : 0;
-        const hasExpB = (b.experience && b.experience !== '-' && b.experience !== 'N/A') ? 1 : 0;
-        return hasExpB - hasExpA; 
-      });
       setSearchResults(results);
       setIsSearchMasked(res.data.masked);
       fetchPlanUsage();
@@ -265,22 +326,22 @@ export default function EmployerDashboard() {
   const handleInputChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   const handleLogout = () => { logout(); navigate('/login'); };
 
-  // --- USAGE STATS ---
- // --- USAGE STATS ---
   const UsageStats = () => {
     if (!planUsage) return null;
-    const currentPlan = planUsage.current_plan || 'free_trial';
+    
+    // Limits
+    const currentPlan = planUsage.current_plan || 'free'; 
     const limits = { 
-      free_trial: { jobs: 2, invites: 5, search: 5, save: 5 },
+      free: { jobs: 0, invites: 5, search: 5, save: 5 },
+      free_trial: { jobs: 0, invites: 5, search: 5, save: 5 },
       starter: { jobs: 3, invites: 5, search: 10, save: 5 },
       growth: { jobs: 10, invites: 15, search: 30, save: 15 },
       pro: { jobs: 9999, invites: 60, search: 120, save: 60 }
     }[currentPlan] || { jobs: 0, invites: 0, search: 0, save: 0 };
 
-    // 🔥 FIX: Default 'used' to 0 to prevent NaN%
     const getPct = (used, total) => {
         const value = used || 0; 
-        if (total <= 0) return 0;
+        if (total <= 0) return 0; 
         return Math.min((value / total) * 100, 100);
     };
 
@@ -288,7 +349,6 @@ export default function EmployerDashboard() {
       <div className="mb-5">
         <div className="row g-3">
           {[
-            // 🔥 FIX: Added || 0 to all values below
             { label: 'JOBS POSTED', val: planUsage.jobs_posted_count || 0, limit: limits.jobs, color: 'bg-primary' },
             { label: 'INVITES SENT', val: planUsage.invites_used_count || 0, limit: limits.invites, color: 'bg-success' },
             { label: 'SEARCH QUERIES', val: planUsage.searches_used_count || 0, limit: limits.search, color: 'bg-info' },
@@ -347,23 +407,17 @@ export default function EmployerDashboard() {
         {/* JOBS TAB */}
         {activeTab === 'jobs' && (
           <>
-           {/* 🔥 FIXED HEADER: Button text always visible, Title shrinks if needed */}
-           {/* 🔥 FIXED HEADER: Button forced to auto width to show text */}
             <div className="d-flex justify-content-between align-items-center mb-4">
               <h4 className="fw-bold text-dark mb-0 text-truncate pe-2" style={{ fontSize: 'clamp(1.1rem, 4vw, 1.25rem)' }}>
                 Active Job Posts
               </h4>
+              
+              {/* ✅ Post Job Button Logic */}
               <button 
                 className="btn btn-primary shadow-sm rounded-pill d-flex align-items-center gap-2" 
-                onClick={() => {
-                    setEditingJobId(null);
-                    setFormData({ title: '', description: '', location: '', salary: '', jobType: 'full-time', skills: '' });
-                    setShowPostForm(!showPostForm);
-                }}
-                // 🔥 "w-auto" forces width to fit text, "minWidth" prevents squishing
+                onClick={handlePostJobClick}
                 style={{ whiteSpace: 'nowrap', width: 'auto', padding: '0.5rem 1rem' }}
               >
-             
                 <span>Post Job</span>
               </button>
             </div>
@@ -388,64 +442,70 @@ export default function EmployerDashboard() {
               </div>
             )}
 
-            {/* Jobs Grid */}
-            <div className="row g-3 g-md-4 mb-5">
-              {jobs.length === 0 && !loading && <div className="text-center py-5 text-muted w-100">No jobs posted yet.</div>}
-              {jobs.map(job => (
-                <div key={job.id} className="col-12 col-md-6 col-lg-4">
-                  <div className={`card h-100 shadow-sm hover-lift ${job.is_featured ? 'border-primary border-2' : 'border'}`}>
-                    <div className="card-body p-4 d-flex flex-column">
-                      
-                      <div className="mb-3">
-                        <div className="d-flex justify-content-between align-items-start mb-2 gap-2">
-                          <h5 className="card-title fw-bold mb-0 text-dark text-truncate">{job.title}</h5>
-                          {/* 🔥 FIXED: Edit Button at Top Right (visible on all screens) */}
+            {/* ✅ UPDATED: Show Empty State if No Jobs */}
+            {jobs.length === 0 && !loading ? (
+               <EmptyState isPaid={isPaidPlan} onAction={handlePostJobClick} />
+            ) : (
+              <div className="row g-3 g-md-4 mb-5">
+                {jobs.map(job => (
+                  <div key={job.id} className="col-12 col-md-6 col-lg-4">
+                    <div className={`card h-100 shadow-sm hover-lift ${job.is_featured ? 'border-primary border-2' : 'border'}`}>
+                      <div className="card-body p-4 d-flex flex-column">
+                        
+                        <div className="mb-3">
+                          <div className="d-flex justify-content-between align-items-start mb-2 gap-2">
+                            <h5 className="card-title fw-bold mb-0 text-dark text-truncate">{job.title}</h5>
+                            <button 
+                              className="btn btn-light btn-sm text-muted rounded-pill border"
+                              onClick={() => handleEditClick(job)}
+                              style={{fontSize: '0.75rem', padding: '0.2rem 0.7rem', flexShrink: 0}}
+                            >
+                              Edit
+                            </button>
+                          </div>
+                          {job.is_featured && <span className="badge bg-primary px-2 py-1 flex-shrink-0 d-inline-block mb-1">FEATURED</span>}
+                          <p className="text-muted small mb-2">{job.location} • {job.jobType}</p>
+                          {job.salary && <div className="text-success fw-semibold small"><i className="bi bi-currency-rupees"></i> {job.salary}</div>}
+                        </div>
+
+                        <p className="card-text text-secondary mb-3 flex-grow-1 small" style={{display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>{job.description}</p>
+                        
+                        <div className="d-flex gap-2 mt-auto pt-3 border-top">
                           <button 
-                            className="btn btn-light btn-sm text-muted rounded-pill border"
-                            onClick={() => handleEditClick(job)}
-                            style={{fontSize: '0.75rem', padding: '0.2rem 0.7rem', flexShrink: 0}}
+                            className="btn btn-primary btn-sm flex-grow-1 rounded-pill" 
+                            onClick={() => { setActiveTab('applications'); fetchApplications(job.id); }}
                           >
-                            Edit
+                            View Applicants
+                          </button>
+                          
+                          <button 
+                            className="btn btn-outline-danger btn-sm rounded-pill px-3" 
+                            onClick={() => initiateDeleteJob(job)}
+                          >
+                            Delete
                           </button>
                         </div>
-                        {job.is_featured && <span className="badge bg-primary px-2 py-1 flex-shrink-0 d-inline-block mb-1">FEATURED</span>}
-                        <p className="text-muted small mb-2">{job.location} • {job.jobType}</p>
-                        {job.salary && <div className="text-success fw-semibold small"><i className="bi bi-currency-rupees"></i> {job.salary}</div>}
-                      </div>
 
-                      <p className="card-text text-secondary mb-3 flex-grow-1 small" style={{display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>{job.description}</p>
-                      
-                      {/* 🔥 FIXED: Footer with View Apps & Delete Button (Text) */}
-                      <div className="d-flex gap-2 mt-auto pt-3 border-top">
-                        <button 
-                          className="btn btn-primary btn-sm flex-grow-1 rounded-pill" 
-                          onClick={() => { setActiveTab('applications'); fetchApplications(job.id); }}
-                        >
-                          View Applicants
-                        </button>
-                        
-                        <button 
-                          className="btn btn-outline-danger btn-sm rounded-pill px-3" 
-                          onClick={() => initiateDeleteJob(job)}
-                        >
-                          Delete
-                        </button>
                       </div>
-
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
-            <div className="mt-5 pt-4 border-top">
-              <h5 className="fw-bold text-dark mb-4">Usage</h5>
-              <UsageStats />
-            </div>
+            {/* ✅ Usage Section HIDDEN for Free Users */}
+            {isPaidPlan && (
+              <div className="mt-5 pt-4 border-top">
+                <h5 className="fw-bold text-dark mb-4">Usage</h5>
+                <UsageStats />
+              </div>
+            )}
           </>
         )}
 
-        {/* ... (Search, Applications, Profile tabs logic remains identical) ... */}
+        {/* ... (Keep Search, Applications, Profile tabs logic identical) ... */}
+        
+        {/* OTHER TABS (Search, Apps, Profile) */}
         {(activeTab === 'search' || activeTab === 'saved') && (
           <div className="card border-0 shadow-sm">
             <div className="card-header bg-white py-3 px-4">
@@ -518,7 +578,6 @@ export default function EmployerDashboard() {
           </div>
         )}
 
-        {/* APPLICATIONS TAB */}
         {activeTab === 'applications' && (
           <div className="card border-0 shadow-sm">
             <div className="card-header bg-white py-3 px-4 d-flex justify-content-between align-items-center">
