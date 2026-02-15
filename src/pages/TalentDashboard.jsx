@@ -10,6 +10,7 @@ import JobMatchCard from '../components/jobs/JobMatchCard.jsx';
 import axios from "../services/api";
 import NavbarPremium from "../components/NavbarPremium";
 import JobDetailsModal from '../components/JobDetailsModal.jsx';
+import '../assets/css/dashboard.css'
 
 export default function TalentDashboard() {
   const { logout } = useContext(AuthContext);

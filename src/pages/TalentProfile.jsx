@@ -4,6 +4,7 @@ import * as profileService from '../services/profileService.js';
 import { AuthContext } from '../context/AuthContext.jsx';
 import SubscriptionCard from '../components/subscription/SubscriptionCard.jsx';
 import NavbarPremium from "../components/NavbarPremium";
+import '../assets/css/TalentProfile.css'
 
 
 
@@ -324,6 +325,92 @@ const showToast = (message, type = 'success') => {
   </div>
 </div>
 
+ <div className="profile-card">
+            <div className="card-header">
+              <div className="card-header-content">
+                <svg className="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13 10V3L4 14H11L11 21L20 10L13 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <h2 className="card-title">Quick Actions</h2>
+              </div>
+            </div>
+            
+            <div className="card-content">
+              <div className="action-list">
+                <button
+                  className="action-item"
+                  onClick={() => navigate('/profile/edit')}
+                >
+                  <div className="action-icon-wrapper action-icon-blue">
+                    <svg className="action-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11 5H6C5.46957 5 4.96086 5.21071 4.58579 5.58579C4.21071 5.96086 4 6.46957 4 7V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H17C17.5304 20 18.0391 19.7893 18.4142 19.4142C18.7893 19.0391 19 18.5304 19 18V13M17.5 3.5C17.8978 3.1022 18.4374 2.87868 19 2.87868C19.5626 2.87868 20.1022 3.1022 20.5 3.5C20.8978 3.8978 21.1213 4.43739 21.1213 5C21.1213 5.56261 20.8978 6.1022 20.5 6.5L12 15H9V12L17.5 3.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div className="action-content">
+                    <div className="action-title">Edit Profile</div>
+                    <div className="action-description">Update your information</div>
+                  </div>
+                  <svg className="action-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+
+                <button
+  className="action-item"
+  onClick={() => !uploadingResume && resumeInputRef.current.click()}
+  disabled={uploadingResume}
+>
+  <div className="action-icon-wrapper action-icon-purple">
+    <svg className="action-icon" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M21 15V19C21 19.53 20.79 20.04 20.41 20.41C20.04 20.79 19.53 21 19 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V15M17 8L12 3M12 3L7 8M12 3V15"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </div>
+
+  <div className="action-content">
+    <div className="action-title">
+      {profile.resume ? 'Change Resume' : 'Upload Resume'}
+    </div>
+    <div className="action-description">
+      {profile.resume
+        ? 'Replace your existing resume'
+        : 'Upload your resume (PDF)'}
+    </div>
+  </div>
+  <input
+  type="file"
+  ref={resumeInputRef}
+  hidden
+  accept="application/pdf"
+  onChange={handleResumeUpload}
+/>
+
+
+  {uploadingResume ? (
+    <div className="action-spinner" />
+  ) : (
+    <svg className="action-arrow" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M9 18L15 12L9 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )}
+</button>
+
+              </div>
+            </div>
+          </div>
+          
+
         {/* Profile Grid - Better Organization */}
         <div className="profile-grid">
           <div className="profile-column-left">
@@ -469,90 +556,7 @@ const showToast = (message, type = 'success') => {
           </div>
 
  {/* Quick Actions Card - 4 columns */}
-          <div className="profile-card">
-            <div className="card-header">
-              <div className="card-header-content">
-                <svg className="card-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M13 10V3L4 14H11L11 21L20 10L13 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <h2 className="card-title">Quick Actions</h2>
-              </div>
-            </div>
-            
-            <div className="card-content">
-              <div className="action-list">
-                <button
-                  className="action-item"
-                  onClick={() => navigate('/profile/edit')}
-                >
-                  <div className="action-icon-wrapper action-icon-blue">
-                    <svg className="action-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M11 5H6C5.46957 5 4.96086 5.21071 4.58579 5.58579C4.21071 5.96086 4 6.46957 4 7V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H17C17.5304 20 18.0391 19.7893 18.4142 19.4142C18.7893 19.0391 19 18.5304 19 18V13M17.5 3.5C17.8978 3.1022 18.4374 2.87868 19 2.87868C19.5626 2.87868 20.1022 3.1022 20.5 3.5C20.8978 3.8978 21.1213 4.43739 21.1213 5C21.1213 5.56261 20.8978 6.1022 20.5 6.5L12 15H9V12L17.5 3.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <div className="action-content">
-                    <div className="action-title">Edit Profile</div>
-                    <div className="action-description">Update your information</div>
-                  </div>
-                  <svg className="action-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-
-                <button
-  className="action-item"
-  onClick={() => !uploadingResume && resumeInputRef.current.click()}
-  disabled={uploadingResume}
->
-  <div className="action-icon-wrapper action-icon-purple">
-    <svg className="action-icon" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M21 15V19C21 19.53 20.79 20.04 20.41 20.41C20.04 20.79 19.53 21 19 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V15M17 8L12 3M12 3L7 8M12 3V15"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  </div>
-
-  <div className="action-content">
-    <div className="action-title">
-      {profile.resume ? 'Change Resume' : 'Upload Resume'}
-    </div>
-    <div className="action-description">
-      {profile.resume
-        ? 'Replace your existing resume'
-        : 'Upload your resume (PDF)'}
-    </div>
-  </div>
-  <input
-  type="file"
-  ref={resumeInputRef}
-  hidden
-  accept="application/pdf"
-  onChange={handleResumeUpload}
-/>
-
-
-  {uploadingResume ? (
-    <div className="action-spinner" />
-  ) : (
-    <svg className="action-arrow" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M9 18L15 12L9 6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )}
-</button>
-
-              </div>
-            </div>
-          </div>
+         
 
  {/* Resume Card - 6 columns */}
           

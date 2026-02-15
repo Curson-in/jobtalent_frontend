@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "../assets/css/navbar.css"
 
 export default function NavbarPremium({ active = "", onTabChange }) {
   const { logout, subscription, loading } = useContext(AuthContext);
