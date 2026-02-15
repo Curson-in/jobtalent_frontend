@@ -41,16 +41,8 @@ export default function Landing() {
             
             {/* ✅ UPDATED BRAND SECTION */}
             <Link className="navbar-brand" to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <img 
-                src={logo} 
-                alt="Curson Logo" 
-                style={{ 
-                  width: '42px', 
-                  height: '42px', 
-                  borderRadius: '50%', // Makes it circular
-                  objectFit: 'cover' 
-                }} 
-              />
+              
+              
               <span>Curson</span>
             </Link>
 
