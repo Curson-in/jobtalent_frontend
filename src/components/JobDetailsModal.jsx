@@ -1,101 +1,150 @@
 import React from 'react';
-import { X, MapPin, Calendar, Briefcase, IndianRupee, Building2 } from 'lucide-react';
+import { X, MapPin, Calendar, Briefcase, IndianRupee, Building2, CheckCircle2 } from 'lucide-react';
 
 export default function JobDetailsModal({ job, onClose, onApply }) {
   if (!job) return null;
 
   return (
-    // 🔥 WRAPPER: Flexbox used here to force perfect centering
+    // 🔥 OVERLAY: Darker background, centered content
     <div 
       className="modal fade show" 
       style={{ 
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'center', 
-        backgroundColor: 'rgba(0,0,0,0.6)', 
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', 
         backdropFilter: 'blur(4px)',
         position: 'fixed', 
         top: 0, 
         left: 0, 
         width: '100%', 
         height: '100%', 
-        zIndex: 1050 
+        zIndex: 1060 
       }}
+      onClick={onClose}
     >
-      {/* 🔥 DIALOG: Added margin to prevent touching edges on mobile */}
-      <div className="modal-dialog modal-lg w-100 m-3" style={{ maxWidth: '800px' }}>
-        <div className="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      {/* 🔥 MODAL CARD: Responsive Width & Max Height */}
+      <div 
+        className="modal-dialog" 
+        style={{ 
+          maxWidth: '650px', 
+          width: '90%', // 90% width on mobile
+          margin: 'auto' 
+        }}
+        onClick={e => e.stopPropagation()} 
+      >
+        <div 
+          className="modal-content border-0 shadow-lg rounded-4 overflow-hidden bg-white" 
+          style={{ 
+            maxHeight: '85vh', // Limit height so it doesn't touch edges
+            display: 'flex', 
+            flexDirection: 'column' 
+          }}
+        >
           
-          {/* Header */}
-          <div className="modal-header border-bottom px-4 py-3 bg-white">
-            <div className="d-flex align-items-center gap-3">
-              {job.company_logo ? (
-                <img src={job.company_logo} alt={job.company_name} className="rounded-3 border" style={{ width: 56, height: 56, objectFit: 'cover' }} />
-              ) : (
-                <div className="rounded-3 bg-light d-flex align-items-center justify-content-center border" style={{ width: 56, height: 56 }}>
-                  <Building2 size={24} className="text-secondary" />
+          {/* ================= HEADER (Sticky) ================= */}
+          <div className="modal-header border-bottom px-3 py-3 d-flex align-items-center justify-content-between bg-white sticky-top">
+            <div className="d-flex align-items-center gap-3" style={{ minWidth: 0 }}>
+              {/* Logo */}
+              <div className="rounded-3 border d-flex align-items-center justify-content-center bg-white" style={{ width: 48, height: 48, flexShrink: 0 }}>
+                {job.company_logo ? (
+                  <img src={job.company_logo} alt="logo" className="rounded-2" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                ) : (
+                  <Building2 size={20} className="text-secondary opacity-50" />
+                )}
+              </div>
+              
+              {/* Title Info */}
+              <div style={{ minWidth: 0 }}>
+                <h6 className="fw-bold text-dark mb-0 text-truncate" style={{ fontSize: '1.1rem' }}>{job.title}</h6>
+                <div className="d-flex align-items-center gap-2 text-muted small">
+                  <span className="fw-medium text-dark text-truncate">{job.company_name || "Confidential"}</span>
                 </div>
-              )}
-              <div>
-                <h5 className="modal-title fw-bold text-dark mb-0">{job.title}</h5>
-                <p className="text-muted small mb-0">{job.company_name || "Confidential"}</p>
               </div>
             </div>
-            <button type="button" className="btn-close" onClick={onClose}></button>
+
+            {/* Close Button */}
+            <button 
+              type="button" 
+              className="btn btn-light rounded-circle p-1 d-flex align-items-center justify-content-center border-0 bg-light"
+              onClick={onClose}
+              style={{ width: 32, height: 32, flexShrink: 0 }}
+            >
+              <X size={18} className="text-dark" />
+            </button>
           </div>
 
-          {/* Body */}
-          <div className="modal-body p-0">
-            <div className="d-flex flex-column flex-lg-row h-100">
-              
-              {/* Main Content (Scrollable) */}
-              <div className="p-4 flex-grow-1" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
-                {/* Meta Tags Row */}
-                <div className="d-flex flex-wrap gap-3 mb-4">
-                  <div className="d-flex align-items-center text-muted small bg-light px-3 py-2 rounded-pill border">
-                    <MapPin size={14} className="me-2 text-primary" /> {job.location || 'Remote'}
-                  </div>
-                  <div className="d-flex align-items-center text-muted small bg-light px-3 py-2 rounded-pill border">
-                    <Briefcase size={14} className="me-2 text-primary" /> {job.job_type || 'Full-time'}
-                  </div>
-                  {job.salary && (
-                    <div className="d-flex align-items-center text-muted small bg-light px-3 py-2 rounded-pill border">
-                      {/* ✅ FIX: Changed to Rupee Symbol */}
-                      <IndianRupee size={14} className="me-2 text-success" /> {job.salary}
-                    </div>
-                  )}
-                  <div className="d-flex align-items-center text-muted small bg-light px-3 py-2 rounded-pill border">
-                    <Calendar size={14} className="me-2 text-primary" /> Posted {new Date(job.created_at).toLocaleDateString()}
-                  </div>
+          {/* ================= BODY (Scrollable) ================= */}
+          <div className="modal-body p-0 overflow-auto custom-scrollbar">
+            
+            {/* 1. HIGHLIGHTS BAR */}
+            <div className="bg-light px-3 py-3 border-bottom">
+              <div className="d-flex flex-wrap gap-2">
+                <div className="d-flex align-items-center gap-1 bg-white border px-2 py-1 rounded-pill shadow-sm">
+                  <MapPin size={14} className="text-primary" /> 
+                  <span className="fw-medium text-dark small" style={{fontSize: '0.85rem'}}>{job.location || 'Remote'}</span>
                 </div>
-
-                <h6 className="fw-bold text-dark mb-3">Job Description</h6>
-                <div className="text-secondary mb-4" style={{ whiteSpace: 'pre-wrap', lineHeight: '1.7' }}>
-                  {job.description}
+                <div className="d-flex align-items-center gap-1 bg-white border px-2 py-1 rounded-pill shadow-sm">
+                  <Briefcase size={14} className="text-primary" /> 
+                  <span className="fw-medium text-dark small" style={{fontSize: '0.85rem'}}>{job.job_type || 'Full-time'}</span>
                 </div>
+                {job.salary && (
+                  <div className="d-flex align-items-center gap-1 bg-white border px-2 py-1 rounded-pill shadow-sm">
+                    <IndianRupee size={14} className="text-success" /> 
+                    <span className="fw-medium text-success small" style={{fontSize: '0.85rem'}}>{job.salary}</span>
+                  </div>
+                )}
+                <div className="d-flex align-items-center gap-1 bg-white border px-2 py-1 rounded-pill shadow-sm">
+                  <Calendar size={14} className="text-secondary" /> 
+                  <span className="fw-medium text-secondary small" style={{fontSize: '0.85rem'}}>Posted {new Date(job.created_at).toLocaleDateString()}</span>
+                </div>
+              </div>
+            </div>
 
-                {job.skills && job.skills.length > 0 && (
-                  <div className="mb-3">
-                    <h6 className="fw-bold text-dark mb-3">Required Skills</h6>
+            {/* 2. MAIN CONTENT */}
+            <div className="p-4">
+              <h6 className="fw-bold text-dark mb-2">About the Role</h6>
+              <div 
+                className="text-secondary" 
+                style={{ 
+                  whiteSpace: 'pre-wrap', 
+                  lineHeight: '1.6', 
+                  fontSize: '0.9rem' 
+                }}
+              >
+                {job.description}
+              </div>
+
+              {job.skills && job.skills.length > 0 && (
+                <>
+                  <hr className="my-4 border-light" />
+                  <div>
+                    <h6 className="fw-bold text-dark mb-3">Skills & Requirements</h6>
                     <div className="d-flex flex-wrap gap-2">
                       {job.skills.map((skill, index) => (
-                        <span key={index} className="badge bg-white text-dark border px-3 py-2 rounded-pill fw-normal">
-                          {skill}
+                        <span 
+                          key={index} 
+                          className="px-3 py-1 bg-white text-dark border rounded-pill fw-medium small d-flex align-items-center gap-1"
+                          style={{ fontSize: '0.85rem' }}
+                        >
+                          <CheckCircle2 size={12} className="text-primary" /> {skill}
                         </span>
                       ))}
                     </div>
                   </div>
-                )}
-              </div>
+                </>
+              )}
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="modal-footer border-top px-4 py-3 bg-light">
+          {/* ================= FOOTER (Sticky) ================= */}
+          <div className="modal-footer border-top px-3 py-3 bg-white d-flex justify-content-end gap-2">
+           
             <button 
               type="button" 
-              className="btn btn-dark rounded-pill px-5 fw-bold"
+              className="btn btn-dark rounded-pill px-5 fw-bold shadow-sm"
               onClick={() => onApply(job)}
+              style={{ fontSize: '0.9rem' }}
             >
               Apply Now
             </button>
