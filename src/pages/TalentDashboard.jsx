@@ -9,6 +9,7 @@ import FollowUpModal from "../components/FollowUpModal.jsx";
 import JobMatchCard from '../components/jobs/JobMatchCard.jsx';
 import axios from "../services/api";
 import NavbarPremium from "../components/NavbarPremium";
+import JobDetailsModal from '../components/JobDetailsModal.jsx';
 
 export default function TalentDashboard() {
   const { logout } = useContext(AuthContext);
@@ -45,6 +46,7 @@ const JOBS_PER_PAGE = 20;
 const [followUpJob, setFollowUpJob] = useState(null);
 const [userProfile, setUserProfile] = useState(null); // 👈 ADD THIS
 const [subscription, setSubscription] = useState(null);
+const [selectedJob, setSelectedJob] = useState(null);
 
 const [subLoading, setSubLoading] = useState(true);
 
@@ -677,6 +679,7 @@ useEffect(() => {
 {/* ✅ Only show Match Card if user is NOT on free plan (Hides Upgrade UI) */}
 {!isFreePlan && <JobMatchCard jobId={job.id} index={index} />}
         {/* DESCRIPTION (flex-grow keeps button aligned) */}
+       {/* DESCRIPTION (flex-grow keeps button aligned) */}
         <div className="job-description-wrapper">
           {job.description && (
             <p className="job-description">
@@ -685,21 +688,35 @@ useEffect(() => {
           )}
         </div>
 
-        {/* APPLY BUTTON (always bottom) */}
-        <button
-          className="apply-btn"
-          onClick={() => handleApply(job)}
-        >
-          Apply Now
-          <svg className="btn-arrow" viewBox="0 0 20 20" fill="currentColor">
-            <path
-              fillRule="evenodd"
-              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
+        {/* ✅ UPDATED: ACTIONS (Read More & Apply) */}
+        <div className="d-flex gap-2 mt-3 w-100">
+          
+          {/* Read More Button (Only for manual jobs: source='direct' or no external URL) */}
+          {(job.source === 'direct' || !job.external_url) && (
+            <button
+              className="btn btn-light border text-dark fw-bold rounded-pill flex-grow-1"
+              onClick={() => setSelectedJob(job)}
+              style={{ fontSize: '0.9rem', padding: '10px' }}
+            >
+              Read More
+            </button>
+          )}
+
+          {/* APPLY BUTTON */}
+          <button
+            className="apply-btn flex-grow-1 m-0"
+            onClick={() => handleApply(job)}
+            style={{ padding: '10px' }}
+          >
+            {job.external_url ? 'Apply Now' : 'Apply Now'}
+            <svg className="btn-arrow" viewBox="0 0 20 20" fill="currentColor" style={{ width: '18px', height: '18px', marginLeft: '5px' }}>
+              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
+          
+        </div>
+      </div> 
+
     );
   })}
 
@@ -901,6 +918,16 @@ useEffect(() => {
   />
 )}
 
+{selectedJob && (
+        <JobDetailsModal 
+          job={selectedJob} 
+          onClose={() => setSelectedJob(null)} 
+          onApply={(job) => {
+            handleApply(job);
+            setSelectedJob(null); // Closes modal after clicking apply
+          }} 
+        />
+      )}
 
 
 

@@ -91,7 +91,7 @@ export default function NavbarPremium({ active = "", onTabChange }) {
                 navigate("/talent/ai-resume");
               }}
             >
-               AI Resume
+               ATS Resume
             </button>
 
            

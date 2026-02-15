@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/images/logo.jpeg'; // ✅ Make sure this path is correct
 
 const EmployerNavbar = ({ activeTab, setActiveTab, handleLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,14 +18,23 @@ const EmployerNavbar = ({ activeTab, setActiveTab, handleLogout }) => {
     <nav className="navbar navbar-light bg-white shadow-sm sticky-top" style={{ zIndex: 1050 }}>
       <div className="container-fluid px-3 px-md-4 position-relative">
         
-        {/* Logo */}
-        <span 
-          className="navbar-brand fw-bold text-primary mb-0" 
-          style={{ cursor: 'pointer', letterSpacing: '-0.5px', fontSize: 'clamp(1.25rem, 3vw, 1.5rem)' }}
+        {/* ✅ LOGO + BRAND NAME (Clickable Wrapper) */}
+        <div 
+          className="d-flex align-items-center gap-2" 
           onClick={() => setActiveTab('jobs')}
+          style={{ cursor: 'pointer' }}
         >
-          Curson
-        </span>
+          {/* Logo Image */}
+          <img 
+            src={logo} 
+            alt="Curson Logo" 
+            className="rounded-circle"
+            style={{ width: '42px', height: '42px', objectFit: 'contain' }} 
+          />
+          
+          {/* Brand Name */}
+         
+        </div>
 
         {/* Desktop Navigation - Right Side */}
         <div className="d-none d-lg-flex align-items-center gap-2 ms-auto">

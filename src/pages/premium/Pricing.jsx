@@ -11,9 +11,11 @@ export default function Pricing() {
       duration: "/ month",
       popular: false,
       features: [
-        "Unlimited job applications",
+        
+        "28 follow-ups per month",
         "7 days profile boost",
-        "Email notifications"
+        "Basic Support"
+        
       ]
     },
     {
@@ -25,7 +27,7 @@ export default function Pricing() {
       features: [
         "Everything in Starter",
         "Follow-up messages",
-        "60 days Profile boost (Top 10%)",
+        "60 days Profile boost",
         "Resume enhancement and tips",
         "Higher recruiter visibility"
       ]
@@ -38,7 +40,7 @@ export default function Pricing() {
       popular: false,
       features: [
         "Everything in Pro",
-        "Priority visibility",
+        "Premium Support",
         "Future premium features"
       ]
     }
