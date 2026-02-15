@@ -63,7 +63,7 @@ export default function Landing() {
           <div className="hero-inner">
             <div className="hero-badge">
               <span></span>
-              Now live across India &amp; globally
+              Now live across India 
             </div>
 
             <h1>
