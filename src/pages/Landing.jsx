@@ -80,8 +80,7 @@ export default function Landing() {
             </h1>
 
             <p>
-              AI-powered job matching and resume insights that connect the right
-              talent with the right opportunities - every time.
+              Find better opportunities. Hire the right people.
             </p>
 
             <div className="hero-buttons">
