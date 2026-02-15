@@ -1,6 +1,7 @@
-/* ===== EMPLOYER ONBOARDING - CENTER FIXED ===== */
+/* ===== NUCLEAR FIX - FORCE EVERYTHING VISIBLE ===== */
 
-/* FORCE FULL VIEWPORT CENTERING */
+/* Main wrapper */
+.onboarding-container,
 .employer-onboarding-wrapper {
   position: fixed !important;
   top: 0 !important;
@@ -15,273 +16,331 @@
   z-index: 9999 !important;
   box-sizing: border-box !important;
   overflow: auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
-/* Hide any scrollbars */
-.employer-onboarding-wrapper::-webkit-scrollbar {
-  display: none;
+/* CRITICAL: Remove fixed positioning from nested wrappers */
+.onboarding-card .employer-onboarding-wrapper,
+.employer-onboarding-card .employer-onboarding-wrapper,
+.onboarding-container .employer-onboarding-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+  z-index: auto !important;
+  display: block !important;
 }
 
-.employer-onboarding-wrapper {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
+/* Main card */
+.onboarding-card,
 .employer-onboarding-card {
-  width: 100%;
-  max-width: 480px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 40px 36px;
-  box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.25),
-    0 10px 20px -8px rgba(0, 0, 0, 0.15),
-    0 0 0 1px rgba(255, 255, 255, 0.8);
-  position: relative;
-  animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 100% !important;
+  max-width: 500px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  padding: 40px 36px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  position: relative !important;
+  margin: 0 auto !important;
+  display: block !important;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+/* Remove extra styling from nested cards */
+.onboarding-card .employer-onboarding-card,
+.employer-onboarding-card .employer-onboarding-card {
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  background: transparent !important;
 }
 
+/* Top bar */
+.onboarding-card::before,
 .employer-onboarding-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  border-radius: 20px 20px 0 0;
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 5px !important;
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%) !important;
+  border-radius: 20px 20px 0 0 !important;
 }
 
-.onboarding-step {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  padding: 6px 12px;
-  border-radius: 999px;
-
-  background: #f1f5f9;
-  color: #475569;
-
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-
-  margin-bottom: 14px;
+/* Progress badge - FORCE VISIBLE */
+.onboarding-step,
+.onboarding-progress {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 8px 14px !important;
+  border-radius: 999px !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.6px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 16px !important;
 }
-
 
 .onboarding-step::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  background: #10b981;
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px #fff;
+  content: '' !important;
+  width: 10px !important;
+  height: 10px !important;
+  background: #10b981 !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 2px #fff !important;
+  flex-shrink: 0 !important;
 }
 
-.employer-onboarding-card h2 {
-  font-size: 32px;
-  font-weight: 800;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 8px;
-  line-height: 1.1;
+/* HEADINGS - FORCE VISIBLE */
+.onboarding-card h2,
+.employer-onboarding-card h2,
+.onboarding-card h1,
+.employer-onboarding-card h1,
+.onboarding-card h3,
+.employer-onboarding-card h3 {
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 0 0 12px 0 !important;
+  line-height: 1.2 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
+/* PARAGRAPHS - FORCE VISIBLE */
+.onboarding-card p,
+.employer-onboarding-card p {
+  color: #64748b !important;
+  margin: 0 0 28px 0 !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Form field container */
 .onboarding-field {
-  margin-bottom: 28px;
-  position: relative;
+  margin-bottom: 24px !important;
+  position: relative !important;
+  display: block !important;
 }
 
-.onboarding-field label {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  color: #374151;
-  margin-bottom: 10px;
-  letter-spacing: 0.3px;
+/* LABELS - FORCE VISIBLE */
+.onboarding-field label,
+.onboarding-card label,
+.employer-onboarding-card label {
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.3px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
+/* INPUTS - FORCE VISIBLE */
+.onboarding-card input,
 .employer-onboarding-card input,
-.employer-onboarding-card textarea {
-  width: 100%;
-  padding: 18px 20px;
-  font-size: 16px;
-  border-radius: 14px;
-  border: 2px solid #e2e8f0;
-  outline: none;
-  background: #fafbfc;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
-  font-family: inherit;
+.onboarding-field input,
+.onboarding-card textarea,
+.employer-onboarding-card textarea,
+.onboarding-field textarea,
+.onboarding-card select,
+.employer-onboarding-card select,
+.onboarding-field select {
+  width: 100% !important;
+  padding: 16px 18px !important;
+  font-size: 16px !important;
+  border-radius: 12px !important;
+  border: 2px solid #e2e8f0 !important;
+  outline: none !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.employer-onboarding-card input:hover,
-.employer-onboarding-card textarea:hover {
-  border-color: #94a3b8;
-  background: #fff;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-}
-
+.onboarding-card input:focus,
 .employer-onboarding-card input:focus,
-.employer-onboarding-card textarea:focus {
-  border-color: #3b82f6;
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15), 0 10px 30px rgba(59, 130, 246, 0.2);
+.onboarding-card textarea:focus,
+.employer-onboarding-card textarea:focus,
+.onboarding-card select:focus,
+.employer-onboarding-card select:focus {
+  border-color: #3b82f6 !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
 }
 
+.onboarding-card textarea,
 .employer-onboarding-card textarea {
-  resize: vertical;
-  min-height: 130px;
+  resize: vertical !important;
+  min-height: 120px !important;
 }
 
+.onboarding-card input::placeholder,
 .employer-onboarding-card input::placeholder,
+.onboarding-card textarea::placeholder,
 .employer-onboarding-card textarea::placeholder {
-  color: #94a3b8;
+  color: #94a3b8 !important;
+  opacity: 1 !important;
 }
 
-.field-error {
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  font-size: 13px;
-  color: #ef4444;
-  font-weight: 600;
+/* ERROR TEXT - FORCE VISIBLE */
+.field-error,
+.onboarding-field .field-error {
+  position: absolute !important;
+  bottom: -22px !important;
+  left: 0 !important;
+  font-size: 13px !important;
+  color: #ef4444 !important;
+  font-weight: 600 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
+/* BUTTON CONTAINER */
 .onboarding-actions {
-  display: flex;
-  gap: 16px;
-  margin-top: 36px;
-  padding-top: 28px;
-  border-top: 1px solid #f1f5f9;
+  display: flex !important;
+  gap: 12px !important;
+  margin-top: 32px !important;
+  padding-top: 24px !important;
+  border-top: 1px solid #f1f5f9 !important;
 }
 
-.onboarding-actions button {
-  flex: 1;
-  padding: 18px 24px;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 14px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: inherit;
-  letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
+/* Remove the top colored gradient bar */
+.onboarding-card::before,
+.employer-onboarding-card::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* BUTTONS - FORCE VISIBLE */
+.onboarding-actions button,
+.onboarding-primary-btn,
+.onboarding-secondary-btn,
+.onboarding-card button,
+.employer-onboarding-card button {
+  padding: 16px 24px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-family: inherit !important;
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  min-height: 48px !important;
 }
 
 .onboarding-secondary-btn {
-  background: transparent;
-  color: #475569;
-  border: 2px solid #e2e8f0;
+  background: #ffffff !important;
+  color: #475569 !important;
+  border: 2px solid #e2e8f0 !important;
+  flex: 1 !important;
 }
 
 .onboarding-secondary-btn:hover:not(:disabled) {
-  background: #f8fafc;
-  border-color: #94a3b8;
-  transform: translateY(-2px);
+  background: #f8fafc !important;
+  border-color: #cbd5e0 !important;
 }
 
 .onboarding-primary-btn {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
   color: #ffffff !important;
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+  flex: 1 !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
 }
 
 .onboarding-primary-btn:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-1px) !important;
 }
 
-.onboarding-primary-btn:disabled {
-  background: #cbd5e1 !important;
-  color: #94a3b8 !important;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+.onboarding-primary-btn:disabled,
+.onboarding-secondary-btn:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
 }
 
-.employer-onboarding-card > button {
-  width: 100%;
-  margin-top: 36px;
-  padding: 20px;
-  font-size: 17px;
-  border-radius: 14px;
+/* Single full-width button */
+.onboarding-card > button:not(.onboarding-actions button),
+.employer-onboarding-card > button:not(.onboarding-actions button) {
+  width: 100% !important;
+  margin-top: 24px !important;
 }
 
-.employer-onboarding-card input[type="file"] {
-  padding: 20px;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  border: 2px dashed #cbd5e1;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.employer-onboarding-card input[type="file"]:hover {
-  border-color: #3b82f6;
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-}
-
+/* Review list - FORCE VISIBLE */
 .review-list {
-  list-style: none;
-  padding: 0;
-  margin: 28px 0 36px 0;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 24px 0 32px 0 !important;
 }
 
 .review-list li {
-  padding: 18px 0;
-  border-bottom: 1px solid #f1f5f9;
-  font-size: 15px;
-  color: #475569;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 16px 0 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  font-size: 15px !important;
+  color: #64748b !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .review-list li strong {
-  color: #0f172a;
-  font-weight: 700;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* ALL TEXT ELEMENTS - NUCLEAR VISIBILITY FIX */
+.onboarding-card *,
+.employer-onboarding-card *,
+.onboarding-container *,
+.employer-onboarding-wrapper * {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Mobile */
 @media (max-width: 480px) {
+  .onboarding-container,
   .employer-onboarding-wrapper {
-    padding: 16px !important;
+    padding: 12px !important;
   }
   
+  .onboarding-card,
   .employer-onboarding-card {
-    padding: 32px 24px;
-    margin: 0;
-    max-height: 95vh;
-    border-radius: 16px;
+    padding: 32px 24px !important;
+    max-height: 95vh !important;
   }
   
+  .onboarding-card h2,
   .employer-onboarding-card h2 {
-    font-size: 28px;
+    font-size: 26px !important;
   }
   
   .onboarding-actions {
-    flex-direction: column;
-    gap: 12px;
+    flex-direction: column !important;
+    gap: 10px !important;
   }
 }

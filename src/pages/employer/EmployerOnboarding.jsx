@@ -12,15 +12,14 @@ export default function EmployerOnboarding() {
   const [step, setStep] = useState(1);
 
   const [data, setData] = useState({
-  name: '',          // 🔥 REQUIRED
-  website: '',
-  description: '',
-  industry: '',
-  company_size: '',
-  location: '',
-  logo_url: ''
-});
-
+    name: '',          // 🔥 REQUIRED
+    website: '',
+    description: '',
+    industry: '',
+    company_size: '',
+    location: '',
+    logo_url: ''
+  });
 
   const update = (values) => setData(prev => ({ ...prev, ...values }));
   const next = () => setStep(s => s + 1);
@@ -29,18 +28,18 @@ export default function EmployerOnboarding() {
   return (
     <div className="onboarding-container">
       <div className="onboarding-card">
-        <div className="onboarding-progress">Step {step} of 4</div>
+        {/* ✅ REMOVED the "Step X of 4" div here */}
 
         {step === 1 && <StepCompanyInfo data={data} update={update} next={next} />}
         {step === 2 && <StepCompanyDetails data={data} update={update} next={next} back={back} />}
         {step === 3 && <StepVerification data={data} update={update} next={next} back={back} />}
         {step === 4 && (
-        <StepOTP 
-          data={data} 
-          next={next} 
-          back={back} 
-        />
-      )}
+          <StepOTP 
+            data={data} 
+            next={next} 
+            back={back} 
+          />
+        )}
         {step === 5 && <StepReview data={data} back={back} />}
       </div>
     </div>

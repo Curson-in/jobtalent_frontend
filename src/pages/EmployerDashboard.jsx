@@ -101,7 +101,7 @@ const EmptyState = ({ isPaid, onAction }) => (
         className="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm hover-scale" 
         onClick={onAction}
       >
-        {isPaid ? 'Create Job Post' : 'Start Hiring (Upgrade)'}
+        {isPaid ? 'Create Job Post' : 'Start Hiring'}
       </button>
     </div>
   </div>
