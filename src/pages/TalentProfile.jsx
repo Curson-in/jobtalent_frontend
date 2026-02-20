@@ -278,8 +278,8 @@ const showToast = (message, type = 'success') => {
         : 'Your Profile'}
     </h1>
 
-   {/* Profile Header Content */}
-    <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mt-2 flex-wrap">
+  {/* 🔥 UPDATED: Changed align-items-center to align-items-start for mobile, added align-items-md-center for desktop */}
+    <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2 mt-2">
       
       <div className="completion-badge-wrapper m-0">
         <div className="completion-badge">
@@ -287,16 +287,16 @@ const showToast = (message, type = 'success') => {
         </div>
       </div>
 
-      {/* Share Profile Button - Compact & Anti-Stretch Fix */}
+      {/* Share Profile Button */}
       <button 
         onClick={handleShareProfile}
         className="btn btn-outline-secondary rounded-pill d-flex align-items-center shadow-sm"
         style={{ 
           transition: 'all 0.2s ease', 
-          padding: '0.25rem 0.75rem',  // Tighter padding
-          fontSize: '0.75rem',         // Smaller text for mobile
-          width: 'max-content',        // 🔥 Prevents stretching on mobile
-          height: 'fit-content'        // 🔥 Keeps it vertically aligned
+          padding: '0.25rem 0.75rem', 
+          fontSize: '0.75rem',         
+          width: 'max-content',        
+          height: 'fit-content'        
         }}
         onMouseOver={(e) => e.currentTarget.classList.add('bg-light')}
         onMouseOut={(e) => e.currentTarget.classList.remove('bg-light')}
@@ -305,6 +305,7 @@ const showToast = (message, type = 'success') => {
       </button>
 
     </div>
+  
   </div>
 </div>
 
