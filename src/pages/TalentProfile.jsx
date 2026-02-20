@@ -182,6 +182,30 @@ const showToast = (message, type = 'success') => {
 
   const completion = calculateCompletion(profile);
 
+  // --- SHARE PROFILE FUNCTION ---
+  // --- SHARE PROFILE FUNCTION ---
+  const handleShareProfile = async () => {
+    // 🔥 FIX: Changed to the exact route the candidate is on
+    const profileUrl = `${window.location.origin}/talent/profile`; 
+    
+    const shareData = {
+      title: `${profile?.user?.first_name || 'My'} Profile on Curson`,
+      text: `Check out my professional profile on Curson!`,
+      url: profileUrl,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(profileUrl);
+        alert("Profile link copied to clipboard!"); 
+      }
+    } catch (err) {
+      console.error("Error sharing profile:", err);
+    }
+  };
+
   return (
 
     <> 
@@ -254,10 +278,32 @@ const showToast = (message, type = 'success') => {
         : 'Your Profile'}
     </h1>
 
-    <div className="completion-badge-wrapper">
-      <div className="completion-badge">
-        <span>{completion}% Complete</span>
+   {/* Profile Header Content */}
+    <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mt-2 flex-wrap">
+      
+      <div className="completion-badge-wrapper m-0">
+        <div className="completion-badge">
+          <span>{completion}% Complete</span>
+        </div>
       </div>
+
+      {/* Share Profile Button - Compact & Anti-Stretch Fix */}
+      <button 
+        onClick={handleShareProfile}
+        className="btn btn-outline-secondary rounded-pill d-flex align-items-center shadow-sm"
+        style={{ 
+          transition: 'all 0.2s ease', 
+          padding: '0.25rem 0.75rem',  // Tighter padding
+          fontSize: '0.75rem',         // Smaller text for mobile
+          width: 'max-content',        // 🔥 Prevents stretching on mobile
+          height: 'fit-content'        // 🔥 Keeps it vertically aligned
+        }}
+        onMouseOver={(e) => e.currentTarget.classList.add('bg-light')}
+        onMouseOut={(e) => e.currentTarget.classList.remove('bg-light')}
+      >
+        <i className="bi bi-share me-1"></i> Share Profile
+      </button>
+
     </div>
   </div>
 </div>
