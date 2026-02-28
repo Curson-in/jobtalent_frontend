@@ -198,11 +198,7 @@ export default function EmployerDashboard() {
   // ✅ FIXED: Handle Post Job Click
   const handlePostJobClick = () => {
     // 1. If NOT a paid plan, Redirect immediately
-    if (!isPaidPlan) {
-      navigate('/employer/pricing');
-      return; 
-    }
-
+    
     // 2. If Paid, Show Form
     setEditingJobId(null);
     setFormData({ title: '', description: '', location: '', salary: '', jobType: 'full-time', skills: '' });
